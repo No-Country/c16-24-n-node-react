@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./components/Login";
-import NavBar from './components/Navbar'
+import { Login } from "./routes/Login";
+import NavBar from "./components/Navbar";
 
 function App() {
   return (
