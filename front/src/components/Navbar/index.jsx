@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import Search from "./Search";
@@ -27,7 +27,6 @@ const Navbar = () => {
         >
           {open ? <FaTimes /> : <FaBars />}
         </div>
-
         <ul
           className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
             open ? "top-32" : "top-[-490px]"
@@ -44,13 +43,19 @@ const Navbar = () => {
               </NavLink>
             </li>
           ))}
-          <span  onClick={() => setLogIn(!logIn)}>
-            {logIn ? (
-              <IoIosLogIn className="ml-5 text-gray-800" />
-            ) : (
-              <IoIosLogOut className="ml-5 text-gray-800" />
-            )}
-          </span>
+          <Link to="/login">
+            <span onClick={() => setLogIn(!logIn)}>
+              {logIn ? (
+                <IoIosLogIn
+                  className={`${open ? "sm:ml-0" : "ml-5"} "text-gray-800" `}
+                />
+              ) : (
+                <IoIosLogOut
+                  className={`${open ? "sm:ml-0" : "ml-5"} "text-gray-800" `}
+                />
+              )}
+            </span>
+          </Link>
         </ul>
       </div>
     </div>
