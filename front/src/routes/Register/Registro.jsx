@@ -41,7 +41,7 @@ export function Registro() {
             />
             <label
               className="text-sm mb-2 text-gray-200 cursor-pointer"
-              for="gender"
+              htmlFor="gender"
             >
               Genero
             </label>
@@ -49,13 +49,13 @@ export function Registro() {
               className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               id="gender"
             >
-              <option value="male">Hombre</option>
+              <option value="male">Masculino</option>
               <option value="female">Femenino</option>
               <option value="other">Otro</option>
             </select>
             <label
               className="text-sm mb-2 text-gray-200 cursor-pointer"
-              for="age"
+              htmlFor="age"
             >
               Edad
             </label>
@@ -68,7 +68,7 @@ export function Registro() {
               Ya tienes cuenta?
               <a
                 className="text-sm text-blue-500 -200 hover:underline mt-4"
-                href="#"
+                href="/login"
               >
                 Acceder
               </a>

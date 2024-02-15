@@ -1,5 +1,7 @@
 // import styleLogin from "./login.module.css";
 
+import { Link } from "react-router-dom";
+
 export function Login() {
   return (
     <div className="h-[100vh] grid place-content-center pt-16">
@@ -40,6 +42,7 @@ export function Login() {
               <a className="text-blue-500 hover:text-blue-800 text-sm" href="#">
                 Olvido su contraseña?
               </a>
+              <Link to={"/registro"}>Registrar</Link>
             </form>
           </div>
         </div>
