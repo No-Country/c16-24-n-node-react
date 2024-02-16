@@ -1,4 +1,30 @@
+import { useState } from "react";
+
 export function Registro() {
+  const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (email !== confirmEmail) {
+      alert("Los correos electrónicos no coinciden");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    setEmail("");
+    setConfirmEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  }
+
   return (
     <article>
       <div className="flex flex-col items-center justify-center h-screen dark">
@@ -6,15 +32,10 @@ export function Registro() {
           <h2 className="text-2xl font-bold text-gray-200 mb-4">
             Crear cuenta
           </h2>
-          <form className="flex flex-col">
-            <div className="flex space-x-4 mb-4">
+          <form className="flex flex-col" onSubmit={handleSubmit}>
+            <div className="flex space-x-4 mb-4 ">
               <input
-                placeholder="Nombre"
-                className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-                type="text"
-              />
-              <input
-                placeholder="Apellido"
+                placeholder="Nombre usuario"
                 className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="text"
               />
@@ -23,47 +44,31 @@ export function Registro() {
               placeholder="Email"
               className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               placeholder="Confirmar Email"
               className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="email"
+              value={confirmEmail}
+              onChange={(e) => setConfirmEmail(e.target.value)}
             />
             <input
               placeholder="Contraseña"
               className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <input
               placeholder="Confirmar Contraseña"
               className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <label
-              className="text-sm mb-2 text-gray-200 cursor-pointer"
-              htmlFor="gender"
-            >
-              Genero
-            </label>
-            <select
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              id="gender"
-            >
-              <option value="male">Masculino</option>
-              <option value="female">Femenino</option>
-              <option value="other">Otro</option>
-            </select>
-            <label
-              className="text-sm mb-2 text-gray-200 cursor-pointer"
-              htmlFor="age"
-            >
-              Edad
-            </label>
-            <input
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2"
-              id="age"
-              type="date"
-            />
+
             <p className="text-white mt-4">
               Ya tienes cuenta?
               <a
