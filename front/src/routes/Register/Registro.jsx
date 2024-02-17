@@ -28,42 +28,42 @@ export function Registro() {
   return (
     <article>
       <div className="flex flex-col items-center justify-center h-screen dark">
-        <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-200 mb-4">
+        <div className="w-full max-w-md bg-orange-200 rounded-lg shadow-md p-6">
+          <h2 className="text-2xl font-bold text-black-200 mb-4">
             Crear cuenta
           </h2>
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <div className="flex space-x-4 mb-4 ">
               <input
                 placeholder="Nombre usuario"
-                className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 w-1/2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="text"
               />
             </div>
             <input
               placeholder="Email"
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
               placeholder="Confirmar Email"
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="email"
               value={confirmEmail}
               onChange={(e) => setConfirmEmail(e.target.value)}
             />
             <input
               placeholder="Contraseña"
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
               placeholder="Confirmar Contraseña"
-              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+              className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -72,7 +72,7 @@ export function Registro() {
             <p className="text-white mt-4">
               Ya tienes cuenta?
               <a
-                className="text-sm text-blue-500 -200 hover:underline mt-4"
+                className="text-sm text-blue-500 -200 hover:underline mt-4 ml-4"
                 href="/login"
               >
                 Acceder
