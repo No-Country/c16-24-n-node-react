@@ -15,8 +15,8 @@ export default function Login() {
       const response = await axios.post(
         "https://c16-24-n-node-react.vercel.app/api/auth/login",
         {
-          email,
-          password,
+          email: email,
+          password: password,
         }
       );
 
