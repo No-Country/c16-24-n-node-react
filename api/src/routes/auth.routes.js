@@ -49,8 +49,8 @@ router.post(
 
 router.get("/auth/renew-token", tokenValidator, (req, res) => {
   try {
-    const token = renewToken(req.user.id);
-    return res.json({ ok: true, token });
+    const user = renewToken(req.user.id);
+    return res.json({ ok: true, user });
   } catch (error) {
     return res
       .status(500)
