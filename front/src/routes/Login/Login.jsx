@@ -1,8 +1,35 @@
 // import styleLogin from "./login.module.css";
-
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://c16-24-n-node-react.vercel.app/api/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+
+      if (response.ok) {
+        window.location.href = "/dashboard";
+      } else {
+        throw new Error("Error al iniciar sesión");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="max-h-full grid place-content-center p-[250px]">
       <div className="h-96 flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
@@ -18,13 +45,15 @@ export default function Login() {
             >
               Iniciar sesión
             </h2>
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleLogin}>
               <input
                 className="w-full h-12 border border-gray-800 px-3 rounded-lg"
                 placeholder="Email"
                 id="email"
                 name="email"
                 type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="w-full h-12 border border-gray-800 px-3 rounded-lg"
@@ -32,6 +61,8 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 className="w-full h-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -39,6 +70,7 @@ export default function Login() {
               >
                 Acceder
               </button>
+              {error && <p className="text-red-500">{error}</p>}
               <a className="text-blue-500 hover:text-blue-800 text-sm" href="#">
                 Olvido su contraseña?
               </a>
