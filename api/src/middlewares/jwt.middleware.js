@@ -5,7 +5,7 @@ const tokenValidator = (req, res, next) => {
   const token = req.headers["authorization"];
 
   if (!token) {
-    return res.status(401).json({ ok: false, msg: responseMessages.noJwt });
+    return res.status(401).json({ ok: false, message: responseMessages.noJwt });
   }
 
   try {
@@ -15,7 +15,7 @@ const tokenValidator = (req, res, next) => {
   } catch (error) {
     return res
       .status(403)
-      .json({ ok: false, msg: responseMessages.invalidJwt });
+      .json({ ok: false, message: responseMessages.invalidJwt });
   }
 };
 
