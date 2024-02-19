@@ -2,9 +2,9 @@
 
 import { Link } from "react-router-dom";
 
-export function Login() {
+export default function Login() {
   return (
-    <div className="h-[100vh] grid place-content-center pt-16">
+    <div className="min-h-full grid place-content-center p-[250px]">
       <div className="h-96 flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         <div className="relative">
           <div className="absolute -top-2 -left-2 -right-2 -bottom-2 rounded-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-lg animate-pulse"></div>
