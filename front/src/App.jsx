@@ -1,21 +1,16 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import { Login } from "./routes/Login/Login";
-import NavBar from "./components/Navbar";
-import { Home } from "./routes/Home/Home";
-import { Registro } from "./routes/Register/Registro";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import Content from "./components/Content";
 
 function App() {
-  return (
-    <>
-      <NavBar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </>
+  return (    
+      <div className="flex">
+        <Sidebar className="sidebar" />
+        <div className="block w-full">
+          <Header className="header" />
+          <Content className="content" />    
+        </div>        
+      </div>    
   );
 }
-
 export default App;

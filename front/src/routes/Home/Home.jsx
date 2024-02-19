@@ -1,7 +1,8 @@
-export function Home() {
+function Home(){
   return (
-    <main className="pt-16 text-center">
-      <h2 className="text-xl">Home</h2>
+    <main className="text-center">
+      <h1 className="text-2xl">HOME</h1>   
     </main>
   );
 }
+export default Home;

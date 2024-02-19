@@ -6,6 +6,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes");
 const { googleOauth } = require("./controllers/oauth-google.controller.js");
+//swagger
+const swaggerUi = require("swagger-ui-express");
+const { swaggerSpecs, swaggerUiSpecs } = require("./zwagger/config.swagger.js");
 
 require("./db.js");
 
@@ -16,6 +19,11 @@ server.name = "API";
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(googleOauth.initialize());
+server.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpecs, swaggerUiSpecs)
+);
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(cors());

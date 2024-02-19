@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Registro() {
+export default function Registro() {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +27,7 @@ export function Registro() {
 
   return (
     <article>
-      <div className="flex flex-col items-center justify-center h-screen dark">
+      <div className="flex flex-col items-center justify-center h-[100%] p-[200px] dark">
         <div className="w-full max-w-md bg-orange-200 rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold text-black-200 mb-4">
             Crear cuenta
