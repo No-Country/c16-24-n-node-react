@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import useClickOutside from "../../hooks/useClickOutside";
 import { CgMoreVerticalAlt } from "react-icons/cg";
+import useClickOutside from "../../hooks/useClickOutside";
 import DropdownItem from "./DropdownItem";
 
 const Dropdown = () => {

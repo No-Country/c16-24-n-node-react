@@ -1,7 +1,7 @@
 import { CgPushChevronLeft, CgPushChevronRight } from "react-icons/cg";
 import { useState, useEffect } from "react";
-import logo from '../../assets/logo.png';
 import { Link } from "react-router-dom";
+import logo from '../../assets/logo.png';
 import minlogo from '../../assets/minlogo.png';
 import SidebarItem from "./SidebarItem";
 import Dropdown from "./DropDown";
