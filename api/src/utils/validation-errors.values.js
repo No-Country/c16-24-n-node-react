@@ -6,6 +6,7 @@ const validationErrorMessages = {
   passLenght: "Debe tener entre 10 y 24 caracteres",
   usedEmail: "El correo electrónico proporcionado ya está en uso.",
   usedUsername: "El nombre de usuario ya está en uso.",
+  lengthMinMax: (min, max) => `Debe tener entre ${min} y ${max} caracteres`,
 };
 
 const responseMessages = {
