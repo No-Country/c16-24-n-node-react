@@ -4,7 +4,7 @@ import logo from '../../assets/logo.png';
 import { Link } from "react-router-dom";
 import minlogo from '../../assets/minlogo.png';
 import SidebarItem from "./SidebarItem";
-import Dropdown from "./DropDwon";
+import Dropdown from "./DropDown";
 
 const Sidebar = () => {  
   const [expanded, setExpanded] = useState(true);
