@@ -24,7 +24,7 @@ const Sidebar = () => {
   })
 
   return (
-    <div className="flex h-[100vh]">
+    <div className="flex min-h-[100vh]">
       <aside className="h-screen">
         <nav className="h-full max-w-[235px] flex flex-col bg-white border-r shadow-sm">
           <div className="p-4 pb-2">

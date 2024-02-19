@@ -1,19 +1,19 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import  Login from "../../routes/Login/Login";
-import  Home from "../../routes/Home/Home";
-import  Posts from "../../routes/Posts";
-import  Search from "../../routes/Search";
-import  Reviews from "../../routes/Reviews";
-import  Recipes from "../../routes/Recipes";
-import  Profile from "../../routes/Profile";
-import  About from "../../routes/About";
-import  Privacy from "../../routes/Privacy";
-import  Terms from "../../routes/Terms";
-import Registro from "../../routes/Register/Registro"; 
+import Login from "../../routes/Login/Login";
+import Home from "../../routes/Home/Home";
+import Posts from "../../routes/Posts";
+import Search from "../../routes/Search";
+import Reviews from "../../routes/Reviews";
+import Recipes from "../../routes/Recipes";
+import Profile from "../../routes/Profile";
+import About from "../../routes/About";
+import Privacy from "../../routes/Privacy";
+import Terms from "../../routes/Terms";
+import Registro from "../../routes/Register/Registro";
 
 const Content = () => {
   return (
-    <div>
+    <div className="p-3 pb-10 visible">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<Posts />} />
