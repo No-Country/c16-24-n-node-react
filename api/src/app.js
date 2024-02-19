@@ -6,10 +6,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes");
 const { googleOauth } = require("./controllers/oauth-google.controller.js");
-const { SWR_CSS_URL } = process.env;
 //swagger
 const swaggerUi = require("swagger-ui-express");
-const swaggerSpecs = require("./zwagger/config.swagger.js");
+const { swaggerSpecs, swaggerUiSpecs } = require("./zwagger/config.swagger.js");
 
 require("./db.js");
 
@@ -23,7 +22,7 @@ server.use(googleOauth.initialize());
 server.use(
   "/api-docs",
   swaggerUi.serve,
-  swaggerUi.setup(swaggerSpecs, { customCssUrl: SWR_CSS_URL })
+  swaggerUi.setup(swaggerSpecs, swaggerUiSpecs)
 );
 server.use(cookieParser());
 server.use(morgan("dev"));
