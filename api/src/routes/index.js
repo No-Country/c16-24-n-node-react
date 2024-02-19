@@ -1,7 +1,13 @@
 const { Router } = require("express");
-const authRoutes = require("./auth.routes");
-const oauthGoogleRoutes = require("./oauth-google.routes");
 
-const api = new Router().use(authRoutes).use(oauthGoogleRoutes);
+const authRoutes = require("./routes-auth");
+const oauthGoogleRoutes = require("./routes-oauth-google");
+const recipesRoutes = require("./routes-Recipes");
 
-module.exports = Router().use("/api", api);
+const router = Router();
+
+router.use("/auth", authRoutes);
+router.use("/oauth-google", oauthGoogleRoutes);
+router.use("/recipes", recipesRoutes);
+
+module.exports = router;
