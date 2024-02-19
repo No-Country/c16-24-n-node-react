@@ -6,7 +6,7 @@ import { MdPrivacyTip, MdNoteAlt  } from "react-icons/md";
 const DropdownItem = ()=> {
     let items = [
         { id: 1, icon: <BsPeopleFill size={20} />, text: "About", to: "/about" },
-        { id: 2, icon: <MdPrivacyTip size={20} />, text: "Privacy", to: "/privacy-policy"},
+        { id: 2, icon: <MdPrivacyTip size={20} />, text: "Privacy", to: "/privacy"},
         { id: 3, icon: <MdNoteAlt  size={20} />, text: "Terms Of Use", to: "/terms"},
     ];
     return (

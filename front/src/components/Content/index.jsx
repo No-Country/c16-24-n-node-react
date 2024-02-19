@@ -6,6 +6,9 @@ import  Search from "../../routes/Search";
 import  Reviews from "../../routes/Reviews";
 import  Recipes from "../../routes/Recipes";
 import  Profile from "../../routes/Profile";
+import  About from "../../routes/About";
+import  Privacy from "../../routes/Privacy";
+import  Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro"; 
 
 const Content = () => {
@@ -18,6 +21,9 @@ const Content = () => {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="*" element={<Navigate to="/" />} />
