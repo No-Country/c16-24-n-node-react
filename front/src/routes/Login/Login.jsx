@@ -1,5 +1,5 @@
 // import styleLogin from "./login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  let navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,10 +21,8 @@ export default function Login() {
         }
       );
 
-      if (response.ok) {
-        window.location.href = "/dashboard";
-      } else {
-        throw new Error("Error al iniciar sesión");
+      if (response.data) {
+        navigate("/");
       }
     } catch (error) {
       setError(error.message);

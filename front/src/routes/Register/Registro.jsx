@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Registro() {
   const [userName, setUserName] = useState("");
@@ -8,9 +9,21 @@ export default function Registro() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
+  let navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!emailRegex.test(email)) {
+      alert("Por favor, introduce un correo electrónico válido");
+      return;
+    }
+
+    if (password.length <= 10) {
+      alert("La contraseña debe tener más de 10 caracteres");
+      return;
+    }
 
     if (email !== confirmEmail) {
       alert("Los correos electrónicos no coinciden");
@@ -32,10 +45,8 @@ export default function Registro() {
         }
       );
 
-      if (response.ok) {
-        window.location.href = "/dashboard";
-      } else {
-        throw new Error("Error al registrarse");
+      if (response.data) {
+        navigate("/");
       }
     } catch (error) {
       setError(error.message);
