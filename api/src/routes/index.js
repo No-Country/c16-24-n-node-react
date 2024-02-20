@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
-const authRoutes = require("./routes-auth");
-const oauthGoogleRoutes = require("./routes-oauth-google");
-const recipesRoutes = require("./routes-Recipes");
+const authRoutes = require("./auth.routes");
+const oauthGoogleRoutes = require("./oauth-google.routes");
+const recipesRoutes = require("./recipes.routes");
 
 const apiRouter = new Router()
   .use("/auth", authRoutes)
