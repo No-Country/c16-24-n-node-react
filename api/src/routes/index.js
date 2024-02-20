@@ -3,9 +3,9 @@ const authRoutes = require("./auth.routes");
 const oauthGoogleRoutes = require("./oauth-google.routes");
 const profileRoutes = require("./profile.routes");
 
-const api = new Router()
-  .use(authRoutes)
-  .use(oauthGoogleRoutes)
-  .use(profileRoutes);
+const apiRouter = new Router()
+  .use("/auth",authRoutes)
+  .use("/auth/google", oauthGoogleRoutes)
+  .use("/profile",profileRoutes);
 
-module.exports = Router().use("/api", api);
+module.exports = apiRouter;

@@ -1,4 +1,4 @@
-const { User } = require("../db");
+const { User, Profile } = require("../db");
 
 const createUser = async (newUserData) => {
   try {
@@ -6,6 +6,7 @@ const createUser = async (newUserData) => {
       ...newUserData,
     });
     await newUser.save();
+    await Profile.create({UserId:newUser.id});
     return newUser;
   } catch (error) {
     console.log("Error creating user", error);
@@ -14,7 +15,13 @@ const createUser = async (newUserData) => {
 };
 
 const getUserByEmail = async (userEmail) => {
-  return await User.findOne({ where: { email: userEmail } });
+  return await User.findOne({ where: { email: userEmail },include: [
+    { model: Profile }, // Carga los posts del usuario
+  ], });
 };
 
-module.exports = { createUser, getUserByEmail };
+const getUserById = async (userId) =>{
+  return await User.findOne({where: { id: userId }})
+}
+
+module.exports = { createUser, getUserByEmail, getUserById };

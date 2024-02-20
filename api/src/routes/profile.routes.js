@@ -2,18 +2,23 @@ const { Router } = require("express");
 const {
   profileValidationSchema,
 } = require("../validations/profile.validations");
-const fieldValidator = require("../middlewares/field-validator.middleware");
-const tokenValidator = require("../middlewares/jwt.middleware");
 const {
   updateProfile,
   getProfileByUser,
+  updateProfilePhoto,
 } = require("../controllers/profile.controller");
+const {
+  jwtValidator,
+  emptyBodyValidator,
+  fieldValidator,
+  imageValidator,
+} = require("../middlewares");
 
-const router = new Router();
+const profileRouter = new Router();
 
-router.patch(
-  "/profile",
-  [profileValidationSchema, fieldValidator, tokenValidator],
+profileRouter.patch(
+  "/",
+  [jwtValidator, profileValidationSchema, emptyBodyValidator, fieldValidator],
   async (req, res) => {
     try {
       await updateProfile(req.body, req.user.id);
@@ -21,16 +26,16 @@ router.patch(
     } catch (error) {
       console.log(error);
       if (error.status) {
-        return res.status(error.status).json({ ok: false, msg: error.msg });
+        return res.status(error.status).json({ ok: false, message: error.msg });
       }
       return res
         .status(500)
-        .json({ ok: false, msg: "Server Error, please try again later." });
+        .json({ ok: false, message: "Server Error, please try again later." });
     }
   }
 );
 
-router.get("/profile", [tokenValidator], async (req, res) => {
+profileRouter.get("/", [jwtValidator], async (req, res) => {
   try {
     const data = await getProfileByUser(req.user.id);
     return res.status(200).json({ ok: true, data });
@@ -42,4 +47,28 @@ router.get("/profile", [tokenValidator], async (req, res) => {
   }
 });
 
-module.exports = router;
+profileRouter.patch(
+  "/photo",
+  [jwtValidator, imageValidator, fieldValidator],
+  async (req, res) => {
+    try {
+      const profile = await updateProfilePhoto(req.user.id, req.file.filename);
+      return res.json({ ok: true, profile });
+    } catch (error) {
+      console.log(error);
+      if (error.status || error.http_code) {
+        return res.status(error.status || error.http_code).json({ ok: false, message: error.message });
+      }
+      return res
+        .status(500)
+        .json({ ok: false, message: "Server Error, please try again later." });
+    }
+  }
+);
+
+profileRouter.post("/change-password", (req, res) => {
+  try {
+  } catch (error) {}
+});
+
+module.exports = profileRouter;

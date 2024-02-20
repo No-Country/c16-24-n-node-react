@@ -1,4 +1,10 @@
 const { Profile } = require("../db");
+const {
+  cloudinary,
+  deleteCloudinaryImage,
+  getCloudinaryResizedImage,
+} = require("../utils/cloudinary.helper");
+const deleteFile = require("../utils/delete-file.helper");
 
 const updateProfile = async (profileData, userId) => {
   const { first_name, last_name, description, country, mobilenumber } =
@@ -16,6 +22,7 @@ const updateProfile = async (profileData, userId) => {
     profile.country = country;
     profile.mobilenumber = mobilenumber;
     await profile.save();
+    return profile;
   } catch (error) {
     throw error;
   }
@@ -23,10 +30,39 @@ const updateProfile = async (profileData, userId) => {
 
 const getProfileByUser = async (userId) => {
   try {
-    return await Profile.findOne({ where: { UserId: userId } });
+    const profile = await Profile.findOne({ where: { UserId: userId } });
+    profile.image = getCloudinaryResizedImage(profile.image, 100);
+    return profile;
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = { updateProfile, getProfileByUser };
+const updateProfilePhoto = async (userId, fileName) => {
+  try {
+    const profile = await Profile.findOne({ where: { UserId: userId } });
+    if (!profile) {
+      throw { status: 404, message: "Perfil no encontrado" };
+    }
+    const result = await cloudinary.v2.uploader.upload(`uploads/${fileName}`, {
+      allowed_formats: ["jpg", "png", "svg", "webp"],
+      tags: ["profile", "avatar"],
+      folder: userId,
+    });
+    await deleteCloudinaryImage(profile.image);
+    profile.image = result.secure_url;
+    await profile.save();
+    return profile;
+  } catch (error) {
+    throw error;
+  } finally {
+    deleteFile(fileName);
+  }
+};
+
+const createProfile = async (userId) => {
+  try {
+  } catch (error) {}
+};
+
+module.exports = { updateProfile, getProfileByUser, updateProfilePhoto };
