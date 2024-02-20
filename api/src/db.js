@@ -79,7 +79,7 @@ User.hasMany(Recipe);
 User.hasMany(Review, { foreignKey: "userId" });
 Review.belongsTo(User, { foreignKey: "userId" });
 
-// Review con Producto (suponiendo que Product es en realidad Recipe)
+// Review con Recipe
 Recipe.hasMany(Review, { foreignKey: "recipeId" });
 Review.belongsTo(Recipe, { foreignKey: "recipeId" });
 
