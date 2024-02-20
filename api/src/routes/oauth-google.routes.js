@@ -2,15 +2,15 @@ const { Router } = require("express");
 const { googleOauth } = require("../controllers/oauth-google.controller");
 const { signToken } = require("../utils/jwt-auth.helper");
 const { FRONT_URL, FRONT_LOGIN } = process.env;
-const router = new Router();
+const oauthGoogleRoutes = Router();
 
-router.get(
-  "/auth/google",
+oauthGoogleRoutes.get(
+  "/google",
   googleOauth.authenticate("google", { scope: ["profile", "email"] })
 );
 
-router.get(
-  "/auth/google/callback",
+oauthGoogleRoutes.get(
+  "/callback",
   googleOauth.authenticate("google", {
     failureRedirect: "/error",
     session: false,
@@ -21,4 +21,4 @@ router.get(
   }
 );
 
-module.exports = router;
+module.exports = oauthGoogleRoutes;

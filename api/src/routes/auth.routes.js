@@ -11,10 +11,10 @@ const {
   renewToken,
 } = require("../controllers/auth.controller");
 const tokenValidator = require("../middlewares/jwt.middleware");
-const router = new Router();
+const authRoutes = new Router();
 
-router.post(
-  "/auth/signin",
+authRoutes.post(
+  "/signin",
   [signInValidations, fieldValidator, checkUniqueUser],
   async (req, res) => {
     try {
@@ -28,26 +28,22 @@ router.post(
   }
 );
 
-router.post(
-  "/auth/login",
-  [logInValidations, fieldValidator],
-  async (req, res) => {
-    try {
-      const user = await emailPasswordLogIn(req.body);
-      return res.status(200).json({ ok: true, user });
-    } catch (error) {
-      console.log(error);
-      if (error.status) {
-        return res.status(error.status).json({ ok: false, message: error.msg });
-      }
-      return res
-        .status(500)
-        .json({ ok: false, message: "Server Error, please try again later." });
+authRoutes.post("/login", [logInValidations, fieldValidator], async (req, res) => {
+  try {
+    const user = await emailPasswordLogIn(req.body);
+    return res.status(200).json({ ok: true, user });
+  } catch (error) {
+    console.log(error);
+    if (error.status) {
+      return res.status(error.status).json({ ok: false, message: error.msg });
     }
+    return res
+      .status(500)
+      .json({ ok: false, message: "Server Error, please try again later." });
   }
-);
+});
 
-router.get("/auth/renew-token", tokenValidator, (req, res) => {
+authRoutes.get("/renew-token", tokenValidator, (req, res) => {
   try {
     const user = renewToken(req.user.id);
     return res.json({ ok: true, user });
@@ -58,4 +54,4 @@ router.get("/auth/renew-token", tokenValidator, (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = authRoutes;
