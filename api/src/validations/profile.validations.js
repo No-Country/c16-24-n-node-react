@@ -4,10 +4,6 @@ const {
 } = require("../utils/validation-errors.values");
 
 const profileValidationSchema = checkSchema({
-  image: {
-    optional: true,
-    isURL: { errorMessage: "URL no válido" },
-  },
   first_name: {
     optional: true,
     isString: { errorMessage: "No válido" },
@@ -63,4 +59,11 @@ const profileValidationSchema = checkSchema({
   },
 });
 
-module.exports = { profileValidationSchema };
+const profilePhotoValidationSchema = checkSchema({
+  image: {
+    optional:true,
+    notEmpty:true,
+  }
+})
+
+module.exports = { profileValidationSchema, profilePhotoValidationSchema };

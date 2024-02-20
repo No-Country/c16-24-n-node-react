@@ -86,8 +86,8 @@ Review.belongsTo(Recipe, { foreignKey: "recipeId" });
 
 //?-----Relaciones de Perfil-----//
 //Perfil con Usuario
-User.hasOne(Profile);
-Profile.belongsTo(User);
+User.hasOne(Profile, {foreignKey:"UserId"});
+Profile.belongsTo(User, {foreignKey:"UserId"});
 
 //?-----Relaciones de Favoritos-----//
 User.belongsToMany(Recipe, {

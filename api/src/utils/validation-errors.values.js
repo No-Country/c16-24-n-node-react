@@ -2,11 +2,11 @@ const validationErrorMessages = {
   general: "Valor no válido",
   notEmpty: "Campo obligatorio",
   isEmail: "Email no válido",
-  namesLenght: "Debe tener entre 2 y 12 caracteres",
-  passLenght: "Debe tener entre 10 y 24 caracteres",
   usedEmail: "El correo electrónico proporcionado ya está en uso.",
   usedUsername: "El nombre de usuario ya está en uso.",
   lengthMinMax: (min, max) => `Debe tener entre ${min} y ${max} caracteres`,
+  imageMimes: "Only JPG, PNG, SVG and WEBP files are allowed.",
+  fileSize: (size) => `File size exceeds the limit${size?' of '+ size+'Mb' : undefined}`
 };
 
 const responseMessages = {
