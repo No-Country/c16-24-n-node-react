@@ -4,10 +4,9 @@ const authRoutes = require("./routes-auth");
 const oauthGoogleRoutes = require("./routes-oauth-google");
 const recipesRoutes = require("./routes-Recipes");
 
-const router = Router();
+const api = new Router()
+  .use("/auth", authRoutes)
+  .use("/auth", oauthGoogleRoutes)
+  .use("/recipes", recipesRoutes);
 
-router.use("/auth", authRoutes);
-router.use("/auth", oauthGoogleRoutes);
-router.use("/recipes", recipesRoutes);
-
-module.exports = router;
+module.exports = api;
