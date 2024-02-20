@@ -7,7 +7,7 @@ const recipesRoutes = require("./routes-Recipes");
 const router = Router();
 
 router.use("/auth", authRoutes);
-router.use("/oauth-google", oauthGoogleRoutes);
+router.use("/auth", oauthGoogleRoutes);
 router.use("/recipes", recipesRoutes);
 
 module.exports = router;

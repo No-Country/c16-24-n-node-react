@@ -5,7 +5,7 @@ const { FRONT_URL, FRONT_LOGIN } = process.env;
 const oauthGoogleRoutes = Router();
 
 oauthGoogleRoutes.get(
-  "/",
+  "/google",
   googleOauth.authenticate("google", { scope: ["profile", "email"] })
 );
 
