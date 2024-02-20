@@ -3,7 +3,23 @@
 @tailwind utilities;
 
 .active {
-    font-weight: 700;
-    color: #000;
+    background-color: linear-gradient(to top right, var(--tw-gradient-stops));
+    --tw-gradient-from: #c7d2fe var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(199 210 254 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-gradient-from: #e0e7ff var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(224 231 255 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    --tw-text-opacity: 1;
+    color: rgb(55 48 163 / var(--tw-text-opacity));
+    transition: all 0.5s ease-out;
+} 
+
+::-webkit-scrollbar {
+    width: 10px;
 }
 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #f2f2f2;
+}

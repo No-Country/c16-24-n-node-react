@@ -1,21 +1,18 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import { Login } from "./routes/Login/Login";
-import NavBar from "./components/Navbar";
-import { Home } from "./routes/Home/Home";
-import { Registro } from "./routes/Register/Registro";
+import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import Content from "./components/Content";
 
 function App() {
   return (
-    <>
-      <NavBar />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </>
+    <div className="flex fixed w-full h-full pr-5">
+      <Sidebar className="sidebar" />
+      <div className="block w-full">
+        <Header className="header" />
+        <div className="w-full h-full overflow-auto pl-6 pr-3 invisible hover:visible">
+          <Content />
+        </div>
+      </div>
+    </div>
   );
 }
-
 export default App;

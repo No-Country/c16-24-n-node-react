@@ -3,14 +3,16 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_EXTERNAL } = process.env;
+const { DB_PG_URL, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 const sequelize = new Sequelize(
-  DB_EXTERNAL,
-  // `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB}?ssl=true`,
+  DB_PG_URL,
+  //`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}?ssl=true`,
   {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    dialect: "postgres",
+    dialectModule: require("pg"),
     dialectOptions: {
       ssl: { require: true },
     },
@@ -63,8 +65,8 @@ Recipe.belongsToMany(Category, { through: "RecipeCategory" });
 Category.belongsToMany(Recipe, { through: "RecipeCategory" });
 
 //Relacion Receta con Ingrediente
-Recipe.belongsToMany(Ingredient, { through: "RecipeIngredient" });
-Ingredient.belongsToMany(Recipe, { through: "RecipeIngredient" });
+// Recipe.belongsToMany(Ingredient, { through: "RecipeIngredient" });
+// Ingredient.belongsToMany(Recipe, { through: "RecipeIngredient" });
 
 //Relacion entre Receta y Hashtag
 Recipe.belongsToMany(Hashtag, { through: "RecipeHashtag" });
