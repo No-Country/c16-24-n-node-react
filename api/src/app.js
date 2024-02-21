@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
-const apiRouter = require("./routes");
+const apiRoutes = require("./routes");
 const { googleOauth } = require("./controllers/oauth-google.controller.js");
 //swagger
 const swaggerUi = require("swagger-ui-express");
@@ -28,7 +28,7 @@ server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(cors());
 
-server.use("/api", apiRouter);
+server.use("/api", apiRoutes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {

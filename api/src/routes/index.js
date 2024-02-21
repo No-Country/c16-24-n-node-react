@@ -6,9 +6,9 @@ const recipesRoutes = require("./recipes.routes");
 const profileRoutes = require("./profile.routes");
 
 const apiRouter = new Router()
-  .use("/auth",authRoutes)
+  .use("/auth", authRoutes)
   .use("/auth/google", oauthGoogleRoutes)
-  .use("/profile",profileRoutes)
-  .use("recipes", recipesRoutes);
+  .use("/profile", profileRoutes)
+  .use("/recipes", recipesRoutes);
 
 module.exports = apiRouter;
