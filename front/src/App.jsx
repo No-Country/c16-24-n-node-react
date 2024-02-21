@@ -3,14 +3,16 @@ import Header from "./components/Header";
 import Content from "./components/Content";
 
 function App() {
-  return (    
-      <div className="flex">
-        <Sidebar className="sidebar" />
-        <div className="block w-full">
-          <Header className="header" />
-          <Content className="content" />    
-        </div>        
-      </div>    
+  return (
+    <div className="flex fixed w-full h-full pr-5">
+      <Sidebar className="sidebar" />
+      <div className="block w-full">
+        <Header className="header" />
+        <div className="w-full h-full overflow-auto pl-6 pr-3 invisible hover:visible">
+          <Content />
+        </div>
+      </div>
+    </div>
   );
 }
 export default App;

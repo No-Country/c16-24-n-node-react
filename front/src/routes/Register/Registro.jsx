@@ -1,13 +1,29 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Registro() {
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+  let navigate = useNavigate();
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!emailRegex.test(email)) {
+      alert("Por favor, introduce un correo electrónico válido");
+      return;
+    }
+
+    if (password.length <= 10) {
+      alert("La contraseña debe tener más de 10 caracteres");
+      return;
+    }
 
     if (email !== confirmEmail) {
       alert("Los correos electrónicos no coinciden");
@@ -19,10 +35,22 @@ export default function Registro() {
       return;
     }
 
-    setEmail("");
-    setConfirmEmail("");
-    setPassword("");
-    setConfirmPassword("");
+    try {
+      const response = await axios.post(
+        "https://c16-24-n-node-react.vercel.app/api/auth/signin",
+        {
+          user_name: userName,
+          email: email,
+          password: password,
+        }
+      );
+
+      if (response.data) {
+        navigate("/");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   }
 
   return (
@@ -38,6 +66,8 @@ export default function Registro() {
                 placeholder="Nombre usuario"
                 className="bg-gray-200 text-gray-100 border-0 rounded-md p-2 w-1/2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
               />
             </div>
             <input
@@ -68,9 +98,9 @@ export default function Registro() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
-
+            {error && <p className="text-red-500">{error}</p>}
             <p className="text-white mt-4">
-              Ya tienes cuenta?
+              ¿Ya tienes una cuenta?
               <a
                 className="text-sm text-blue-500 -200 hover:underline mt-4 ml-4"
                 href="/login"

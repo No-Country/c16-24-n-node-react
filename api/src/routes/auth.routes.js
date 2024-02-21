@@ -13,9 +13,9 @@ const {
   uniqueUserValidator,
   jwtValidator,
 } = require("../middlewares");
-const authRouter = new Router();
+const authRoutes = Router();
 
-authRouter.post(
+authRoutes.post(
   "/signin",
   [signInValidations, fieldValidator, uniqueUserValidator],
   async (req, res) => {
@@ -31,7 +31,7 @@ authRouter.post(
   }
 );
 
-authRouter.post(
+authRoutes.post(
   "/login",
   [logInValidations, fieldValidator],
   async (req, res) => {
@@ -50,7 +50,7 @@ authRouter.post(
   }
 );
 
-authRouter.get("/renew-token", jwtValidator, (req, res) => {
+authRoutes.get("/renew-token", jwtValidator, (req, res) => {
   try {
     const user = renewToken(req.user.id);
     return res.json({ ok: true, user });
@@ -61,4 +61,4 @@ authRouter.get("/renew-token", jwtValidator, (req, res) => {
   }
 });
 
-module.exports = authRouter;
+module.exports = authRoutes;

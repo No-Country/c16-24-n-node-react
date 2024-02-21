@@ -6,7 +6,7 @@ const {
 const { signToken } = require("../utils/jwt-auth.helper");
 const { jwtValidator } = require("../middlewares");
 const { FRONT_URL, FRONT_LOGIN } = process.env;
-const oauthGoogleRoutes = new Router();
+const oauthGoogleRoutes = Router();
 
 oauthGoogleRoutes.get(
   "/",
