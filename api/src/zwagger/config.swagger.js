@@ -7,6 +7,7 @@ const {
   googleAuthPath,
   renewTokenPath,
 } = require("./auth.swagger");
+const { createRecipePath } = require("./createRecipe.swagger");
 const { SWR_CSS_URL1, SWR_CSS_URL2, SWR_JS_URL1, SWR_JS_URL2 } = process.env;
 
 const swaggerDefinition = {
@@ -24,6 +25,7 @@ const swaggerDefinition = {
       "/api/auth/login": authLoginPath,
       "/api/auth/google": googleAuthPath,
       "/api/auth/renew-token": renewTokenPath,
+      "/api/recipes": createRecipePath,
     },
     definitions: { AuthOkResponse: authOkResponse },
     components: {

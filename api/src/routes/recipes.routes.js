@@ -11,9 +11,11 @@ recipesRoutes.get("/", async (req, res) => {
 
 recipesRoutes.post("/", async (req, res) => {
   try {
-    return res.status(200).send("Esta es la ruta post recipes");
+    const response = req.body;
+    const newRecipe = await createRecipe(response);
+    return res.status(201).json(newRecipe);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    return res.status(500).json({ error: error.message });
   }
 });
 
