@@ -1,6 +1,4 @@
 const { Router } = require("express");
-const fieldValidator = require("../middlewares/field-validator.middleware");
-const checkUniqueUser = require("../middlewares/unique-values.middleware");
 const {
   signInValidations,
   logInValidations,
@@ -10,40 +8,49 @@ const {
   emailPasswordLogIn,
   renewToken,
 } = require("../controllers/auth.controller");
-const tokenValidator = require("../middlewares/jwt.middleware");
-const authRoutes = new Router();
+const {
+  fieldValidator,
+  uniqueUserValidator,
+  jwtValidator,
+} = require("../middlewares");
+const authRoutes = Router();
 
 authRoutes.post(
   "/signin",
-  [signInValidations, fieldValidator, checkUniqueUser],
+  [signInValidations, fieldValidator, uniqueUserValidator],
   async (req, res) => {
     try {
       const user = await emailPasswordSignIn(req.body);
-      res.status(201).json({ ok: true, user });
+      return res.status(201).json({ ok: true, user });
     } catch (error) {
-      res
+      console.log(error)
+      return res
         .status(500)
         .json({ ok: false, message: "Server Error, please try again later." });
     }
   }
 );
 
-authRoutes.post("/login", [logInValidations, fieldValidator], async (req, res) => {
-  try {
-    const user = await emailPasswordLogIn(req.body);
-    return res.status(200).json({ ok: true, user });
-  } catch (error) {
-    console.log(error);
-    if (error.status) {
-      return res.status(error.status).json({ ok: false, message: error.msg });
+authRoutes.post(
+  "/login",
+  [logInValidations, fieldValidator],
+  async (req, res) => {
+    try {
+      const user = await emailPasswordLogIn(req.body);
+      return res.status(200).json({ ok: true, user });
+    } catch (error) {
+      console.log(error);
+      if (error.status) {
+        return res.status(error.status).json({ ok: false, message: error.msg });
+      }
+      return res
+        .status(500)
+        .json({ ok: false, message: "Server Error, please try again later." });
     }
-    return res
-      .status(500)
-      .json({ ok: false, message: "Server Error, please try again later." });
   }
-});
+);
 
-authRoutes.get("/renew-token", tokenValidator, (req, res) => {
+authRoutes.get("/renew-token", jwtValidator, (req, res) => {
   try {
     const user = renewToken(req.user.id);
     return res.json({ ok: true, user });

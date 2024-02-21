@@ -3,6 +3,7 @@ const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
 const { createUser, getUserByEmail } = require("./user.controller");
 const { APP_URL, PORT } = process.env;
 const { SignInMethods } = require("../enums/signin-methods.enum");
+const { signToken } = require("../utils/jwt-auth.helper");
 
 const googleStrategyOptions = {
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -38,4 +39,21 @@ const googleOauth = passport.use(
   )
 );
 
-module.exports = { googleOauth };
+const googleRevalidateToken = async (userId) =>{
+  try {
+    const user = await getUserByEmail(userId);
+    if (!user) {
+      throw { status: 400, msg: responseMessages.userNotRegistered };
+    }
+    const signedToken = signToken({ id: user.id });
+    return {
+      token: signedToken,
+      user_name: user.user_name,
+      image: getCloudinaryResizedImage(user.Profile.image),
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = { googleOauth, googleRevalidateToken };
