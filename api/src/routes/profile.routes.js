@@ -14,9 +14,9 @@ const {
   imageValidator,
 } = require("../middlewares");
 
-const profileRouter = new Router();
+const profileRoutes = Router();
 
-profileRouter.patch(
+profileRoutes.patch(
   "/",
   [jwtValidator, profileValidationSchema, emptyBodyValidator, fieldValidator],
   async (req, res) => {
@@ -35,7 +35,7 @@ profileRouter.patch(
   }
 );
 
-profileRouter.get("/", [jwtValidator], async (req, res) => {
+profileRoutes.get("/", [jwtValidator], async (req, res) => {
   try {
     const data = await getProfileByUser(req.user.id);
     return res.status(200).json({ ok: true, data });
@@ -47,7 +47,7 @@ profileRouter.get("/", [jwtValidator], async (req, res) => {
   }
 });
 
-profileRouter.patch(
+profileRoutes.patch(
   "/photo",
   [jwtValidator, imageValidator, fieldValidator],
   async (req, res) => {
@@ -66,9 +66,4 @@ profileRouter.patch(
   }
 );
 
-profileRouter.post("/change-password", (req, res) => {
-  try {
-  } catch (error) {}
-});
-
-module.exports = profileRouter;
+module.exports = profileRoutes;
