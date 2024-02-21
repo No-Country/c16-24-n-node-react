@@ -1,17 +1,13 @@
 const path = require("path");
 const swaggerJSDoc = require("swagger-jsdoc");
-const {
-  authSigninPath,
-  authOkResponse,
-  authLoginPath,
-  googleAuthPath,
-  renewTokenPath,
-} = require("./auth.swagger");
+const { authOkResponse, authPaths } = require("./auth.swagger");
+const googleOauthPaths = require("./oauth-google.swagger")
+const profilePaths = require("./profile.swagger")
 const { SWR_CSS_URL1, SWR_CSS_URL2, SWR_JS_URL1, SWR_JS_URL2 } = process.env;
 
 const swaggerDefinition = {
   definition: {
-    openapi: "3.1.0",
+    openapi: "3.0.0",
     info: {
       title: "chetifabene API",
       version: "1.0.0",
@@ -20,10 +16,9 @@ const swaggerDefinition = {
     basePath: "/",
     tags: [],
     paths: {
-      "/api/auth/signin": authSigninPath,
-      "/api/auth/login": authLoginPath,
-      "/api/auth/google": googleAuthPath,
-      "/api/auth/renew-token": renewTokenPath,
+      ...authPaths,
+      ...googleOauthPaths,
+      ...profilePaths
     },
     definitions: { AuthOkResponse: authOkResponse },
     components: {

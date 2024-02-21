@@ -30,7 +30,7 @@ const updateProfile = async (profileData, userId) => {
 
 const getProfileByUser = async (userId) => {
   try {
-    const profile = await Profile.findOne({ where: { UserId: userId } });
+    const profile = await Profile.findOne({ where: { UserId: userId }, attributes:{exclude:["id", "UserId"]} });
     profile.image = getCloudinaryResizedImage(profile.image, 100);
     return profile;
   } catch (error) {
