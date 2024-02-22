@@ -18,23 +18,24 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        API_URL,{ email, password },
+        API_URL,
+        { email, password },
         {
           hearder: { "Content-Type": "application/json" },
           widthCredentials: true,
         }
-        );
-        const user = res?.data?.user
-        setAuth({email, password, user});
-        navigate("/");        
-        sessionStorage.setItem("token", user)
-        sessionStorage.setItem("user", email)
-        setLogIn(true)
-        } catch (error) {
-        setError(error.message);
-      }
-    };
-    
+      );
+      const user = res?.data?.user;
+      setAuth({ email, password, user });
+      navigate("/");
+      sessionStorage.setItem("token", user);
+      sessionStorage.setItem("user", email);
+      setLogIn(true);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <div className="max-h-full grid place-content-center p-[250px]">
       <div className="h-96 flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
