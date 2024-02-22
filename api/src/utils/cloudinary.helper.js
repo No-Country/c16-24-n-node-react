@@ -2,7 +2,7 @@ const cloudinary = require('cloudinary');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: './uploads',
+  destination: './',
   filename: (req, file, cb) => {
     cb(null, 'pp-' + Date.now());
   }
