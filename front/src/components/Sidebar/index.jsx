@@ -12,7 +12,7 @@ const Sidebar = () => {
 
   const changeSize = () => {
     setWidth(window.innerWidth)
-    width < 640 ?setExpanded(false) : setExpanded(true)
+    width < 900 ?setExpanded(false) : setExpanded(true)
   }
 
   useEffect(()=>{

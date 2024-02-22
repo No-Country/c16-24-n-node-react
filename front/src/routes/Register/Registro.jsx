@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -45,6 +46,7 @@ export default function Registro() {
 
     try {
       setLoading(true);
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.post(
         "https://c16-24-n-node-react.vercel.app/api/auth/signin",
         {
@@ -77,9 +79,34 @@ export default function Registro() {
             </p>
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit}>
-            <InputComponent name={"user_name"} onInputChange={onInputChange} placeholder={"Nombre de usuario"} type={"text"} value={user_name} key={"user_name"} error={errors.user_name}/>
-            <InputComponent name={"email"} onInputChange={onInputChange} placeholder={"Email"} type={"email"} value={email} key={"email"} error={errors.email}/>
-            <InputComponent name={"password"} onInputChange={onInputChange} placeholder={"Contraseña"} type={"password"} value={password} key={"password"} error={errors.password}/>
+            <InputComponent
+              name={"user_name"}
+              onInputChange={onInputChange}
+              placeholder={"Nombre de usuario"}
+              type={"text"}
+              value={user_name}
+              key={"user_name"}
+              error={errors.user_name}
+            />
+            <InputComponent
+              name={"email"}
+              onInputChange={onInputChange}
+              placeholder={"Email"}
+              type={"email"}
+              value={email}
+              key={"email"}
+              error={errors.email}
+            />
+            <InputComponent
+              name={"password"}
+              onInputChange={onInputChange}
+              placeholder={"Contraseña"}
+              type={"password"}
+              value={password}
+              key={"password"}
+              error={errors.password}
+              autocomplete="current-password"
+            />
             <p className="mt-4 text-sm text-center">
               ¿Ya tienes una cuenta?
               <Link
@@ -104,7 +131,14 @@ export default function Registro() {
   );
 }
 
-const InputComponent = ({placeholder, type, name, value, onInputChange, error}) => {
+const InputComponent = ({
+  placeholder,
+  type,
+  name,
+  value,
+  onInputChange,
+  error,
+}) => {
   return (
     <div className="mb-2">
       <input

@@ -28,6 +28,8 @@ const AuthProvider = ({ children }) => {
     sessionStorage.removeItem("token");
     setLogIn(false);
   };
+
+  console.log(auth)
   
   return (
     <AuthContext.Provider

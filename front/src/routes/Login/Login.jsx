@@ -6,7 +6,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 
 export default function Login() {
   // eslint-disable-next-line no-unused-vars
-  const { auth, setLogIn, setAuth } = useAuthContext();
+  const { setLogIn, setAuth } = useAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -24,11 +24,13 @@ export default function Login() {
           widthCredentials: true,
         }
         );
-        const user = res?.data?.user
-        setAuth({email, password, user});
-        navigate("/");        
-        sessionStorage.setItem("token", user)
-        sessionStorage.setItem("user", email)
+        const user = "@"+res?.data?.user?.user_name;
+        const accessToken = res?.data?.user?.token;
+        setAuth({ email, password, user, accessToken });
+        navigate("/");  
+        console.log(res.data)      
+        sessionStorage.setItem("token", accessToken)
+        sessionStorage.setItem("user", user)
         setLogIn(true)
         } catch (error) {
         setError(error.message);
@@ -58,6 +60,7 @@ export default function Login() {
                 name="email"
                 type="text"
                 value={email}
+                autoComplete="current-password"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
@@ -67,6 +70,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 value={password}
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button
