@@ -3,6 +3,24 @@ const {
   validationErrorMessages,
 } = require("../utils/validation-errors.values");
 
+const passwordValidOptions = {
+  in: "body",
+  trim: true,
+  notEmpty: { errorMessage: validationErrorMessages.notEmpty },
+  isLength: {
+    options: { min: 10, max: 24 },
+    errorMessage: validationErrorMessages.lengthMinMax(10, 24),
+  },
+};
+
+const emailValidOptions = {
+  in: "body",
+  trim: true,
+  notEmpty: { errorMessage: validationErrorMessages.notEmpty },
+  isEmail: { errorMessage: validationErrorMessages.isEmail },
+  toLowerCase: true,
+};
+
 const signInValidations = checkSchema({
   user_name: {
     in: "body",
@@ -17,41 +35,17 @@ const signInValidations = checkSchema({
       errorMessage: validationErrorMessages.general,
     },
   },
-  email: {
-    in: "body",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isEmail: { errorMessage: validationErrorMessages.isEmail },
-    toLowerCase: true,
-  },
-  password: {
-    in: "body",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isLength: {
-      options: { min: 10, max: 24 },
-      errorMessage: validationErrorMessages.lengthMinMax(10,24),
-    },
-  },
+  email: emailValidOptions,
+  password: passwordValidOptions,
 });
 
-const logInValidations = checkSchema({
-  email: {
-    in: "body",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isEmail: { errorMessage: validationErrorMessages.isEmail },
-    toLowerCase: true,
-  },
-  password: {
-    in: "body",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isLength: {
-      options: { min: 10, max: 24 },
-      errorMessage: validationErrorMessages.lengthMinMax(10,24),
-    },
-  },
+const emailPassValidations = checkSchema({
+  email: emailValidOptions,
+  password: passwordValidOptions,
 });
 
-module.exports = { signInValidations, logInValidations };
+module.exports = {
+  signInValidations,
+  emailPassValidations,
+  passwordValidOptions,
+};
