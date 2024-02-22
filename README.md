@@ -2,5 +2,5 @@ Mi nono (abuelo) que hablaba italiano y piamontes solia decir "manya manya que t
 Por eso propuse y puse a consideracion del grupo el nombre del proyecto, y Anibal propuso el nombre del grupo.
 
 Todos acordamos:
-Nombre del Grupo: "Manya Manya"
+Nombre del Grupo: "Manya Manya",
 Nombre del Proyecto: "Chetifabene"
