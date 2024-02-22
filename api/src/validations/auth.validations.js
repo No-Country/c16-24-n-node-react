@@ -30,7 +30,7 @@ const signInValidations = checkSchema({
     notEmpty: { errorMessage: validationErrorMessages.notEmpty },
     isLength: {
       options: { min: 10, max: 24 },
-      errorMessage: validationErrorMessages.passLenght,
+      errorMessage: validationErrorMessages.lengthMinMax(10,24),
     },
   },
 });
@@ -49,7 +49,7 @@ const logInValidations = checkSchema({
     notEmpty: { errorMessage: validationErrorMessages.notEmpty },
     isLength: {
       options: { min: 10, max: 24 },
-      errorMessage: validationErrorMessages.passLenght,
+      errorMessage: validationErrorMessages.lengthMinMax(10,24),
     },
   },
 });

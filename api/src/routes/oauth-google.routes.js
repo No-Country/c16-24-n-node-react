@@ -1,11 +1,15 @@
 const { Router } = require("express");
-const { googleOauth } = require("../controllers/oauth-google.controller");
+const {
+  googleOauth,
+  googleRevalidateToken,
+} = require("../controllers/oauth-google.controller");
 const { signToken } = require("../utils/jwt-auth.helper");
+const { jwtValidator } = require("../middlewares");
 const { FRONT_URL, FRONT_LOGIN } = process.env;
 const oauthGoogleRoutes = Router();
 
 oauthGoogleRoutes.get(
-  "/google",
+  "/",
   googleOauth.authenticate("google", { scope: ["profile", "email"] })
 );
 
@@ -20,5 +24,17 @@ oauthGoogleRoutes.get(
     return res.redirect(`${FRONT_URL}/${FRONT_LOGIN}?token=${token}`);
   }
 );
+
+oauthGoogleRoutes.get("/revalidate", [jwtValidator], async (req, res) => {
+  try {
+    const user = await googleRevalidateToken(req.user.id);
+    return { ok: true, user };
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ ok: false, message: "Server Error, please try again later." });
+  }
+});
 
 module.exports = oauthGoogleRoutes;

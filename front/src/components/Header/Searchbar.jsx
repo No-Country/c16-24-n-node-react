@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { TbSearch  } from "react-icons/tb";
 import { IoIosClose } from "react-icons/io";
+import axios from "axios"  
 
 // eslint-disable-next-line react/prop-types
 const SearchBar = ({ setResults }) => {
   const [input, setInput] = useState("");
-
-  const fetchData = (value) => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
+  const API_URL = "https://jsonplaceholder.typicode.com/users"
+  
+  const searchData = (value) => {
+    axios(API_URL)
       .then((json) => {
-        const results = json.filter((user) => {
+        const results = json.data.filter((user) => {
           return (
             value &&
             user &&
@@ -19,12 +20,12 @@ const SearchBar = ({ setResults }) => {
           );
         });
         setResults(results);
-      });
+      }).catch(err=>console.log(err))
   };
 
   const handleChange = (value) => {
     setInput(value);
-    fetchData(value);
+    searchData(value);
   };
 
   return (

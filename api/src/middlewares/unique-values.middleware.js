@@ -3,7 +3,7 @@ const {
   validationErrorMessages,
 } = require("../utils/validation-errors.values");
 
-const checkUniqueUser = async (req, res, next) => {
+const uniqueUserValidator = async (req, res, next) => {
   try {
     const { user_name, email } = req.body;
     const existingUsername = await User.findOne({ where: { user_name } });
@@ -42,4 +42,4 @@ const checkUniqueUser = async (req, res, next) => {
   }
 };
 
-module.exports = checkUniqueUser;
+module.exports = uniqueUserValidator;

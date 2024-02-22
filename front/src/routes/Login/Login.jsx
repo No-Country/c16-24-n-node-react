@@ -2,8 +2,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useAuthContext } from "../../context/AuthProvider";
 
 export default function Login() {
+  // eslint-disable-next-line no-unused-vars
+  const { setLogIn, setAuth } = useAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -11,24 +14,29 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const API_URL = "https://c16-24-n-node-react.vercel.app/api/auth/login";
 
     try {
-      const response = await axios.post(
-        "https://c16-24-n-node-react.vercel.app/api/auth/login",
+      const res = await axios.post(
+        API_URL,{ email, password },
         {
-          email: email,
-          password: password,
+          hearder: { "Content-Type": "application/json" },
+          widthCredentials: true,
         }
-      );
-
-      if (response.data) {
-        navigate("/");
+        );
+        const user = "@"+res?.data?.user?.user_name;
+        const accessToken = res?.data?.user?.token;
+        setAuth({ email, password, user, accessToken });
+        navigate("/");  
+        console.log(res.data)      
+        sessionStorage.setItem("token", accessToken)
+        sessionStorage.setItem("user", user)
+        setLogIn(true)
+        } catch (error) {
+        setError(error.message);
       }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
+    };
+    
   return (
     <div className="max-h-full grid place-content-center p-[250px]">
       <div className="h-96 flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
@@ -52,6 +60,7 @@ export default function Login() {
                 name="email"
                 type="text"
                 value={email}
+                autoComplete="current-password"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
@@ -61,6 +70,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 value={password}
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button

@@ -12,7 +12,7 @@ const { SWR_CSS_URL1, SWR_CSS_URL2, SWR_JS_URL1, SWR_JS_URL2 } = process.env;
 
 const swaggerDefinition = {
   definition: {
-    openapi: "3.1.0",
+    openapi: "3.0.0",
     info: {
       title: "chetifabene API",
       version: "1.0.0",

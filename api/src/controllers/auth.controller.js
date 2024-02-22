@@ -3,6 +3,7 @@ const { createUser, getUserByEmail } = require("./user.controller");
 const { responseMessages } = require("../utils/validation-errors.values");
 const { signToken } = require("../utils/jwt-auth.helper");
 const { SignInMethods } = require("../enums/signin-methods.enum");
+const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
 
 const passwordHash = async (password) => {
   const salt = bcrypt.genSaltSync();
@@ -14,7 +15,11 @@ const emailPasswordSignIn = async (newUserData) => {
     newUserData.password = await passwordHash(newUserData.password);
     newUserData.signin_method = SignInMethods.email_password;
     const user = await createUser(newUserData);
-    return signToken({ id: user.id });
+    const signedToken = signToken({ id: user.id });
+    return {
+      token: signedToken,
+      user_name: user.user_name,
+    };
   } catch (error) {
     throw error;
   }
@@ -33,7 +38,12 @@ const emailPasswordLogIn = async (userCredentials) => {
     if (!isPassword) {
       throw { status: 400, msg: responseMessages.notValidCredentials };
     }
-    return signToken({ id: user.id });
+    const signedToken = signToken({ id: user.id });
+    return {
+      token: signedToken,
+      user_name: user.user_name,
+      image: getCloudinaryResizedImage(user.Profile.image),
+    };
   } catch (error) {
     throw error;
   }

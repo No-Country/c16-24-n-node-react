@@ -1,16 +1,33 @@
 const authOkResponse = {
-  title:"AuthOkResponse",
-  type:"object",
-  properties:{
+  title: "AuthOkResponse",
+  type: "object",
+  properties: {
     ok: {
       type: "boolean",
       description: "Si todo sale bien 'ok', caso contrario 'false'",
     },
     user: {
-      type: "string",
-      description: "El JWT",
+      type: "object",
+      description: "Datos del usuario",
+      properties: {
+        token: {
+          type: "string",
+          description: "El JWT",
+        },
+        user_name: {
+          type: "string",
+          description: "El Nombre de usuario del usuario",
+        },
+        image: {
+          type: "string",
+          description:
+            "EL URL de la imagen del usuario con width=100px (puede ser undefined)",
+          example: "undefined",
+          nullable:true
+        },
+      },
     },
-  }
+  },
 };
 
 const authSigninPath = {
@@ -34,17 +51,17 @@ const authSigninPath = {
                 description: "The user's password",
                 minLength: 10,
                 maxLength: 24,
-                example: "asdasdsd"
+                example: "asdasdsd",
               },
               user_name: {
                 type: "string",
                 description: "The user's username",
                 minLength: 2,
                 maxLength: 24,
-                example:"sadasd"
+                example: "sadasd",
               },
             },
-            required:["email", "password", "user_name"]
+            required: ["email", "password", "user_name"],
           },
         },
       },
@@ -54,7 +71,7 @@ const authSigninPath = {
         description: "Sign-in successful, user data returned",
         content: {
           "application/json": {
-            schema: authOkResponse
+            schema: authOkResponse,
           },
         },
       },
@@ -68,7 +85,7 @@ const authSigninPath = {
                 ok: {
                   type: "boolean",
                   description: "Indica si la solicitud fue exitosa",
-                  example: false
+                  example: false,
                 },
                 errors: {
                   type: "object",
@@ -77,28 +94,28 @@ const authSigninPath = {
                     field_name: {
                       type: "object",
                       description: "Descripción del error para el campo 1",
-                      properties:{
-                        msg:{
-                          type:"string",
-                          description:"El mensaje de error",
-                          example: "Debe tener entre 10 y 24 caracteres"
+                      properties: {
+                        msg: {
+                          type: "string",
+                          description: "El mensaje de error",
+                          example: "Debe tener entre 10 y 24 caracteres",
                         },
-                        location:{
-                          type:"string",
-                          description:"La locacíon del campo",
-                          example: "body"
+                        location: {
+                          type: "string",
+                          description: "La locacíon del campo",
+                          example: "body",
                         },
-                        path:{
-                          type:"string",
-                          description:"El nombre del campo",
-                          example: "password"
+                        path: {
+                          type: "string",
+                          description: "El nombre del campo",
+                          example: "password",
                         },
-                      }
+                      },
                     },
-                  }
-                }
-              }
-            }
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -111,10 +128,10 @@ const authSigninPath = {
               properties: {
                 ok: {
                   type: "boolean",
-                  description:"Indica si la solicitud fue exitosa",
-                  example:false
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
                 },
-                msg: {
+                message: {
                   type: "string",
                   description: "Error message",
                 },
@@ -148,10 +165,10 @@ const authLoginPath = {
                 description: "The user's password",
                 minLength: 10,
                 maxLength: 24,
-                example: "asdasdsd"
+                example: "asdasdsd",
               },
             },
-            required:["email", "password"]
+            required: ["email", "password"],
           },
         },
       },
@@ -161,7 +178,7 @@ const authLoginPath = {
         description: "Sign-in successful, user data returned",
         content: {
           "application/json": {
-            schema: authOkResponse
+            schema: authOkResponse,
           },
         },
       },
@@ -175,15 +192,15 @@ const authLoginPath = {
                 ok: {
                   type: "boolean",
                   description: "Indica si la solicitud fue exitosa",
-                  example: false
+                  example: false,
                 },
                 message: {
                   type: "string",
                   description: "La razón del error",
-                  example:"Email o contraseña no válidos."
-                }
-              }
-            }
+                  example: "Email o contraseña no válidos.",
+                },
+              },
+            },
           },
         },
       },
@@ -196,8 +213,8 @@ const authLoginPath = {
               properties: {
                 ok: {
                   type: "boolean",
-                  description:"Indica si la solicitud fue exitosa",
-                  example:false
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
                 },
                 msg: {
                   type: "string",
@@ -210,63 +227,62 @@ const authLoginPath = {
       },
     },
   },
-}
+};
 
 const renewTokenPath = {
   get: {
-    tags:["Auth"],
+    tags: ["Auth"],
     summary: "Renews JWT",
     security: [
       {
-        apiKeyAuth: []
-      }
+        apiKeyAuth: [],
+      },
     ],
-    responses:{
-      200:{
-        description:"Devuelve el nuevo token",
+    responses: {
+      200: {
+        description: "Devuelve el nuevo token",
         content: {
           "application/json": {
-            schema: authOkResponse
+            schema: authOkResponse,
           },
         },
       },
-      401:{
-        description:"Error al no tener token o enviar uno invalido.",
+      401: {
+        description: "Error al no tener token o enviar uno invalido.",
         content: {
-          "application/json":{
+          "application/json": {
             schema: {
               type: "object",
               properties: {
                 ok: {
                   type: "boolean",
-                  description:"Indica si la solicitud fue exitosa",
-                  example:false
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
                 },
                 message: {
                   type: "string",
                   description: "Error message",
-                  examples:["Token de acceso no proporcionado","Token de acceso inválido"]
+                  examples: [
+                    "Token de acceso no proporcionado",
+                    "Token de acceso inválido",
+                  ],
                 },
               },
-            }
-          }
-        }
-      }
-    }
-  }
-}
+            },
+          },
+        },
+      },
+    },
+  },
+};
 
-const googleAuthPath = {
-  get: {
-    tags: ["Auth"],
-    summary: "Redirects to Google OAuth (Doesn't works here)",
-    responses:{
-      302:{
-        description: "Redirección a Google OAuth, ejecutarla aquí no funciona"
-      }
-    }
-  }
-}
+const authPaths = {
+  "/api/auth/signin": authSigninPath,
+  "/api/auth/login": authLoginPath,
+  "/api/auth/renew-token": renewTokenPath,
+};
 
-
-module.exports = { authSigninPath, authLoginPath, googleAuthPath, renewTokenPath, authOkResponse };
+module.exports = {
+  authPaths,
+  authOkResponse,
+};
