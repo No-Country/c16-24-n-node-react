@@ -13,12 +13,12 @@ const checks = (val) => {
 };
 
 const formValidations = {
-  email: [(value) => checks(value), "Formato de correo inválido"],
+  email: [(value) => checks(value), "Invalid email format"],
   password: [
     (value) => value.length >= 10,
-    "El password debe de tener más de 9 caracteres.",
+    "The password must be more than 9 characters.",
   ],
-  user_name: [(value) => value.length > 2, "El nombre es obligatorio."],
+  user_name: [(value) => value.length > 2, "The name is required."],
 };
 
 const registerFormFields = {
@@ -74,15 +74,15 @@ export default function Registro() {
           <div className="flex flex-col items-center">
             <img src={logo} className="h-[5rem]" alt="chetifabene" />
             <p className=" text-center text-sm font-semibold text-slate-500 pb-1">
-              Regístrate para ver recetas, ingredientes y paltos de todo el
-              mundo.
+              Sign up to see recipes, ingredients and dishes from around the
+              world. world.
             </p>
           </div>
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <InputComponent
               name={"user_name"}
               onInputChange={onInputChange}
-              placeholder={"Nombre de usuario"}
+              placeholder={"Username"}
               type={"text"}
               value={user_name}
               key={"user_name"}
@@ -100,7 +100,7 @@ export default function Registro() {
             <InputComponent
               name={"password"}
               onInputChange={onInputChange}
-              placeholder={"Contraseña"}
+              placeholder={"Password"}
               type={"password"}
               value={password}
               key={"password"}
@@ -108,17 +108,18 @@ export default function Registro() {
               autocomplete="current-password"
             />
             <p className="mt-4 text-sm text-center">
-              ¿Ya tienes una cuenta?
+              Do you already have an account?
               <Link
-                className="text-blue-600 hover:underline mt-4 ml-4"
+                className="ml-2 w-full h-12 bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
+            "
                 to="/login"
                 disabled={loading}
               >
-                Acceder
+                To access
               </Link>
             </p>
             <button
-              className="bg-gradient-to-r disabled:shadow-none disabled:hover:shadow-none disabled:hover:cursor-not-allowed disabled:opacity-40 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:to-blue-600 transition ease-in-out duration-300"
+              className="bg-gradient-to-r disabled:shadow-none disabled:hover:shadow-none disabled:hover:cursor-not-allowed disabled:opacity-40 from-gray-700 to-gray-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:to-gray-800 transition ease-in-out duration-300"
               type="submit"
               disabled={!validForm || loading}
             >

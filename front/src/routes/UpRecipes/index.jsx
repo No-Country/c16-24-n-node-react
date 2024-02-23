@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const UpRecipes = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,14 @@ const UpRecipes = () => {
 
     console.log(formData);
 
+    Swal.fire({
+      icon: "success",
+      title: "Éxito",
+      text: "Receta publicada con exito",
+      timer: 2000,
+      showConfirmButton: false,
+    });
+
     setFormData({
       title: "",
       ingredients: "",
@@ -42,7 +51,7 @@ const UpRecipes = () => {
   return (
     <main className="text-center mt-10">
       <h1 className="text-2xl">Recipes Upload</h1>
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-4">
+      <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         <div className="mb-4">
           <label htmlFor="title" className="block mb-2">
             Title:
@@ -53,7 +62,7 @@ const UpRecipes = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full"
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
           />
         </div>
         <div className="mb-4">
@@ -65,7 +74,7 @@ const UpRecipes = () => {
             name="ingredients"
             value={formData.ingredients}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full"
+            className="border border-gray-300 px-3 py-1 w-full rounded"
           />
         </div>
         <div className="mb-4">
@@ -77,7 +86,7 @@ const UpRecipes = () => {
             name="steps"
             value={formData.steps}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full"
+            className="border border-gray-300 px-3 py-1 w-full rounded"
           />
         </div>
         <div className="mb-4">
@@ -90,7 +99,7 @@ const UpRecipes = () => {
             name="author"
             value={formData.author}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full"
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
           />
         </div>
         <div className="mb-4">
@@ -103,12 +112,12 @@ const UpRecipes = () => {
             name="image"
             accept="image/*"
             onChange={handleImageChange}
-            className="border border-gray-300 px-3 py-1 w-full"
+            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="w-full bg-indigo-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         >
           Upload
         </button>
