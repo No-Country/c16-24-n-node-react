@@ -6,7 +6,10 @@ const validationErrorMessages = {
   usedUsername: "El nombre de usuario ya está en uso.",
   lengthMinMax: (min, max) => `Debe tener entre ${min} y ${max} caracteres`,
   imageMimes: "Only JPG, PNG, SVG and WEBP files are allowed.",
-  fileSize: (size) => `File size exceeds the limit${size?' of '+ size+'Mb' : undefined}`
+  fileSize: (size) =>
+    `File size exceeds the limit${size ? " of " + size + "Mb" : undefined}`,
+  passwordMismatch: "Las contrseñas no coinciden",
+  samePassword: "La nueva contraseña es la misma",
 };
 
 const responseMessages = {
@@ -14,6 +17,12 @@ const responseMessages = {
   notValidCredentials: "Email o contraseña no válidos.",
   noJwt: "Token de acceso no proporcionado",
   invalidJwt: "Token de acceso inválido",
+  invalidPassword: "Mal password",
+  updatedPassword: "Contraseña actualizada correctamente",
+  internalServerError: "Internal server error",
+  updatedEmail: "Correo electrónico actualizado correctamente",
+  updatedUserName: "Nombre de usuario actualizado correctamente",
+  blockEmailUpdate: "No puede cambiar su email sin antes configurar una contraseña"
 };
 
 module.exports = { validationErrorMessages, responseMessages };
