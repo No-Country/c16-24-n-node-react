@@ -1,42 +1,16 @@
-const usuarioResponseSchema = {
+const updateUsuarioSchema = {
   ok: {
     type: "boolean",
   },
-  data: {
-    type: "object",
-    properties: {
-      image: {
-        type: "string",
-        nullable: true,
-      },
-      first_name: {
-        type: "string",
-        nullable: true,
-      },
-      last_name: {
-        type: "string",
-        nullable: true,
-      },
-      description: {
-        type: "string",
-        nullable: true,
-      },
-      country: {
-        type: "string",
-        nullable: true,
-      },
-      mobilenumber: {
-        type: "string",
-        nullable: true,
-      },
-    },
+  message: {
+    type: "string",
   },
 };
 
-const profilePatchPath = {
-  patch: {
-    tags: ["Profile"],
-    summary: "Update profile",
+const userUpdatePassPath = {
+  put: {
+    tags: ["User"],
+    summary: "Update password",
     security: [
       {
         apiKeyAuth: [],
@@ -49,35 +23,26 @@ const profilePatchPath = {
           schema: {
             type: "object",
             properties: {
-              first_name: {
+              password: {
                 type: "string",
-                optional: true,
-                minLength: 2,
-                maxLength: 12,
-              },
-              last_name: {
-                type: "string",
-                optional: true,
-                minLength: 2,
-                maxLength: 12,
-              },
-              description: {
-                type: "string",
-                optional: true,
-                minLength: 2,
-                maxLength: 256,
-              },
-              country: {
-                type: "string",
-                optional: true,
+                description: "The user's password",
                 minLength: 10,
-                maxLength: 40,
+                maxLength: 24,
+                example: "asdasdsd",
               },
-              mobilenumber: {
+              new_password: {
                 type: "string",
-                optional: true,
+                description: "The user's new password",
                 minLength: 10,
-                maxLength: 12,
+                maxLength: 24,
+                example: "asdasdsd",
+              },
+              new_password_confirm: {
+                type: "string",
+                description: "The user's new password confirm",
+                minLength: 10,
+                maxLength: 24,
+                example: "asdasdsd",
               },
             },
           },
@@ -85,13 +50,13 @@ const profilePatchPath = {
       },
     },
     responses: {
-      201: {
+      200: {
         description: "Update correct",
         content: {
           "application/json": {
             schema: {
               type: "object",
-              properties: usuarioResponseSchema,
+              properties: updateUsuarioSchema,
             },
           },
         },
@@ -119,7 +84,7 @@ const profilePatchPath = {
                         msg: {
                           type: "string",
                           description: "El mensaje de error",
-                          example: "Debe tener entre 10 y 24 caracteres",
+                          example: "El mensaje de error",
                         },
                         location: {
                           type: "string",
@@ -133,61 +98,9 @@ const profilePatchPath = {
                         },
                       },
                     },
-                    message: {
-                      type: "string",
-                      description: "Nothing to do",
-                      example: "Solo aparece cuando el body está vacío (Nothing to do)",
-                      nullable: true,
-                    },
                   },
                 },
               },
-            },
-          },
-        },
-      },
-      500: {
-        description: "Internal server error",
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              properties: {
-                ok: {
-                  type: "boolean",
-                  description: "Indica si la solicitud fue exitosa",
-                  example: false,
-                },
-                message: {
-                  type: "string",
-                  description: "Error message",
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const profileGetPath = {
-  get: {
-    tags: ["Profile"],
-    summary: "Get Personal profile",
-    security: [
-      {
-        apiKeyAuth: [],
-      },
-    ],
-    responses: {
-      200: {
-        description: "You get the profile succesfully",
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              properties: usuarioResponseSchema,
             },
           },
         },
@@ -229,7 +142,7 @@ const profileGetPath = {
                   description: "Indica si la solicitud fue exitosa",
                   example: false,
                 },
-                msg: {
+                message: {
                   type: "string",
                   description: "Error message",
                 },
@@ -242,10 +155,10 @@ const profileGetPath = {
   },
 };
 
-const profilePhotoPath = {
-  patch: {
-    tags: ["Profile"],
-    summary: "Update profile photo (Not working)",
+const userUpdateEmailPath = {
+  put: {
+    tags: ["User"],
+    summary: "Update email",
     security: [
       {
         apiKeyAuth: [],
@@ -258,10 +171,17 @@ const profilePhotoPath = {
           schema: {
             type: "object",
             properties: {
-              image: {
+              password: {
                 type: "string",
-                description: "El archivo de imagen",
-                example: "Una imagen"
+                description: "The user's password",
+                minLength: 10,
+                maxLength: 24,
+                example: "asdasdsd",
+              },
+              email: {
+                type: "string",
+                description: "The user's email address",
+                example: "sdasd@dasd.co",
               },
             },
           },
@@ -275,7 +195,7 @@ const profilePhotoPath = {
           "application/json": {
             schema: {
               type: "object",
-              properties: usuarioResponseSchema,
+              properties: updateUsuarioSchema,
             },
           },
         },
@@ -296,14 +216,24 @@ const profilePhotoPath = {
                   type: "object",
                   description: "Objeto con los errores de validación",
                   properties: {
-                    image: {
+                    field_name: {
                       type: "object",
                       description: "Descripción del error para el campo 1",
                       properties: {
                         msg: {
                           type: "string",
                           description: "El mensaje de error",
-                          example: "Campo obligatorio || Only JPG, PNG, SVG and WEBP files are allowed. || File size exceeds the limit of 1Mb",
+                          example: "El mensaje de error",
+                        },
+                        location: {
+                          type: "string",
+                          description: "La locacíon del campo",
+                          example: "body",
+                        },
+                        path: {
+                          type: "string",
+                          description: "El nombre del campo",
+                          example: "password",
                         },
                       },
                     },
@@ -314,8 +244,8 @@ const profilePhotoPath = {
           },
         },
       },
-      403: {
-        description: "Forbidden",
+      401: {
+        description: "Error al no tener token o enviar uno invalido.",
         content: {
           "application/json": {
             schema: {
@@ -329,7 +259,10 @@ const profilePhotoPath = {
                 message: {
                   type: "string",
                   description: "Error message",
-                  example:"No token o token inválido"
+                  examples: [
+                    "Token de acceso no proporcionado",
+                    "Token de acceso inválido",
+                  ],
                 },
               },
             },
@@ -359,12 +292,143 @@ const profilePhotoPath = {
       },
     },
   },
-}
-
-const profilePaths = {
-  "/api/profile": {...profileGetPath,...profilePatchPath},
-  "/api/profile/photo": profilePhotoPath
 };
 
+const userUpdateUserNamePath = {
+  put: {
+    tags: ["User"],
+    summary: "Update user name",
+    security: [
+      {
+        apiKeyAuth: [],
+      },
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              user_name: {
+                type: "string",
+                description: "El Nombre de usuario del usuario",
+              },
+            },
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: "Update correct",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: updateUsuarioSchema,
+            },
+          },
+        },
+      },
+      400: {
+        description: "Bad request, validation errors or empty body",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                ok: {
+                  type: "boolean",
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
+                },
+                errors: {
+                  type: "object",
+                  description: "Objeto con los errores de validación",
+                  properties: {
+                    field_name: {
+                      type: "object",
+                      description: "Descripción del error para el campo 1",
+                      properties: {
+                        msg: {
+                          type: "string",
+                          description: "El mensaje de error",
+                          example: "El mensaje de error",
+                        },
+                        location: {
+                          type: "string",
+                          description: "La locacíon del campo",
+                          example: "body",
+                        },
+                        path: {
+                          type: "string",
+                          description: "El nombre del campo",
+                          example: "password",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      401: {
+        description: "Error al no tener token o enviar uno invalido.",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                ok: {
+                  type: "boolean",
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
+                },
+                message: {
+                  type: "string",
+                  description: "Error message",
+                  examples: [
+                    "Token de acceso no proporcionado",
+                    "Token de acceso inválido",
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+      500: {
+        description: "Internal server error",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                ok: {
+                  type: "boolean",
+                  description: "Indica si la solicitud fue exitosa",
+                  example: false,
+                },
+                message: {
+                  type: "string",
+                  description: "Error message",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
 
-module.exports = profilePaths;
+const userPaths = {
+  "/api/user/change-password": userUpdatePassPath,
+  "/api/user/change-email": userUpdateEmailPath,
+  "/api/user/change-user": userUpdateUserNamePath
+};
+
+module.exports = userPaths;

@@ -1,14 +1,9 @@
-const bcrypt = require("bcrypt");
 const { createUser, getUserByEmail } = require("./user.controller");
 const { responseMessages } = require("../utils/validation-errors.values");
 const { signToken } = require("../utils/jwt-auth.helper");
 const { SignInMethods } = require("../enums/signin-methods.enum");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
-
-const passwordHash = async (password) => {
-  const salt = bcrypt.genSaltSync();
-  return await bcrypt.hash(password, salt);
-};
+const { passwordHash, compareHash } = require("../utils/bcrypt.helper");
 
 const emailPasswordSignIn = async (newUserData) => {
   try {
@@ -31,13 +26,11 @@ const emailPasswordLogIn = async (userCredentials) => {
     if (!user) {
       throw { status: 400, msg: responseMessages.userNotRegistered };
     }
-    const isPassword = await bcrypt.compare(
+    await compareHash(
       userCredentials.password,
-      user.password
+      user.password,
+      responseMessages.notValidCredentials
     );
-    if (!isPassword) {
-      throw { status: 400, msg: responseMessages.notValidCredentials };
-    }
     const signedToken = signToken({ id: user.id });
     return {
       token: signedToken,
