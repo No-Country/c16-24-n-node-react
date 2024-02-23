@@ -12,6 +12,9 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [user, setUser] = useState();
   const [logIn, setLogIn] = useState(false);
+  const [ favorites, setFavorites ] = useState([]);
+  // const [ bookMarks, setBookMarks ] = useState([]);
+
 
   let token = sessionStorage.getItem("token");
   let userApp = sessionStorage.getItem("user");
@@ -23,18 +26,82 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     userApp ? setUser(userApp) : setLogIn("");
   }, [user, userApp]);
- 
+
   const handlerLogOut = () => {
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     setLogIn(false);
   };
 
-  console.log(auth)
+  useEffect(() => {
+    const favsDish = localStorage.getItem("favorites"); 
+
+    let tempDishInFavs; 
+
+    favsDish === null 
+      ? (tempDishInFavs = []) 
+      : (tempDishInFavs = JSON.parse(favsDish)); 
+    setFavorites(tempDishInFavs); 
+ 
+  }, []);
+
+
+  const favsDish = localStorage.getItem("favorites");
+
+  let tempDishInFavs;
+
+  favsDish === null
+  ? (tempDishInFavs = [])
+  : (tempDishInFavs = JSON.parse(favsDish));
   
+  const addOrRemoveFromFavs = (e) => {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    const parent = btn.parentElement.parentElement.parentElement;
+    const imgUrl = parent.querySelector("img").src
+    const userPost = parent.querySelector("#userPost").textContent;
+    const date = parent.querySelector("#date").textContent;
+    const title = parent.querySelector("#titulo").textContent;
+    const overview = parent.querySelector("#comentario").textContent;
+      
+     const dishData = {
+      userPost,
+      date,
+      title,
+      imgUrl,
+      overview,
+      id: btn.dataset.dishId
+    };
+    
+    let dishInArray = tempDishInFavs.find( (dish) => dish.id === btn.dataset.dishId );   
+
+    if (!dishInArray) {
+      tempDishInFavs.push(dishData);
+      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+      setFavorites(tempDishInFavs);
+      console.log("Agregado a favoritos");
+    } else {
+      tempDishInFavs = tempDishInFavs.filter( (dish) => dish.id !== btn.dataset.dishId );
+      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+      setFavorites(tempDishInFavs);
+      console.log("Eliminado de favoritos");
+    }
+  }
+
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, logIn, setLogIn, handlerLogOut, user }}
-    >
+      value={{ 
+        auth,
+        setAuth,
+        logIn, 
+        setLogIn, 
+        handlerLogOut, 
+        user, 
+        addOrRemoveFromFavs, 
+        favorites, 
+        setFavorites, 
+        // bookMarks 
+      }}>
       {children}
     </AuthContext.Provider>
   );
