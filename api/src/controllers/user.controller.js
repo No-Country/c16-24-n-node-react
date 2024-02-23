@@ -26,7 +26,10 @@ const getUserByEmail = async (userEmail) => {
 
 const getUserById = async (userId) => {
   try {
-    return await User.findOne({ where: { id: userId } });
+    return await User.findOne({
+      where: { id: userId },
+      include: [{ model: Profile }],
+    });
   } catch (error) {
     throw { status: 400, msg: responseMessages.userNotRegistered };
   }
@@ -90,5 +93,5 @@ module.exports = {
   getUserById,
   updatePassword,
   updateEmail,
-  updateUserName
+  updateUserName,
 };

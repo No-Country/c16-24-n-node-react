@@ -28,12 +28,15 @@ oauthGoogleRoutes.get(
 oauthGoogleRoutes.get("/revalidate", [jwtValidator], async (req, res) => {
   try {
     const user = await googleRevalidateToken(req.user.id);
-    return { ok: true, user };
+    return res.status(200).json({ ok: true, user });
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ ok: false, message: "Server Error, please try again later." });
+      if (error.status) {
+        return res.status(error.status).json({ ok: false, message: error.msg });
+      }
+      return res
+        .status(500)
+        .json({ ok: false, message: "Server Error, please try again later." });
   }
 });
 
