@@ -10,12 +10,12 @@ import { useAuthContext } from "../../context/AuthProvider";
 
 const Header = () => {
   const userRef = useClickOutsideUser(() => setOpen(open))
-  const { logIn, handlerLogOut, user } = useAuthContext();
+  const { logIn, handlerLogOut, user} = useAuthContext();
   const [open, setOpen] = useState(false);
   const [results, setResults] = useState([]); 
   
   let navigate = useNavigate()
-  
+
   const logOut = () => {
     handlerLogOut()
     navigate('/login')
