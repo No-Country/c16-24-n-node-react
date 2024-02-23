@@ -45,7 +45,7 @@ const UpdateUserName = () => {
 
   return (
     <section className="mx-auto max-w-md mt-14">
-      <h1 className="mb-4 text-center text-xl">Change User</h1>
+      <h1 className="mb-4 text-center text-2xl">Change User</h1>
       <form onSubmit={handleSubmit}>
         <label>
           New User Name:
@@ -56,12 +56,14 @@ const UpdateUserName = () => {
             onChange={handleChange}
           />
         </label>
-        <button
-          className="w-full bg-indigo-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          type="submit"
-        >
-          Update
-        </button>
+        <div className="text-center mt-2">
+          <button
+            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            type="submit"
+          >
+            Update
+          </button>
+        </div>
       </form>
     </section>
   );

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import UpdateUserName from "./ChangeUser";
 import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
+import PhotoUpdater from "./ChangeImage";
 
 const Profile = () => {
   const [editEnabled, setEditEnabled] = useState(false);
@@ -138,12 +139,12 @@ const Profile = () => {
         <img
           src={userAvatar}
           alt="Foto de perfil"
-          className="rounded-full w-24 h-24 border-yellow-200 border-2"
+          className="rounded-full w-24 h-24 border-blue-500 border-2"
         />
       </section>
       <hr className="text-7xl" />
       <div className="mx-auto max-w-md mt-14">
-        <h1 className="mb-4 text-center text-xl">Edit Profile</h1>
+        <h1 className="mb-6 text-center text-2xl">Edit Profile</h1>
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div>
             <label className="block">
@@ -231,27 +232,36 @@ const Profile = () => {
             </label>
           </div>
 
-          {!editEnabled && (
-            <button
-              type="button"
-              onClick={handleEnableEdit}
-              className="w-full bg-indigo-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            >
-              Enable Edit
-            </button>
-          )}
-          {editEnabled && (
-            <div>
+          <div className="text-center">
+            {!editEnabled && (
               <button
-                type="submit"
-                className="w-full bg-indigo-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                type="button"
+                onClick={handleEnableEdit}
+                className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               >
-                Update
+                Enable Edit
               </button>
-            </div>
-          )}
+            )}
+            {editEnabled && (
+              <div>
+                <button
+                  type="submit"
+                  className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
+                >
+                  Update
+                </button>
+              </div>
+            )}
+          </div>
         </form>
       </div>
+
+      <hr className="my-10" />
+
+      <section>
+        <PhotoUpdater />
+      </section>
+
       <hr className="my-10" />
 
       <section>

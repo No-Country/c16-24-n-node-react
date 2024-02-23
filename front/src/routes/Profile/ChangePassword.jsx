@@ -66,7 +66,7 @@ const ChangePassword = () => {
 
   return (
     <section className="mx-auto max-w-md mt-14">
-      <h1 className="mb-4 text-center text-xl">Change Password</h1>
+      <h1 className="mb-6 text-center text-2xl">Change Password</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="password">Current password:</label>
@@ -101,12 +101,14 @@ const ChangePassword = () => {
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
           />
         </div>
-        <button
-          className="w-full bg-indigo-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          type="submit"
-        >
-          Change Password
-        </button>
+        <div className="text-center">
+          <button
+            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            type="submit"
+          >
+            Change Password
+          </button>
+        </div>
       </form>
     </section>
   );
