@@ -45,7 +45,7 @@ export default function Registro() {
     navigate("/");
     sessionStorage.setItem("token", accessToken);
     sessionStorage.setItem("user", user);
-    console.log('succesgul auth')
+    console.log("succesgul auth");
     setLogIn(true);
   };
 
@@ -77,8 +77,8 @@ export default function Registro() {
             <div className="flex flex-col items-center">
               <img src={logo} className="h-[5rem]" alt="chetifabene" />
               <p className=" text-center text-sm font-semibold text-slate-500 pb-1">
-                Regístrate para ver recetas, ingredientes y paltos de todo el
-                mundo.
+                Sign up to see recipes, ingredients and dishes from around the
+                world. world.
               </p>
             </div>
             {errors.general && (
@@ -90,7 +90,7 @@ export default function Registro() {
               <InputComponent
                 name={"user_name"}
                 onInputChange={onInputChange}
-                placeholder={"Nombre de usuario"}
+                placeholder={"Username"}
                 type={"text"}
                 value={formState["user_name"]}
                 error={errors.user_name}
@@ -106,7 +106,7 @@ export default function Registro() {
               <InputComponent
                 name={"password"}
                 onInputChange={onInputChange}
-                placeholder={"Contraseña"}
+                placeholder={"Password"}
                 type={"password"}
                 value={formState["password"]}
                 error={errors.password}
@@ -116,11 +116,11 @@ export default function Registro() {
                 type="submit"
                 disabled={!validForm || loading}
               >
-                {!loading ? "Crear" : "Cargando"}
+                {!loading ? "Create" : "Loading"}
               </button>
             </form>
             <GoogleButton
-              title={"Regístrese"}
+              title={"Access"}
               onSuccessfulAuth={handleSuccessfulAuth}
               setIsLoading={setLoadingAuth}
               setErrors={setFormErrors}

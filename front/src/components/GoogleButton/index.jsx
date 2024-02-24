@@ -42,7 +42,7 @@ const GoogleButton = ({ title, onSuccessfulAuth, setIsLoading, setErrors }) => {
     <a className="w-full block" href={GOOGLE_AUTH_URL}>
       <button className="btn_shadow w-full flex items-center justify-center border-[1px] border-slate-800 p-2 mt-2 rounded-md">
         <FcGoogle size={22} className="inline-block" />
-        {`${title} con Google`}
+        {`${title} with Google`}
       </button>
     </a>
   );
