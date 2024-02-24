@@ -54,7 +54,9 @@ const updateProfilePhoto = async (userId, fileData) => {
         tags: ["profile", "avatar"],
         folder: userId,
       });
-      await deleteCloudinaryImage(profile.image);
+      if(profile.image){
+        await deleteCloudinaryImage(profile.image);
+      }
       profile.image = result.secure_url;
       await profile.save();
       return profile;
@@ -70,8 +72,9 @@ const updateProfilePhoto = async (userId, fileData) => {
       tags: ["profile", "avatar"],
       folder: userId,
     });
-    await deleteCloudinaryImage(profile.image);
-
+    if(profile.image){
+      await deleteCloudinaryImage(profile.image);
+    }
     profile.image = result.secure_url;
     await profile.save();
     return profile;
