@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import appApi from "../../api/appApi";
 import Swal from "sweetalert2";
 
 const PhotoUpdater = () => {
@@ -22,22 +22,12 @@ const PhotoUpdater = () => {
     }
 
     const formData = new FormData();
-    formData.append("image", "Una imagen"); // Agregar el objeto JSON
+    formData.append("image", "Una imagen");
 
-    // Agregar la foto al formulario
     formData.append("photo", photo);
 
     try {
-      const response = await axios.patch(
-        "https://c16-24-n-node-react.vercel.app/api/profile/photo",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `${token}`,
-          },
-        }
-      );
+      const response = await appApi.patch("/profile/photo", formData);
       Swal.fire("Success", "Photo updated successfully!", "success");
       console.log(response.data);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
+import appApi from "../../api/appApi";
 
 const UpdateUserName = () => {
   const [userName, setUserName] = useState("");
@@ -12,20 +12,32 @@ const UpdateUserName = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const token = sessionStorage.getItem("token");
+    if (userName.trim() === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "Please fill in the user name field.",
+      });
+      return;
+    }
+
+    const confirmResult = await Swal.fire({
+      icon: "question",
+      title: "Are you sure you want to update your user name?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, update it!",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+    });
+
+    if (!confirmResult.isConfirmed) {
+      return;
+    }
 
     try {
-      const response = await axios.put(
-        "https://c16-24-n-node-react.vercel.app/api/user/change-user",
-        {
-          user_name: userName,
-        },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      const response = await appApi.put("/user/change-user", {
+        user_name: userName,
+      });
 
       Swal.fire({
         icon: "success",
