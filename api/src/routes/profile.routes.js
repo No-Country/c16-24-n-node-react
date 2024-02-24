@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const {
-  profileValidationSchema,
+  profileValidationSchema, profilePhotoValidationSchema,
 } = require("../validations/profile.validations");
 const {
   updateProfile,
@@ -49,10 +49,10 @@ profileRoutes.get("/", [jwtValidator], async (req, res) => {
 
 profileRoutes.patch(
   "/photo",
-  [jwtValidator, imageValidator, fieldValidator],
+  [jwtValidator, profilePhotoValidationSchema, fieldValidator],
   async (req, res) => {
     try {
-      const profile = await updateProfilePhoto(req.user.id, req.file.filename);
+      const profile = await updateProfilePhoto(req.user.id, req.body.image, );
       return res.json({ ok: true, profile });
     } catch (error) {
       console.log(error);
