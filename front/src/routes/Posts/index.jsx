@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useAuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import logo from "./logo.png";
 
 const Post = () => {
+  const { logIn } = useAuthContext();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     ingredients: "",
@@ -9,6 +14,12 @@ const Post = () => {
     author: "",
     image: null,
   });
+
+  useEffect(() => {
+    if (!logIn) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,6 +39,19 @@ const Post = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const confirmResult = Swal.fire({
+      icon: "question",
+      title: "Are you sure to submit this post?",
+      showCancelButton: true,
+      confirmButtonText: "Yes!",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+    });
+
+    if (!confirmResult.isConfirmed) {
+      return;
+    }
 
     console.log(formData);
 
@@ -49,11 +73,14 @@ const Post = () => {
   };
 
   return (
-    <main className="text-center mt-10">
-      <h1 className="text-2xl">Recipes Upload</h1>
+    <main className="text-center mt-10 mb-12">
+      <div>
+        <img className="mx-auto" src={logo} alt="Logo" />
+      </div>
+      <h1 className="text-3xl">Recipes Upload</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         <div className="mb-4">
-          <label htmlFor="title" className="block mb-2">
+          <label htmlFor="title" className="block mb-2 ">
             Title:
           </label>
           <input
@@ -74,7 +101,7 @@ const Post = () => {
             name="ingredients"
             value={formData.ingredients}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full rounded"
+            className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
           />
         </div>
         <div className="mb-4">
@@ -86,7 +113,7 @@ const Post = () => {
             name="steps"
             value={formData.steps}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full rounded"
+            className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
           />
         </div>
         <div className="mb-4">

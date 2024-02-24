@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import countriesData from "./country.json";
-import userAvatar from "./homero.jpg";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -149,11 +148,11 @@ const UserProfile = () => {
   return (
     <article>
       <section className="flex flex-row-reverse justify-center gap-20 items-center h-40">
-        <h1 className="text-4xl">User profile</h1>
+        <h1 className="text-4xl">Edit profile</h1>
         <img
-          src={userAvatar}
+          src={userData.image}
           alt="Foto de perfil"
-          className="rounded-full w-24 h-24 border-blue-500 border-2"
+          className="rounded-full w-28 h-28 border-blue-500 border-2"
         />
       </section>
       <hr className="text-7xl" />

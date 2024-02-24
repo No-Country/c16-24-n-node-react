@@ -8,7 +8,7 @@ import { SiGooglemaps } from "react-icons/si";
 const Profile = () => {
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
-  const { logIn, auth } = useAuthContext();
+  const { logIn, user } = useAuthContext();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -34,16 +34,15 @@ const Profile = () => {
       {profileData && (
         <section className="flex justify-center items-center gap-6 max-md:flex-col">
           <div className=" w-1/4 max-md:w-full">
-            {/* <img src={profileData.image} alt="Profile" /> */}
             <img
               className=" rounded-full w-44 h-44 mx-auto"
-              src={userAvatar}
+              src={profileData.image}
               alt="Profile"
             />
           </div>
           <div className="border-2 border-black rounded-2xl w-3/4  max-md:w-full ">
             <div className="flex m-4 items-center gap-4 font-bold text-xl max-md:flex-col">
-              <p>{auth.user}</p>
+              <p>{user}</p>
               <p className="max-md:hidden">-</p>
               <h1>{`${profileData.first_name.toUpperCase()} ${profileData.last_name.toUpperCase()}`}</h1>
               <div className="ml-auto max-md:mx-auto text-lg">
@@ -59,9 +58,7 @@ const Profile = () => {
               <SiGooglemaps />
               {profileData.country}
             </p>
-            {/* <p className="border-2 bg-slate-200 m-4 border-black rounded-2xl p-2 h-28 overflow-y-auto">
-              {profileData.description}
-            </p> */}
+
             <p className="border-2 bg-slate-200 m-4 border-black rounded-2xl p-2 overflow-y-auto">
               {profileData.description}
             </p>
@@ -78,6 +75,7 @@ const Profile = () => {
         <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
         <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
       </section>
+      <hr className="my-10" />
     </article>
   );
 };
