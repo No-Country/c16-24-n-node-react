@@ -56,6 +56,7 @@ const updateProfilePhoto = async (userId, fileData) => {
       });
       profile.image = result.secure_url;
       await profile.save();
+      await deleteCloudinaryImage(profile.image);
       return profile;
     }
 
