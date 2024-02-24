@@ -3,9 +3,7 @@ const {
   cloudinary,
   deleteCloudinaryImage,
   getCloudinaryResizedImage,
-  getMimeTypeFromBase64Data,
 } = require("../utils/cloudinary.helper");
-const deleteFile = require("../utils/delete-file.helper");
 
 const updateProfile = async (profileData, userId) => {
   const { first_name, last_name, description, country, mobilenumber } =
@@ -48,26 +46,9 @@ const updateProfilePhoto = async (userId, fileData) => {
     if (!profile) {
       throw { status: 404, message: "Perfil no encontrado" };
     }
-    if (!fileData.startsWith('data:image/')) {
-      const result = await cloudinary.v2.uploader.upload(`data:${imageMime};base64,${fileData}`, {
-        allowed_formats: ["jpg", "png", "svg", "webp"],
-        tags: ["profile", "avatar"],
-        folder: userId,
-      });
-      if(profile.image){
-        await deleteCloudinaryImage(profile.image);
-      }
-      profile.image = result.secure_url;
-      await profile.save();
-      return profile;
-    }
+    const imageData = !!fileData.startsWith('data:image/') ? fileData : `data:${imageMime};base64,${fileData}`
 
-    // const result = await cloudinary.v2.uploader.upload(`uploads/${fileName}`, {
-    //   allowed_formats: ["jpg", "png", "svg", "webp"],
-    //   tags: ["profile", "avatar"],
-    //   folder: userId,
-    // });
-    const result = await cloudinary.v2.uploader.upload(fileData, {
+    const result = await cloudinary.v2.uploader.upload(imageData, {
       allowed_formats: ["jpg", "png", "svg", "webp"],
       tags: ["profile", "avatar"],
       folder: userId,
@@ -81,11 +62,6 @@ const updateProfilePhoto = async (userId, fileData) => {
   } catch (error) {
     throw error;
   }
-};
-
-const createProfile = async (userId) => {
-  try {
-  } catch (error) {}
 };
 
 module.exports = { updateProfile, getProfileByUser, updateProfilePhoto };

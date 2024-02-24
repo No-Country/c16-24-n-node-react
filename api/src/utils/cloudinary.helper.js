@@ -40,11 +40,4 @@ const getCloudinaryResizedImage = (secure_url, width, height) => {
   }
 }
 
-function getMimeTypeFromBase64Data(base64Data) {
-  const prefix = 'data:';
-  const delimiter = ';';
-  const mimeType = base64Data.substring(prefix.length, base64Data.indexOf(delimiter));
-  return mimeType;
-}
-
-module.exports = {cloudinary, deleteCloudinaryImage, getCloudinaryResizedImage, getMimeTypeFromBase64Data}
+module.exports = {cloudinary, deleteCloudinaryImage, getCloudinaryResizedImage}
