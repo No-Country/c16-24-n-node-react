@@ -16,12 +16,12 @@ const checks = (val) => {
 };
 
 const formValidations = {
-  email: [(value) => checks(value), "Formato de correo inválido"],
+  email: [(value) => checks(value), "Invalid email format"],
   password: [
     (value) => value.length >= 10,
-    "El password debe de tener más de 9 caracteres.",
+    "The password must be more than 9 characters.",
   ],
-  user_name: [(value) => value.length > 2, "El nombre es obligatorio."],
+  user_name: [(value) => value.length > 2, "The name is required."],
 };
 
 const registerFormFields = {
@@ -126,13 +126,14 @@ export default function Registro() {
               setErrors={setFormErrors}
             />
             <p className="mt-4 text-sm text-center">
-              ¿Ya tienes una cuenta?
+              Do you already have an account?
               <Link
-                className="text-blue-600 hover:underline mt-4 ml-4"
+                className="ml-2 w-full h-12 bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
+            "
                 to="/login"
                 disabled={loading}
               >
-                Acceder
+                To access
               </Link>
             </p>
           </div>
