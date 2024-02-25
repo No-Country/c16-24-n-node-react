@@ -5,28 +5,16 @@ const {
 
 const uniqueUserValidator = async (req, res, next) => {
   try {
-    const { user_name, email } = req.body;
+    const { user_name } = req.body;
     const existingUsername = await User.findOne({ where: { user_name } });
     if (existingUsername) {
       return res.status(400).json({
         ok: false,
         errors: {
-          email: {
+          user_name: {
             value: user_name,
             msg: validationErrorMessages.usedUsername,
-          },
-        },
-      });
-    }
-
-    const existingEmail = await User.findOne({ where: { email } });
-    if (existingEmail) {
-      return res.status(400).json({
-        ok: false,
-        errors: {
-          email: {
-            value: email,
-            msg: validationErrorMessages.usedEmail,
+            path: "user_name"
           },
         },
       });

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {
   signInValidations,
-  logInValidations,
+  emailPassValidations,
 } = require("../validations/auth.validations");
 const {
   emailPasswordSignIn,
@@ -12,12 +12,13 @@ const {
   fieldValidator,
   uniqueUserValidator,
   jwtValidator,
+  uniqueEmailValidator,
 } = require("../middlewares");
 const authRoutes = Router();
 
 authRoutes.post(
   "/signin",
-  [signInValidations, fieldValidator, uniqueUserValidator],
+  [signInValidations, fieldValidator, uniqueEmailValidator, uniqueUserValidator],
   async (req, res) => {
     try {
       const user = await emailPasswordSignIn(req.body);
@@ -33,7 +34,7 @@ authRoutes.post(
 
 authRoutes.post(
   "/login",
-  [logInValidations, fieldValidator],
+  [emailPassValidations, fieldValidator],
   async (req, res) => {
     try {
       const user = await emailPasswordLogIn(req.body);
