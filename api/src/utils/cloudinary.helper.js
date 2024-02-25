@@ -40,4 +40,4 @@ const getCloudinaryResizedImage = (secure_url, width, height) => {
   }
 }
 
-module.exports = {cloudinary, uploadMulter, deleteCloudinaryImage, getCloudinaryResizedImage}
+module.exports = {cloudinary, deleteCloudinaryImage, getCloudinaryResizedImage}
