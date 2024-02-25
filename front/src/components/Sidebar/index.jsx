@@ -17,7 +17,6 @@ const Sidebar = () => {
 
   useEffect(()=>{
     window.addEventListener('resize', changeSize)
-
     return()=>{
       window.addEventListener('resize', changeSize)
     }

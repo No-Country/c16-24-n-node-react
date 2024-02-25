@@ -41,12 +41,12 @@ export default function Login() {
   };
 
   return (
-    <article className="flex items-center justify-evenly mt-56 max-md:flex-col max-md:mt-14  max-md:gap-24">
+    <article className="flex items-center justify-center pl-[-30px] p-32 max-md:flex-col max-md:mt-14 max-md:gap-26 lg:gap-x-32">
       <div>
         <img src={logo} alt="Logo" />
       </div>
 
-      <div className="absolute -top-2 -left-2 -right-2 -bottom-2 rounded-lg  shadow-lg animate-pulse"></div>
+      {/* <div className="-top-2 -left-2 -right-2 -bottom-2 rounded-lg  shadow-lg animate-pulse"></div> */}
       <div
         id="form-container"
         className="bg-white p-16 rounded-lg shadow-xl w-80 relative z-10 transform transition duration-500 ease-in-out"

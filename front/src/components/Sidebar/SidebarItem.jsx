@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { LuHome, LuLayoutDashboard, LuChefHat } from "react-icons/lu";
 import { TbFileLike, TbSearch  } from "react-icons/tb";
-//import { CgProfile } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 
 // eslint-disable-next-line react/prop-types
 const SidebarItem = ({expanded}) => {
@@ -12,7 +12,7 @@ const SidebarItem = ({expanded}) => {
     { id: 3, icon: <TbSearch  size={20} />, text: "Search",to: "/search"},
     { id: 4, icon: <TbFileLike size={20} />, text: "Reviews", to: "/reviews"},
     { id: 5, icon: <LuChefHat  size={20} />, text: "Recipes", to: "/recipes" },
-    //{ id: 6, icon: <CgProfile  size={20} />, text: "Profile", to: "/profile" },
+    { id: 6, icon: <CgProfile  size={20} />, text: "Profile", to: "/profile" },
   ];
 
   return (

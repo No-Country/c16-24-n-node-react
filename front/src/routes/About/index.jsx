@@ -29,3 +29,15 @@ function About() {
 }
 
 export default About;
+
+
+
+
+// useEffect(() => {
+//   addEventListener("DOMContentLoaded", () => {
+//     if(!logIn){
+//       navigate('/login')
+//     }
+//   });
+//    logIn
+// }, [logIn, navigate]);

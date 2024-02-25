@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [logIn, setLogIn] = useState(false);
   const [ favorites, setFavorites ] = useState([]);
+  const [fav, setFav] = useState(false);
   // const [ bookMarks, setBookMarks ] = useState([]);
 
 
@@ -24,7 +25,7 @@ const AuthProvider = ({ children }) => {
   }, [logIn, token]);
 
   useEffect(() => {
-    userApp ? setUser(userApp) : setLogIn("");
+    userApp ? setUser(userApp) : setUser("");
   }, [user, userApp]);
 
   const handlerLogOut = () => {
@@ -53,6 +54,10 @@ const AuthProvider = ({ children }) => {
   favsDish === null
   ? (tempDishInFavs = [])
   : (tempDishInFavs = JSON.parse(favsDish));
+
+  const handlerFav = () => {
+    setFav(!fav) 
+  }
   
   const addOrRemoveFromFavs = (e) => {
     e.preventDefault();
@@ -63,6 +68,8 @@ const AuthProvider = ({ children }) => {
     const date = parent.querySelector("#date").textContent;
     const title = parent.querySelector("#titulo").textContent;
     const overview = parent.querySelector("#comentario").textContent;
+
+    
       
      const dishData = {
       userPost,
@@ -70,6 +77,7 @@ const AuthProvider = ({ children }) => {
       title,
       imgUrl,
       overview,
+      fav: fav,
       id: btn.dataset.dishId
     };
     
@@ -100,6 +108,7 @@ const AuthProvider = ({ children }) => {
         addOrRemoveFromFavs, 
         favorites, 
         setFavorites, 
+        handlerFav,
         // bookMarks 
       }}>
       {children}

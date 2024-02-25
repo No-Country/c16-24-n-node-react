@@ -1,23 +1,26 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
-import endPoint from "./TemplateData.json";
+// import endPoint from "./TemplateData.json";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Seach = () => {
-  const { addOrRemoveFromFavs, favorites } = useAuthContext();
+  const { addOrRemoveFromFavs, favorites, logIn } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [dishList, setDishList] = useState([]);
+  let navigate = useNavigate();
+
+  const endPoint = 'https://7d8adbaec89f45858404e53f8bde9adc.api.mockbin.io/'
 
   useEffect(() => {
   axios.get(endPoint)
     .then((res) =>{
-      const apiData = res.config.url; 
+      const apiData = res.data;     
       const favs = favorites.map(fav => fav.id)
-      
       const newDataApi = apiData.map((data) =>{
         const newArray = favs.find((fav)=> fav === data.id);
         if(newArray){
@@ -30,9 +33,20 @@ const Seach = () => {
     }).catch((err)=>{
       console.log(err)
     });}, [setDishList, favorites]);
+
+
+  useEffect(() => {
+    addEventListener("DOMContentLoaded", () => {
+    if(!logIn){
+      navigate('/login')
+    }
+   });
+   logIn
+   }, [logIn, navigate]);
     
   
    return (
+    <>
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px]">
         <div className="my-[5%] mx-0">
@@ -105,6 +119,7 @@ const Seach = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

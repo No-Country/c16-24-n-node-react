@@ -15,6 +15,7 @@ const UpdateUserName = () => {
     const token = sessionStorage.getItem("token");
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.put(
         "https://c16-24-n-node-react.vercel.app/api/user/change-user",
         {

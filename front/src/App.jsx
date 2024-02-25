@@ -8,7 +8,7 @@ function App() {
       <Sidebar className="sidebar" />
       <div className="block w-full">
         <Header className="header" />
-        <div className="w-full h-full overflow-auto pl-6 pr-3 invisible hover:visible">
+        <div className="w-full h-full overflow-auto pl-6 pr-3">
           <Content />
         </div>
       </div>
