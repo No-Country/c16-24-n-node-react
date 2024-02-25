@@ -19,7 +19,7 @@ const Seach = () => {
   useEffect(() => {
   axios.get(endPoint)
     .then((res) =>{
-      const apiData = res.config.url; 
+      const apiData = res.data; 
       const favs = favorites.map(fav => fav.id)
       
       const newDataApi = apiData.map((data) =>{
@@ -35,7 +35,16 @@ const Seach = () => {
       console.log(err)
     });}, [setDishList, favorites]);
     
+  useEffect(() => {
+    document.addEventListener("DOMContentLoaded", ()=>{
+      if(!logIn){
+        navigate('/login')
+      }
+    });
+   
+    },[logIn, navigate])
   
+
    return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px]">
@@ -137,9 +146,8 @@ const Seach = () => {
           </div>
         </div>
       </section>
-    </main>
-    </>
-  );
+   </main>
+  )
 };
 
 export default Seach;

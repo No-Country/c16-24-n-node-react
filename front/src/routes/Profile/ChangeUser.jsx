@@ -35,6 +35,7 @@ const UpdateUserName = () => {
     }
 
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await appApi.put("/user/change-user", {
         user_name: userName,
       });
