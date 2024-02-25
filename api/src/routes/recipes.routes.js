@@ -1,17 +1,35 @@
 const { Router } = require("express");
+const {
+  jwtValidator,
+  emptyBodyValidator,
+  fieldValidator,
+  imageValidator,
+} = require("../middlewares");
+const {
+  createRecipe,
+  getRecipes,
+} = require("../controllers/recipe.controller");
+
 const recipesRoutes = Router();
 
 recipesRoutes.get("/", async (req, res) => {
   try {
-    return res.status(200).send("Esta es la ruta get recipes");
+    const recipes = getRecipes();
+    if (!recipes || recipes.length === 0) {
+      return res.status(404).json({ message: "No se encontraron recetas." });
+    }
+    return res.status(200).json({ recipes });
   } catch (error) {
-    return res.status(500).json({ message: error });
+    // Si ocurre un error, enviar una respuesta con un código de estado 500 y el mensaje de error
+    console.error("Error al obtener las recetas:", error);
+    return res.status(500).json({ message: "Error al obtener las recetas." });
   }
 });
 
 recipesRoutes.post("/", async (req, res) => {
   try {
     const response = req.body;
+    //const userId = req.user.id;
     const newRecipe = await createRecipe(response);
     return res.status(201).json(newRecipe);
   } catch (error) {
