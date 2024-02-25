@@ -2,11 +2,11 @@
   box-shadow: 3px 3px 26px 1px #0000005c;
 }
 
-button[type="submit"] {
+.btn_shadow {
   transition: all 0.1s ease-in-out;
   box-shadow: 0px 3px 5px 1px #00000043;
 }
 
-button[type="submit"]:hover {
+.btn_shadow:hover {
   box-shadow: 0px 3px 5px 1px #000000bf;
 }

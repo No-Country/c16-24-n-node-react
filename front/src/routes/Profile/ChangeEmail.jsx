@@ -1,11 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
+import appApi from "../../api/appApi";
 
 const ChangeEmail = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const token = sessionStorage.getItem("token");
 
   const handleChangeEmail = (e) => {
     const { name, value } = e.target;
@@ -33,19 +32,24 @@ const ChangeEmail = () => {
       return;
     }
 
+    const confirmResult = await Swal.fire({
+      icon: "question",
+      title: "Are you sure you want to change your email?",
+      showCancelButton: true,
+      confirmButtonText: "Yes, change it!",
+      cancelButtonText: "No, cancel",
+      reverseButtons: true,
+    });
+
+    if (!confirmResult.isConfirmed) {
+      return;
+    }
+
     try {
-      const response = await axios.put(
-        "https://c16-24-n-node-react.vercel.app/api/user/change-email",
-        {
-          password: password,
-          email: email,
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await appApi.put("/user/change-email", {
+        password,
+        email,
+      });
 
       console.log("Email cambiado:", response.data);
       Swal.fire({

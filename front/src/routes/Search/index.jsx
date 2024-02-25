@@ -19,8 +19,9 @@ const Seach = () => {
   useEffect(() => {
   axios.get(endPoint)
     .then((res) =>{
-      const apiData = res.data;     
+      const apiData = res.config.url; 
       const favs = favorites.map(fav => fav.id)
+      
       const newDataApi = apiData.map((data) =>{
         const newArray = favs.find((fav)=> fav === data.id);
         if(newArray){
@@ -33,20 +34,9 @@ const Seach = () => {
     }).catch((err)=>{
       console.log(err)
     });}, [setDishList, favorites]);
-
-
-  useEffect(() => {
-    addEventListener("DOMContentLoaded", () => {
-    if(!logIn){
-      navigate('/login')
-    }
-   });
-   logIn
-   }, [logIn, navigate]);
     
   
    return (
-    <>
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px]">
         <div className="my-[5%] mx-0">
@@ -84,7 +74,9 @@ const Seach = () => {
                           <FaRegUserCircle size={20} />
                           <p id="userPost">{val.user}</p>
                         </span>
-                        <p id="date" className="text-sm pr-5">{val.date}</p>
+                        <p id="date" className="text-sm pr-5">
+                          {val.date}
+                        </p>
                       </h3>
                       <img
                         className="pt-2 w-[500px] max-h-[230px] object-cover rounded-xl"
@@ -93,22 +85,49 @@ const Seach = () => {
                       />
                       <div className="flex justify-between items-center py-3">
                         <div className="flex flex-row">
-                          <button onClick={addOrRemoveFromFavs} data-dish-id={val.id} className="flex seft-start item-center gap-x-2 pl-2">
-                            {val.favorites? <HiOutlineStar className="cursor-pointer fill-red-700 text-red-700" size={20} /> : <HiOutlineStar className="cursor-pointer" size={20} />
-                            }
+                          <button
+                            onClick={addOrRemoveFromFavs}
+                            data-dish-id={val.id}
+                            className="flex seft-start item-center gap-x-2 pl-2"
+                          >
+                            {val.favorites ? (
+                              <HiOutlineStar
+                                className="cursor-pointer fill-red-700 text-red-700"
+                                size={20}
+                              />
+                            ) : (
+                              <HiOutlineStar
+                                className="cursor-pointer"
+                                size={20}
+                              />
+                            )}
                           </button>
-                          <button data-bookmark-id={val.id} className="flex seft-start item-center gap-x-2 pl-2">
-                            <HiOutlineBookmark className={`cursor-pointer `} size={20}/>
+                          <button
+                            data-bookmark-id={val.id}
+                            className="flex seft-start item-center gap-x-2 pl-2"
+                          >
+                            <HiOutlineBookmark
+                              className={`cursor-pointer `}
+                              size={20}
+                            />
                           </button>
                         </div>
                         <div>
                           <button className="flex justify-center item-center pr-5">
-                            <TfiCommentAlt className="cursor-pointer" size={20} />
+                            <TfiCommentAlt
+                              className="cursor-pointer"
+                              size={20}
+                            />
                           </button>
                         </div>
                       </div>
-                      <h3 id="titulo" className="pb-2">{val.title}</h3>
-                      <p id="comentario" className="border border-solid rounded-xl p-2 h-20">
+                      <h3 id="titulo" className="pb-2">
+                        {val.title}
+                      </h3>
+                      <p
+                        id="comentario"
+                        className="border border-solid rounded-xl p-2 h-20"
+                      >
                         {val.comentary.substring(0, 120)}...
                       </p>
                     </div>
