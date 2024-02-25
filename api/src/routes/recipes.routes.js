@@ -8,9 +8,27 @@ const {
 const {
   createRecipe,
   getRecipes,
+  getRecipeById,
 } = require("../controllers/recipe.controller");
 
 const recipesRoutes = Router();
+
+recipesRoutes.get("/:id", async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+
+    const recipe = await getRecipeById(recipeId);
+
+    // Enviar la receta encontrada en la respuesta
+    return res.status(200).json({ recipe });
+  } catch (error) {
+    // Si ocurre un error, enviar una respuesta con un código de estado 500 y el mensaje de error
+    console.error("Error al obtener la receta por ID:", error);
+    return res
+      .status(500)
+      .json({ message: "Error al obtener la receta por ID." });
+  }
+});
 
 recipesRoutes.get("/", async (req, res) => {
   try {

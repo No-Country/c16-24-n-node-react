@@ -1,8 +1,5 @@
 const { Recipe, Ingredient, Category, Hashtag } = require("../db");
 const { cloudinary } = require("../utils/cloudinary.helper");
-const userID = require("../utils/userId");
-
-const userId = userID("andavian");
 
 const uploadImageToCloudinary = async (imageBase64) => {
   try {
@@ -115,10 +112,22 @@ const createRecipe = async ({
 const getRecipes = async () => {
   // Obtener todas las recetas ordenadas por fecha de creación de forma descendente
   const recipes = await Recipe.findAll({
-    //order: [["createdAt", "DESC"]],
+    where: { hidden: false },
+    order: [["createdAt", "DESC"]],
     include: [Ingredient, Category, Hashtag],
   });
   return recipes;
 };
 
-module.exports = { createRecipe, getRecipes };
+const getRecipeById = async (recipeId) => {
+  const recipe = await Recipe.findByPk(recipeId, {
+    include: [Ingredient, Category, Hashtag],
+  });
+
+  if (!recipe) {
+    throw new Error(`No se encontró ninguna receta con el ID ${recipeId}.`);
+  }
+
+  return recipe;
+};
+module.exports = { createRecipe, getRecipes, getRecipeById };
