@@ -67,25 +67,71 @@ const RecipeSchema = {
     ingredients: {
       type: "array",
       items: {
-        $ref: "#/components/schemas/Ingredient", // Referencia al esquema de ingredientes
+        $ref: "#/components/schemas/IngredientSchema", // Referencia al esquema de ingredientes
       },
       description: "The list of ingredients for the recipe",
     },
     categories: {
       type: "array",
       items: {
-        $ref: "#/components/schemas/Category", // Referencia al esquema de categorías
+        $ref: "#/components/schemas/CategorySchema", // Referencia al esquema de categorías
       },
       description: "The list of categories for the recipe",
     },
     hashtags: {
       type: "array",
       items: {
-        $ref: "#/components/schemas/Hashtag", // Referencia al esquema de hashtags
+        $ref: "#/components/schemas/HashtagSchema", // Referencia al esquema de hashtags
       },
       description: "The list of hashtags for the recipe",
     },
   },
+};
+
+const IngredientSchema = {
+  type: "object",
+  properties: {
+    name: {
+      type: "string",
+      example: "Tomate",
+      description: "Nombre del ingrediente",
+    },
+    image: {
+      type: "string",
+      example: "url_de_la_imagen",
+      description: "URL de la imagen del ingrediente",
+    },
+  },
+  required: ["name"],
+};
+
+const CategorySchema = {
+  type: "object",
+  properties: {
+    name: {
+      type: "string",
+      example: "Italiana",
+      description: "Nombre de la categoría",
+    },
+    image: {
+      type: "string",
+      example: "url_de_la_imagen",
+      description: "URL de la imagen de la categoría",
+    },
+  },
+  required: ["name"],
+};
+
+const HashtagSchema = {
+  type: "object",
+  properties: {
+    name: {
+      type: "string",
+      example: "Deliciosa",
+      description: "Nombre del hashtag",
+    },
+  },
+  required: ["name"],
 };
 
 const ValidationErrorSchema = {
@@ -140,6 +186,9 @@ const InternalServerErrorSchema = {
 
 module.exports = {
   RecipeSchema,
+  IngredientSchema,
+  CategorySchema,
+  HashtagSchema,
   ValidationErrorSchema,
   InternalServerErrorSchema,
 };

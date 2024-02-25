@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Recipe, Ingredient, Category, Hashtag } = require("../db");
 const { cloudinary } = require("../utils/cloudinary.helper");
 
@@ -14,114 +15,149 @@ const uploadImageToCloudinary = async (imageBase64) => {
 };
 
 // Controlador para crear una nueva receta
-const createRecipe = async ({
-  name,
-  imageFile,
-  description,
-  portion,
-  preparation_time,
-  difficulty,
-  process,
-  ingredients,
-  categories,
-  hashtags,
-}) =>
-  //userId
+const createRecipe = async (
   {
-    if (
-      //!userId ||
-      !name ||
-      //!imageFile ||
-      !description ||
-      !portion ||
-      !preparation_time ||
-      !difficulty ||
-      !process ||
-      !ingredients ||
-      !categories ||
-      !hashtags
-    )
-      throw Error("Faltan datos");
+    name,
+    imageFile,
+    description,
+    portion,
+    preparation_time,
+    difficulty,
+    process,
+    ingredients,
+    categories,
+    hashtags,
+  },
+  userId
+) => {
+  if (
+    !name ||
+    !imageFile ||
+    !description ||
+    !portion ||
+    !preparation_time ||
+    !difficulty ||
+    !process ||
+    !ingredients ||
+    !categories ||
+    !hashtags
+  )
+    throw Error("Faltan datos");
 
-    // Subir la imagen a Cloudinary
-    var imageUrl = "null";
+  // Subir la imagen a Cloudinary
+  var imageUrl = "null";
 
-    if (imageFile) {
-      imageUrl = await uploadImageToCloudinary(imageFile);
-    }
-    //let userId = "efd1f68f-44f2-4936-8f48-07d8b0be62e1";
-    // Crear la receta en la base de datos
-    const newRecipe = await Recipe.create({
-      UserId: userId, // Asignar el ID del usuario que crea la receta
-      name,
-      primaryimage: imageUrl,
-      description,
-      portion,
-      preparation_time,
-      difficulty,
-      process,
-    });
+  if (imageFile) {
+    imageUrl = await uploadImageToCloudinary(imageFile);
+  }
 
-    // Asociar los ingredientes con la receta
-    if (ingredients && ingredients.length > 0) {
-      const recipeIngredients = await Promise.all(
-        ingredients.map(async (ingredient) => {
-          const [newIngredient, created] = await Ingredient.findOrCreate({
-            where: { name: ingredient.name },
-            defaults: { image: ingredient.image },
-          });
-          return newIngredient;
-        })
-      );
+  // Crear la receta en la base de datos
+  const newRecipe = await Recipe.create({
+    UserId: userId, // Asignar el ID del usuario que crea la receta
+    name,
+    primaryimage: imageUrl,
+    description,
+    portion,
+    preparation_time,
+    difficulty,
+    process,
+  });
 
-      await newRecipe.addIngredients(recipeIngredients);
-    }
+  // Asociar los ingredientes con la receta
+  if (ingredients && ingredients.length > 0) {
+    const recipeIngredients = await Promise.all(
+      ingredients.map(async (ingredient) => {
+        const [newIngredient, created] = await Ingredient.findOrCreate({
+          where: { name: ingredient.name },
+          defaults: { image: ingredient.image },
+        });
+        return newIngredient;
+      })
+    );
 
-    // Asociar las categorías con la receta
-    if (categories && categories.length > 0) {
-      const recipeCategories = await Promise.all(
-        categories.map(async (category) => {
-          const [newCategory, created] = await Category.findOrCreate({
-            where: { name: category.name },
-            defaults: { image: category.image },
-          });
-          return newCategory;
-        })
-      );
+    await newRecipe.addIngredients(recipeIngredients);
+  }
 
-      await newRecipe.addCategories(recipeCategories);
-    }
+  // Asociar las categorías con la receta
+  if (categories && categories.length > 0) {
+    const recipeCategories = await Promise.all(
+      categories.map(async (category) => {
+        const [newCategory, created] = await Category.findOrCreate({
+          where: { name: category.name },
+          defaults: { image: category.image },
+        });
+        return newCategory;
+      })
+    );
 
-    // Asociar los hashtags con la receta
-    if (hashtags && hashtags.length > 0) {
-      const recipeHashtags = await Promise.all(
-        hashtags.map(async (hashtag) => {
-          const [newHashtag, created] = await Hashtag.findOrCreate({
-            where: { name: hashtag.name },
-          });
-          return newHashtag;
-        })
-      );
+    await newRecipe.addCategories(recipeCategories);
+  }
 
-      await newRecipe.addHashtags(recipeHashtags);
-    }
+  // Asociar los hashtags con la receta
+  if (hashtags && hashtags.length > 0) {
+    const recipeHashtags = await Promise.all(
+      hashtags.map(async (hashtag) => {
+        const [newHashtag, created] = await Hashtag.findOrCreate({
+          where: { name: hashtag.name },
+        });
+        return newHashtag;
+      })
+    );
 
-    return newRecipe;
-  };
+    await newRecipe.addHashtags(recipeHashtags);
+  }
+
+  return newRecipe;
+};
+
+const updateRecipe = async (recipeId, updateFields) => {
+  const existingRecipe = await Recipe.findByPk(recipeId);
+
+  if (!existingRecipe) {
+    return res.status(404).json({ error: "Receta no encontrada" });
+  }
+  await existingRecipe.update(updateFields);
+};
 
 const getRecipes = async () => {
   // Obtener todas las recetas ordenadas por fecha de creación de forma descendente
   const recipes = await Recipe.findAll({
     where: { hidden: false },
     order: [["createdAt", "DESC"]],
-    include: [Ingredient, Category, Hashtag],
+    include: [
+      {
+        model: Ingredient,
+        attributes: ["name"],
+      },
+      {
+        model: Category,
+        attributes: ["name"],
+      },
+      {
+        model: Hashtag,
+        attributes: ["name"],
+      },
+    ],
   });
   return recipes;
 };
 
 const getRecipeById = async (recipeId) => {
   const recipe = await Recipe.findByPk(recipeId, {
-    include: [Ingredient, Category, Hashtag],
+    include: [
+      {
+        model: Ingredient,
+        attributes: ["name"],
+      },
+      {
+        model: Category,
+        attributes: ["name"],
+      },
+      {
+        model: Hashtag,
+        attributes: ["name"],
+      },
+    ],
   });
 
   if (!recipe) {
@@ -130,4 +166,63 @@ const getRecipeById = async (recipeId) => {
 
   return recipe;
 };
-module.exports = { createRecipe, getRecipes, getRecipeById };
+
+const searchRecipesByName = async (name) => {
+  try {
+    const recipes = await Recipe.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${name}%`, // Búsqueda por coincidencia parcial del nombre
+        },
+        hidden: false,
+      },
+      include: [
+        {
+          model: Ingredient,
+          attributes: ["name"],
+        },
+        {
+          model: Category,
+          attributes: ["name"],
+        },
+        {
+          model: Hashtag,
+          attributes: ["name"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    return recipes;
+  } catch (error) {
+    console.error("Error al buscar recetas por nombre:", error);
+    throw new Error("Error al buscar recetas por nombre.");
+  }
+};
+
+const deleteRecipe = async (recipeId) => {
+  const recipe = await Recipe.findByPk(recipeId);
+
+  if (!recipe) {
+    return res.status(404).json({ error: "Receta no encontrada" });
+  }
+
+  // Realizar el borrado lógico actualizando el campo "hidden"
+  recipe.hidden
+    ? await recipe.update({ hidden: false })
+    : await recipe.update({ hidden: true });
+
+  const remainingRecipes = await Recipe.findAll({
+    where: { hidden: false },
+  });
+
+  return remainingRecipes;
+};
+
+module.exports = {
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  searchRecipesByName,
+  updateRecipe,
+  deleteRecipe,
+};
