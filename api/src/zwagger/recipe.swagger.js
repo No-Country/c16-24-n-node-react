@@ -45,6 +45,45 @@ const createRecipePath = {
   },
 };
 
+const getOneRecipePath = {
+  get: {
+    tags: ["Recipes"],
+    summary: "Get a recipe",
+    parameters: [
+      {
+        name: "recipeId",
+        in: "query",
+        description: "The ID of the recipe",
+        schema: {
+          type: "UUID",
+        },
+        required: true,
+      },
+    ],
+    responses: {
+      200: {
+        description: "Successful operation",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: RecipeSchema,
+            },
+          },
+        },
+      },
+      500: {
+        description: "Internal server error",
+        content: {
+          "application/json": {
+            schema: InternalServerErrorSchema,
+          },
+        },
+      },
+    },
+  },
+};
+
 const getRecipePath = {
   get: {
     tags: ["Recipes"],
@@ -79,7 +118,7 @@ const updateRecipePath = {
     summary: "Update an existing recipe",
     parameters: [
       {
-        name: "id",
+        name: "recipeId",
         in: "path",
         required: true,
         description: "ID of the recipe to update",
@@ -148,7 +187,7 @@ const deleteRecipePath = {
     summary: "Delete an existing recipe",
     parameters: [
       {
-        name: "id",
+        name: "recipeId",
         in: "path",
         required: true,
         description: "ID of the recipe to delete",
@@ -190,9 +229,8 @@ const deleteRecipePath = {
   },
 };
 
-module.exports = {
-  createRecipePath,
-  getRecipePath,
-  updateRecipePath,
-  deleteRecipePath,
+const recipePaths = {
+  "/api/recipes/": {...createRecipePath,...getRecipePath},
+  "/api/recipes/:recipeId": {...getOneRecipePath,...updateRecipePath,...deleteRecipePath}
 };
+module.exports = recipePaths;

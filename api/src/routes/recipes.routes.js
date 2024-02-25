@@ -31,7 +31,7 @@ recipesRoutes.get("/search", [jwtValidator], async (req, res) => {
   }
 });
 
-recipesRoutes.get("/:id", [jwtValidator], async (req, res) => {
+recipesRoutes.get("/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
     const recipe = await getRecipeById(recipeId);
@@ -46,7 +46,7 @@ recipesRoutes.get("/:id", [jwtValidator], async (req, res) => {
 
 recipesRoutes.get("/", async (req, res) => {
   try {
-    const recipes = getRecipes();
+    const recipes = await getRecipes();
     if (!recipes || recipes.length === 0) {
       return res.status(404).json({ message: "No se encontraron recetas." });
     }
@@ -68,11 +68,11 @@ recipesRoutes.post("/", [jwtValidator], async (req, res) => {
   }
 });
 
-recipesRoutes.patch("/", [jwtValidator], async (req, res) => {
+recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
     const updateFields = req.body;
-    const updatedRecipe = updateRecipe(recipeId, updateFields);
+    const updatedRecipe = await updateRecipe(recipeId, updateFields);
     return res.status(200).json({
       message: "Receta actualizada exitosamente",
       recipe: updatedRecipe,
@@ -84,10 +84,10 @@ recipesRoutes.patch("/", [jwtValidator], async (req, res) => {
   }
 });
 
-recipesRoutes.delete("/", [jwtValidator], async (req, res) => {
+recipesRoutes.delete("/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const recipeDeleted = deleteRecipe(recipeId);
+    const recipeDeleted = await deleteRecipe(recipeId);
     return res.status(200).json({
       message: "Receta borrada exitosamente",
       recipe: recipeDeleted,
