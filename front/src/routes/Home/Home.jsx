@@ -16,17 +16,17 @@ const Home = () => {
   useEffect(() => {
     getData();
 
-  /*    window.addEventListener('scroll', () =>{
+     window.addEventListener('scroll', () =>{
        console.log(window.innerHeight)
        if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
         console.log('hola')
          
        }
-     }) */
+     })
   }, []);
 
 
-  
+
   async function getData() {
     const res = await axios.get(endPoint).catch((err) => {
       console.log(err);

@@ -6,6 +6,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 const GOOGLE_AUTH_URL =
   "https://c16-24-n-node-react.vercel.app/api/auth/google";
 
+// eslint-disable-next-line react/prop-types
 const GoogleButton = ({ title, onSuccessfulAuth, setIsLoading, setErrors }) => {
   const { setLogIn } = useAuthContext();
   const [searchParams] = useSearchParams();
@@ -14,10 +15,6 @@ const GoogleButton = ({ title, onSuccessfulAuth, setIsLoading, setErrors }) => {
     handleGoogleSignIn();
   }, []);
 
-  useEffect(() => {
-    handleGoogleSignIn();
-  }, []);
-  
 
   async function handleGoogleSignIn() {
     try {

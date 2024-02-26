@@ -150,7 +150,7 @@ const UserProfile = () => {
       <section className="flex flex-row-reverse justify-center gap-20 items-center h-40">
         <h1 className="text-4xl">Edit profile</h1>
         <img
-          src={userData.image}
+          src={userData?.image? userData?.image :'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}
           alt="Foto de perfil"
           className="rounded-full w-28 h-28 border-blue-500 border-2"
         />

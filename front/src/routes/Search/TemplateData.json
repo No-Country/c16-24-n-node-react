@@ -1,402 +1,324 @@
-[
-  {
-    "title": "Pizza Napolitana",
-    "user": "@Gustavo",
-    "image": "https://img.freepik.com/foto-gratis/pizza-pepperoni-pimientos-tomate-aceituna-queso_140725-5881.jpg?w=740&t=st=1717008000~exp=1717008600~hmac=509b81e2e044e516575ec717b71feb4abf02837d7d429236b1fb219767e6d615",
-    "id": 1,
-    "comentary": "¡La pizza napolitana es mi favorita! Esta receta es excelente.",
-    "date": "2021-07-05",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Sushi",
-    "user": "@Jorge",
-    "image": "https://img.freepik.com/foto-gratis/sushi-set-hot-rolls-aguacate-california-rollos-salmon_141793-1279.jpg?w=996&t=st=1717008050~exp=1717008650~hmac=8c3568653ea5593ca94d3b8ff541bd4b49059b99c5281ca1be185eefd75c2e73",
-    "id": 2,
-    "comentary": "El sushi siempre es una delicia, especialmente el nigiri de salmón.",
-    "date": "2021-08-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Hamburguesa con queso",
-    "user": "@Luca",
-    "image": "https://img.freepik.com/foto-gratis/vista-frontal-hamburguesa-stand_141793-15542.jpg?w=1380&t=st=1717008100~exp=1717008700~hmac=101ceef74d74dee1b1cd8e35de6f12c4813a92907f6d891108d637b1b668b1f3",
-    "id": 3,
-    "comentary": "¡Nada como una buena hamburguesa con queso y papas fritas!",
-    "date": "2021-09-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Pasta Carbonara",
-    "user": "@Daniel",
-    "image": "https://img.freepik.com/foto-gratis/vista-superior-espagueti-pollo-pimientos-perejil_140725-312.jpg?w=826&t=st=1717008150~exp=1717008750~hmac=e73ca2e493849c5daa5b7e08c976c6ff053c6e3716b843b530ea1db92be6ee60",
-    "id": 4,
-    "comentary": "La pasta carbonara auténtica italiana es simplemente deliciosa.",
-    "date": "2021-10-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tacos al pastor",
-    "user": "@Eduardo",
-    "image": "https://img.freepik.com/foto-gratis/tacos-mexicanos-carne-res-salsa-tomate-salsa_2829-14221.jpg?w=1380&t=st=1717008200~exp=1717008800~hmac=fc2d7ed5c6146b6c1a230e181cca8dfa64151c2525eb4981fc628d55c5ef81af",
-    "id": 5,
-    "comentary": "Los tacos al pastor son mi comida mexicana favorita, especialmente con salsa picante.",
-    "date": "2021-11-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Sopa de Tomate",
-    "user": "@Anibal",
-    "image": "https://img.freepik.com/foto-gratis/sopa-tomate-albahaca-bol_114579-11656.jpg?w=1380&t=st=1717008250~exp=1717008850~hmac=16167b0c805b902f4501452889bc3e9aa099b321dcc16aeba4fe241f32e6249c",
-    "id": 6,
-    "comentary": "Una sopa de tomate caliente con crujientes trozos de pan es perfecta para un día frío.",
-    "date": "2021-12-01",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Pad Thai",
-    "user": "@Matias",
-    "image": "https://img.freepik.com/foto-gratis/comida-tailandesa-som-tum-o-ensalada-papaya_1150-35488.jpg?w=1380&t=st=1717008300~exp=1717008900~hmac=214266c9a719ad03296176702d4c85697cbe9802a73ba08216eea83b2338e067",
-    "id": 7,
-    "comentary": "El Pad Thai tailandés es una explosión de sabores: picante, ácido, dulce y salado.",
-    "date": "2022-01-05",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ensalada César",
-    "user": "@Gustavo",
-    "image": "https://img.freepik.com/foto-gratis/vista-lateral-ensalada-cesar-pollo-queso-parmesano-tazon-blanco-sobre-tabla-madera_140725-11875.jpg?w=996&t=st=1717008350~exp=1717008950~hmac=e4249bc72fe6a9593b39fe89c0f47aa774d7955ce815ec66e095c157a1a5a6de",
-    "id": 8,
-    "comentary": "Una ensalada César fresca y crujiente es el acompañamiento perfecto para cualquier comida.",
-    "date": "2022-02-14",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Curry de Pollo",
-    "user": "@Luca",
-    "image": "https://img.freepik.com/foto-gratis/pollo-al-curry-rojo-taza-negra_1150-23917.jpg?w=1380&t=st=1717008400~exp=1717009000~hmac=384eafb66dafac955a9f9dd2f93dd48f33cec09d38f19a96b6266044dae42724",
-    "id": 9,
-    "comentary": "El curry de pollo especiado es reconfortante y delicioso, especialmente con arroz basmati.",
-    "date": "2022-03-22",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tarta de Manzana",
-    "user": "@Jorge",
-    "image": "https://img.freepik.com/foto-gratis/vista-superior-deliciosa-tarta-manzana-manzanas-verdes-frescas-pastel-galleta-azucar-fruta-hornear_140725-22442.jpg?w=1380&t=st=1717008450~exp=1717009050~hmac=d837f224e65b36c6a30b0fd8a03812966baac3440e9e61a1954c335afec76f60",
-    "id": 10,
-    "comentary": "La tarta de manzana casera con una cucharada de helado de vainilla es el postre perfecto.",
-    "date": "2022-04-08",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tacos de Carnitas",
-    "user": "@Ricardo",
-    "image": "https://img.freepik.com/foto-gratis/tacos-mexicanas-mesa-madera_1147-558.jpg?w=1060&t=st=1708629853~exp=1708630453~hmac=dc98a4a00623ee888e6f703de32036b320e4ad7869a33ae0e2892c30d8af7b14",
-    "id": 11,
-    "comentary": "Las carnitas son uno de los platillos más emblemáticos de México, ¡y en tacos son deliciosas!",
-    "date": "2022-05-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Sushi Rolls",
-    "user": "@Mariana",
-    "image": "https://img.freepik.com/foto-gratis/rollos-sushi-salsa-soja_140725-4256.jpg?w=1060&t=st=1708629821~exp=1708630421~hmac=0babff9f76ec37555b021635c2c151a233a2450c7042d2ee8f8e30e072189593",
-    "id": 12,
-    "comentary": "Los sushi rolls son una excelente opción para los amantes de la comida japonesa, ¡siempre frescos y deliciosos!",
-    "date": "2022-06-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Lasagna",
-    "user": "@Carolina",
-    "image": "https://img.freepik.com/foto-gratis/lasagna-tradicional-rica-salsa-bolonesa_60438-3536.jpg?w=1060&t=st=1708629756~exp=1708630356~hmac=83f35d2eb712c48e23c48cd398f8f7ecc9983e855ea704a814c3be002730ca2f",
-    "id": 13,
-    "comentary": "La lasaña es un clásico italiano que nunca pasa de moda. ¡Tan cremosa y deliciosa!",
-    "date": "2022-07-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ceviche Peruano",
-    "user": "@Diego",
-    "image": "https://img.freepik.com/foto-gratis/ensalada-frutas-verduras-vaso-vidrio-sobre-piso-madera_1150-20743.jpg?w=1060&t=st=1708629725~exp=1708630325~hmac=e9f6aadc15f5f0d1d366ce24694e4c8769394b9e0c44e85a95181facf74ec632",
-    "id": 14,
-    "comentary": "El ceviche peruano es una explosión de frescura y sabor, ¡perfecto para los días calurosos!",
-    "date": "2022-08-30",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ramen",
-    "user": "@Sofia",
-    "image": "https://img.freepik.com/foto-gratis/sopa-ramen-ternera-parrilla-comida-gourmet-fresca-generada-ia_188544-29199.jpg?w=1060&t=st=1708627779~exp=1708628379~hmac=2c077a4592540c975a9889d1027abbe13f17cff385eabe4c34c3dc73a0f68186",
-    "id": 15,
-    "comentary": "El ramen es reconfortante y delicioso, ¡perfecto para calentar el alma en días fríos!",
-    "date": "2022-09-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tiramisú",
-    "user": "@Elena",
-    "image": "https://img.freepik.com/foto-gratis/sabroso-pastel-tiramisu-casero_114579-85350.jpg?w=1380&t=st=1708627377~exp=1708627977~hmac=5b2d3441875e1cb1eb8e0705c1efff42fe2ebd90baa642bafbb3f81b5b2e050f",
-    "id": 16,
-    "comentary": "El tiramisú es un postre italiano clásico que combina la esponjosidad del mascarpone con el sabor del café. ¡Simplemente irresistible!",
-    "date": "2022-10-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Paella",
-    "user": "@Juan",
-    "image": "https://img.freepik.com/foto-gratis/paella-gourmet-marisco-fresco-saludable-generada-ia_188544-20666.jpg?w=1060&t=st=1708627819~exp=1708628419~hmac=f09461297a2fed592329adcaf9c8f3f8b45fd5d6abbb47f25bc20b2cd80fa4eb",
-    "id": 17,
-    "comentary": "La paella es un plato español emblemático, ¡lleno de sabor y color!",
-    "date": "2022-11-05",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Poke Bowl",
-    "user": "@Ana",
-    "image": "https://img.freepik.com/foto-gratis/fotografia-endecha-plana-tazon-fuente-salmon_53876-108183.jpg?w=1060&t=st=1708629685~exp=1708630285~hmac=74b014773c7642e27766135072806c28c653038a8518e8e406a59608e1841193",
-    "id": 18,
-    "comentary": "El poke bowl es una opción saludable y deliciosa, ¡llena de ingredientes frescos y sabrosos!",
-    "date": "2022-12-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Croissant",
-    "user": "@Luis",
-    "image": "https://img.freepik.com/foto-gratis/croissant-colocado-sobre-plataforma-madera-granos-cafe-sobre-piso-cemento-negro_1150-24180.jpg?w=1060&t=st=1708629636~exp=1708630236~hmac=3a24653385c59df7f073e04cdccae6de137977c6015c8142022d8e131cd3db84",
-    "id": 19,
-    "comentary": "Los croissants son un clásico desayuno francés, ¡perfectos cuando se acompañan con café caliente!",
-    "date": "2023-01-30",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Canelones",
-    "user": "@Laura",
-    "image": "https://img.freepik.com/foto-gratis/lasana-recien-cocinada-salsa-bolonesa-salada-generada-ia_188544-43143.jpg?w=1060&t=st=1708629583~exp=1708630183~hmac=8baff02bef4560c643ab8a3f08a716ceee895aaf71db2a1afe91a2eb386c5c33",
-    "id": 20,
-    "comentary": "Los canelones son una comida reconfortante y deliciosa, ¡perfectos para una comida en familia!",
-    "date": "2023-02-14",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Fajitas de Pollo",
-    "user": "@Rosa",
-    "image": "https://img.freepik.com/foto-gratis/deliciosos-tacos-angulo-alto-tablero-madera_23-2148629324.jpg?w=1060&t=st=1708629503~exp=1708630103~hmac=9b938b40f58c0e313930ac7b7593c56a1d1c36d49824375a787dcf8a784879c8",
-    "id": 21,
-    "comentary": "Las fajitas de pollo son una opción rápida y deliciosa para una cena entre semana. ¡Tan llenas de sabor!",
-    "date": "2023-03-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tarta de Chocolate",
-    "user": "@Marcela",
-    "image": "https://img.freepik.com/foto-gratis/delicioso-pastel-sobre-mesa_144627-12755.jpg?w=1060&t=st=1708629466~exp=1708630066~hmac=c063e151cd98d58d1741c0890b7f4dc3ec8c9903cbc6661c33e50cd41c064321",
-    "id": 22,
-    "comentary": "La tarta de chocolate es un placer para los amantes del chocolate. ¡Un postre irresistible!",
-    "date": "2023-04-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Gyoza",
-    "user": "@Hiroshi",
-    "image": "https://img.freepik.com/foto-gratis/gyoza-dumplings-cerca-aperitivos-menu-comida-asiatica_1268-29313.jpg?w=1060&t=st=1708629415~exp=1708630015~hmac=4900cd92332a3248c7c431b35af5c46a39b4e746b52eae3657b148c80f9192fb",
-    "id": 23,
-    "comentary": "Los gyoza son bocados deliciosos y adictivos, ¡perfectos como aperitivo o acompañamiento!",
-    "date": "2023-05-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Empanadas Argentinas",
-    "user": "@Diego",
-    "image": "https://img.freepik.com/foto-gratis/vista-lateral-albondigas-cordero-frito-gurza-cebolla-sal-pimienta-plato_141793-4949.jpg?w=1060&t=st=1708629357~exp=1708629957~hmac=85dc550613d5d4ef374545814694de827a1aae9bcffb517bef9c9f4674ee424a",
-    "id": 24,
-    "comentary": "Las empanadas argentinas son un clásico de la gastronomía, ¡rellenas de sabrosa carne y horneadas a la perfección!",
-    "date": "2023-06-30",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Cuscús",
-    "user": "@Sara",
-    "image": "https://img.freepik.com/foto-gratis/cuscus-israeli-carne-res-comida-sabrosa-comida-asiatica_2829-7118.jpg?w=1060&t=st=1708629284~exp=1708629884~hmac=10c8c7c0e0b7f24c4c5c064783a1c7e4513f5af83879da92c0d2b7d71c550280",
-    "id": 25,
-    "comentary": "El cuscús es un acompañamiento versátil y delicioso, ¡lleno de sabor y fácil de preparar!",
-    "date": "2023-07-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ceviche de Camarón",
-    "user": "@Luisa",
-    "image": "https://img.freepik.com/foto-gratis/vista-superior-plato-mariscos-lima-aguacate_181624-59141.jpg?w=1060&t=st=1708629231~exp=1708629831~hmac=c66f813ffceebef344ac2d2c3f76891f21f190ba1bcb956674bf9c7fdd3b46a0",
-    "id": 26,
-    "comentary": "El ceviche de camarón es refrescante y delicioso, ¡perfecto para los días calurosos de verano!",
-    "date": "2023-08-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Moussaka",
-    "user": "@Nikos",
-    "image": "https://img.freepik.com/foto-gratis/moussaka-griega-plato-horno-blanco_2829-14276.jpg?w=1380&t=st=1717009300~exp=1717009900~hmac=fe6924620d1670a56a896358a500a6e7e7fc0457a3fd8f569fd3df6eeb37265d",
-    "id": 27,
-    "comentary": "La moussaka es un plato griego tradicional, ¡lleno de sabor y aroma a Mediterráneo!",
-    "date": "2023-09-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Enchiladas Verdes",
-    "user": "@Isabel",
-    "image": "https://img.freepik.com/foto-gratis/sabrosa-comida-mexicana-guacamole-res-vegetales-frescos-generada-inteligencia-artificial_25030-65269.jpg?w=1060&t=st=1708628309~exp=1708628909~hmac=4be6d1bf2fe5e87afd9a91ff79dd4cd07c9913b59d5f2ec53065b03dcf74eb15",
-    "id": 28,
-    "comentary": "Las enchiladas verdes son una explosión de sabor mexicano, ¡llenas de pollo, queso y salsa verde!",
-    "date": "2023-10-30",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ratatouille",
-    "user": "@Pierre",
-    "image": "https://img.freepik.com/foto-gratis/ratatouille-verduras-sarten-sobre-mesa-madera_2829-19906.jpg?w=1380&t=st=1708627465~exp=1708628065~hmac=b95c629a743b710193b0595ab22e2ccc0f2fa45036541765fff0bc60303fa461",
-    "id": 29,
-    "comentary": "El ratatouille es un plato francés lleno de vegetales asados, ¡perfecto para los amantes de la comida saludable!",
-    "date": "2023-11-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tarta de Limón",
-    "user": "@Lorena",
-    "image": "https://img.freepik.com/foto-gratis/tarta-queso-casera-nueva-york-limon-menta-postre-organico-saludable-vista-superior_114579-9384.jpg?w=1060&t=st=1708628382~exp=1708628982~hmac=385a9cbb8bb52d14e2d7dc234ebcdc952aecfd32a41d5e64abed7fd9c7e9b8fd",
-    "id": 30,
-    "comentary": "La tarta de limón es refrescante y deliciosa, ¡perfecta para el verano o cualquier ocasión!",
-    "date": "2023-12-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Pizza Margarita",
-    "user": "@Giovanni",
-    "image": "https://img.freepik.com/foto-gratis/pizza-carne-pimientos-tomate-queso_140725-5865.jpg?w=1060&t=st=1708627877~exp=1708628477~hmac=15ee566d7c5a105b66d3c69aee022471e9d9de4a90fdd640083997bca2226b56",
-    "id": 31,
-    "comentary": "La pizza margarita es un clásico italiano que destaca por su sencillez y sabores frescos.",
-    "date": "2024-01-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Ceviche de Pescado",
-    "user": "@Maria",
-    "image": "https://img.freepik.com/foto-gratis/primer-plano-deliciosa-ensalada-mariscos-verduras-recipiente-sobre-mesa_181624-39561.jpg?w=1060&t=st=1708629161~exp=1708629761~hmac=149b1cdc6192b3516028553d5c2381948bf6a40da24c0d386ed1706aca3a634e",
-    "id": 32,
-    "comentary": "El ceviche de pescado es una explosión de frescura y sabor, ¡perfecto para los amantes de los mariscos!",
-    "date": "2024-01-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Tacos de Pescado",
-    "user": "@Pedro",
-    "image": "https://img.freepik.com/foto-gratis/tacos-carne-verduras-perejil_23-2148750426.jpg?w=1060&t=st=1708628982~exp=1708629582~hmac=49e835a38afb14892500b38d364a59ff1545b365fd329f9a3054d41880037fc0",
-    "id": 33,
-    "comentary": "Los tacos de pescado son una opción ligera y deliciosa, ¡perfectos para una comida fresca y rápida!",
-    "date": "2024-01-15",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Arroz con Pollo",
-    "user": "@Lucia",
-    "image": "https://img.freepik.com/foto-gratis/plato-indio-tradicional-primer-plano-arroz-pollo_23-2148294955.jpg?w=1060&t=st=1708628020~exp=1708628620~hmac=85e1ce9995848ed4fee4225d1694073cafecc91962c151ae4bf399700177554c",
-    "id": 34,
-    "comentary": "El arroz con pollo es un plato reconfortante y lleno de sabor, ¡perfecto para una comida casera!",
-    "date": "2024-01-20",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Pasta Alfredo",
-    "user": "@Giuseppe",
-    "image": "https://img.freepik.com/foto-gratis/espaguetis-salsa-bolonesa-tablexa-madera_123827-22959.jpg?w=1060&t=st=1708628933~exp=1708629533~hmac=2a4d2a97662fbc2c9394c4fe0e2975bd398e72f46e8460c554c04bf56cdab412",
-    "id": 35,
-    "comentary": "La pasta Alfredo es cremosa y reconfortante, ¡perfecta para los amantes de la cocina italiana!",
-    "date": "2024-01-25",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Burritos",
-    "user": "@Carlos",
-    "image": "https://img.freepik.com/foto-gratis/vista-superior-delicioso-sandwich-carne-sandwich-hecho-carne-parrilla-asador-verduras-frescas-piso-azul-oscuro-sandwich-hamburguesa-comida-comida-almuerzo-carne_140725-64483.jpg?w=1060&t=st=1708627958~exp=1708628558~hmac=1acf8b9278063e05e8d060c661cb4305b581c61b7f4604e4fddd120303745a66",
-    "id": 36,
-    "comentary": "Los burritos son una comida reconfortante y versátil, ¡llenos de sabores y texturas!",
-    "date": "2024-01-30",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Sopa de Tortilla",
-    "user": "@Martina",
-    "image": "https://img.freepik.com/foto-gratis/vista-superior-apetitoso-tazon-pozole_23-2149248560.jpg?w=1060&t=st=1708628713~exp=1708629313~hmac=aacdb915f0259edb6bde99196c87da959532103a4f79200b2e497b2d568b45da",
-    "id": 37,
-    "comentary": "La sopa de tortilla es reconfortante y llena de sabores mexicanos, ¡perfecta para una comida caliente!",
-    "date": "2024-02-10",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Hummus",
-    "user": "@Amira",
-    "image": "https://img.freepik.com/foto-gratis/arreglo-delicioso-plato-comida-local_23-2148833845.jpg?w=1060&t=st=1708628063~exp=1708628663~hmac=da5d3d4c4f4cbda27ff89c073302e8c4c5e761ba1683fe9c381fd213659aa76f",
-    "id": 38,
-    "comentary": "El hummus es un dip delicioso y saludable, ¡perfecto para acompañar con pan de pita o vegetales!",
-    "date": "2024-02-13",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Pancakes",
-    "user": "@Emily",
-    "image": "https://img.freepik.com/foto-gratis/deliciosos-panqueques-platanos_23-2150830494.jpg?w=1060&t=st=1708628446~exp=1708629046~hmac=8a91b98a453ed322993b5ac7db2ded935e7f0a7171ea424d7885a914e5c5203e",
-    "id": 39,
-    "comentary": "Los pancakes son un desayuno clásico y reconfortante, ¡perfectos con sirope de arce y frutas frescas!",
-    "date": "2024-02-14",
-    "favorite": false,
-    "bookmark": false
-  },
-  {
-    "title": "Chili con Carne",
-    "user": "@Javier",
-    "image": "https://img.freepik.com/foto-gratis/carne-res-recien-cocinada-especias-chile-generada-ia_188544-38801.jpg?w=1060&t=st=1708628144~exp=1708628744~hmac=6848e29f8f4a60c32d8de8851fe0f696427650c6b617604b79722754d81ee0de",
-    "id": 40,
-    "comentary": "El chili con carne es un plato reconfortante y lleno de sabor, ¡perfecto para una comida abundante y caliente!",
-    "date": "2024-02-15",
-    "favorite": false,
-    "bookmark": false
-  }
-]
+{
+  "data": [
+    {
+      "title": "Pizza Napolitana",
+      "user": "@Gustavo",
+      "image": "https://img.freepik.com/foto-gratis/pizza-pepperoni-pimientos-tomate-aceituna-queso_140725-5881.jpg?w=740&t=st=1717008000~exp=1717008600~hmac=509b81e2e044e516575ec717b71feb4abf02837d7d429236b1fb219767e6d615",
+      "id": 1,
+      "comentary": "¡La pizza napolitana es mi favorita! Esta receta es excelente.",
+      "date": "2021-07-05"
+    },
+    {
+      "title": "Sushi",
+      "user": "@Jorge",
+      "image": "https://img.freepik.com/foto-gratis/sushi-set-hot-rolls-aguacate-california-rollos-salmon_141793-1279.jpg?w=996&t=st=1717008050~exp=1717008650~hmac=8c3568653ea5593ca94d3b8ff541bd4b49059b99c5281ca1be185eefd75c2e73",
+      "id": 2,
+      "comentary": "El sushi siempre es una delicia, especialmente el nigiri de salmón.",
+      "date": "2021-08-15"
+    },
+    {
+      "title": "Hamburguesa con queso",
+      "user": "@Luca",
+      "image": "https://img.freepik.com/foto-gratis/vista-frontal-hamburguesa-stand_141793-15542.jpg?w=1380&t=st=1717008100~exp=1717008700~hmac=101ceef74d74dee1b1cd8e35de6f12c4813a92907f6d891108d637b1b668b1f3",
+      "id": 3,
+      "comentary": "¡Nada como una buena hamburguesa con queso y papas fritas!",
+      "date": "2021-09-25"
+    },
+    {
+      "title": "Pasta Carbonara",
+      "user": "@Daniel",
+      "image": "https://img.freepik.com/foto-gratis/vista-superior-espagueti-pollo-pimientos-perejil_140725-312.jpg?w=826&t=st=1717008150~exp=1717008750~hmac=e73ca2e493849c5daa5b7e08c976c6ff053c6e3716b843b530ea1db92be6ee60",
+      "id": 4,
+      "comentary": "La pasta carbonara auténtica italiana es simplemente deliciosa.",
+      "date": "2021-10-10"
+    },
+    {
+      "title": "Tacos al pastor",
+      "user": "@Eduardo",
+      "image": "https://img.freepik.com/foto-gratis/tacos-mexicanos-carne-res-salsa-tomate-salsa_2829-14221.jpg?w=1380&t=st=1717008200~exp=1717008800~hmac=fc2d7ed5c6146b6c1a230e181cca8dfa64151c2525eb4981fc628d55c5ef81af",
+      "id": 5,
+      "comentary": "Los tacos al pastor son mi comida mexicana favorita, especialmente con salsa picante.",
+      "date": "2021-11-20"
+    },
+    {
+      "title": "Sopa de Tomate",
+      "user": "@Anibal",
+      "image": "https://img.freepik.com/foto-gratis/sopa-tomate-albahaca-bol_114579-11656.jpg?w=1380&t=st=1717008250~exp=1717008850~hmac=16167b0c805b902f4501452889bc3e9aa099b321dcc16aeba4fe241f32e6249c",
+      "id": 6,
+      "comentary": "Una sopa de tomate caliente con crujientes trozos de pan es perfecta para un día frío.",
+      "date": "2021-12-01"
+    },
+    {
+      "title": "Pad Thai",
+      "user": "@Matias",
+      "image": "https://img.freepik.com/foto-gratis/comida-tailandesa-som-tum-o-ensalada-papaya_1150-35488.jpg?w=1380&t=st=1717008300~exp=1717008900~hmac=214266c9a719ad03296176702d4c85697cbe9802a73ba08216eea83b2338e067",
+      "id": 7,
+      "comentary": "El Pad Thai tailandés es una explosión de sabores: picante, ácido, dulce y salado.",
+      "date": "2022-01-05"
+    },
+    {
+      "title": "Ensalada César",
+      "user": "@Gustavo",
+      "image": "https://img.freepik.com/foto-gratis/vista-lateral-ensalada-cesar-pollo-queso-parmesano-tazon-blanco-sobre-tabla-madera_140725-11875.jpg?w=996&t=st=1717008350~exp=1717008950~hmac=e4249bc72fe6a9593b39fe89c0f47aa774d7955ce815ec66e095c157a1a5a6de",
+      "id": 8,
+      "comentary": "Una ensalada César fresca y crujiente es el acompañamiento perfecto para cualquier comida.",
+      "date": "2022-02-14"
+    },
+    {
+      "title": "Curry de Pollo",
+      "user": "@Luca",
+      "image": "https://img.freepik.com/foto-gratis/pollo-al-curry-rojo-taza-negra_1150-23917.jpg?w=1380&t=st=1717008400~exp=1717009000~hmac=384eafb66dafac955a9f9dd2f93dd48f33cec09d38f19a96b6266044dae42724",
+      "id": 9,
+      "comentary": "El curry de pollo especiado es reconfortante y delicioso, especialmente con arroz basmati.",
+      "date": "2022-03-22"
+    },
+    {
+      "title": "Tarta de Manzana",
+      "user": "@Jorge",
+      "image": "https://img.freepik.com/foto-gratis/vista-superior-deliciosa-tarta-manzana-manzanas-verdes-frescas-pastel-galleta-azucar-fruta-hornear_140725-22442.jpg?w=1380&t=st=1717008450~exp=1717009050~hmac=d837f224e65b36c6a30b0fd8a03812966baac3440e9e61a1954c335afec76f60",
+      "id": 10,
+      "comentary": "La tarta de manzana casera con una cucharada de helado de vainilla es el postre perfecto.",
+      "date": "2022-04-08"
+    },
+    {
+      "title": "Tacos de Carnitas",
+      "user": "@Ricardo",
+      "image": "https://img.freepik.com/foto-gratis/tacos-mexicanas-mesa-madera_1147-558.jpg?w=1060&t=st=1708629853~exp=1708630453~hmac=dc98a4a00623ee888e6f703de32036b320e4ad7869a33ae0e2892c30d8af7b14",
+      "id": 11,
+      "comentary": "Las carnitas son uno de los platillos más emblemáticos de México, ¡y en tacos son deliciosas!",
+      "date": "2022-05-15"
+    },
+    {
+      "title": "Sushi Rolls",
+      "user": "@Mariana",
+      "image": "https://img.freepik.com/foto-gratis/rollos-sushi-salsa-soja_140725-4256.jpg?w=1060&t=st=1708629821~exp=1708630421~hmac=0babff9f76ec37555b021635c2c151a233a2450c7042d2ee8f8e30e072189593",
+      "id": 12,
+      "comentary": "Los sushi rolls son una excelente opción para los amantes de la comida japonesa, ¡siempre frescos y deliciosos!",
+      "date": "2022-06-20"
+    },
+    {
+      "title": "Lasagna",
+      "user": "@Carolina",
+      "image": "https://img.freepik.com/foto-gratis/lasagna-tradicional-rica-salsa-bolonesa_60438-3536.jpg?w=1060&t=st=1708629756~exp=1708630356~hmac=83f35d2eb712c48e23c48cd398f8f7ecc9983e855ea704a814c3be002730ca2f",
+      "id": 13,
+      "comentary": "La lasaña es un clásico italiano que nunca pasa de moda. ¡Tan cremosa y deliciosa!",
+      "date": "2022-07-25"
+    },
+    {
+      "title": "Ceviche Peruano",
+      "user": "@Diego",
+      "image": "https://img.freepik.com/foto-gratis/ensalada-frutas-verduras-vaso-vidrio-sobre-piso-madera_1150-20743.jpg?w=1060&t=st=1708629725~exp=1708630325~hmac=e9f6aadc15f5f0d1d366ce24694e4c8769394b9e0c44e85a95181facf74ec632",
+      "id": 14,
+      "comentary": "El ceviche peruano es una explosión de frescura y sabor, ¡perfecto para los días calurosos!",
+      "date": "2022-08-30"
+    },
+    {
+      "title": "Ramen",
+      "user": "@Sofia",
+      "image": "https://img.freepik.com/foto-gratis/sopa-ramen-ternera-parrilla-comida-gourmet-fresca-generada-ia_188544-29199.jpg?w=1060&t=st=1708627779~exp=1708628379~hmac=2c077a4592540c975a9889d1027abbe13f17cff385eabe4c34c3dc73a0f68186",
+      "id": 15,
+      "comentary": "El ramen es reconfortante y delicioso, ¡perfecto para calentar el alma en días fríos!",
+      "date": "2022-09-10"
+    },
+    {
+      "title": "Tiramisú",
+      "user": "@Elena",
+      "image": "https://img.freepik.com/foto-gratis/sabroso-pastel-tiramisu-casero_114579-85350.jpg?w=1380&t=st=1708627377~exp=1708627977~hmac=5b2d3441875e1cb1eb8e0705c1efff42fe2ebd90baa642bafbb3f81b5b2e050f",
+      "id": 16,
+      "comentary": "El tiramisú es un postre italiano clásico que combina la esponjosidad del mascarpone con el sabor del café. ¡Simplemente irresistible!",
+      "date": "2022-10-20"
+    },
+    {
+      "title": "Paella",
+      "user": "@Juan",
+      "image": "https://img.freepik.com/foto-gratis/paella-gourmet-marisco-fresco-saludable-generada-ia_188544-20666.jpg?w=1060&t=st=1708627819~exp=1708628419~hmac=f09461297a2fed592329adcaf9c8f3f8b45fd5d6abbb47f25bc20b2cd80fa4eb",
+      "id": 17,
+      "comentary": "La paella es un plato español emblemático, ¡lleno de sabor y color!",
+      "date": "2022-11-05"
+    },
+    {
+      "title": "Poke Bowl",
+      "user": "@Ana",
+      "image": "https://img.freepik.com/foto-gratis/fotografia-endecha-plana-tazon-fuente-salmon_53876-108183.jpg?w=1060&t=st=1708629685~exp=1708630285~hmac=74b014773c7642e27766135072806c28c653038a8518e8e406a59608e1841193",
+      "id": 18,
+      "comentary": "El poke bowl es una opción saludable y deliciosa, ¡llena de ingredientes frescos y sabrosos!",
+      "date": "2022-12-15"
+    },
+    {
+      "title": "Croissant",
+      "user": "@Luis",
+      "image": "https://img.freepik.com/foto-gratis/croissant-colocado-sobre-plataforma-madera-granos-cafe-sobre-piso-cemento-negro_1150-24180.jpg?w=1060&t=st=1708629636~exp=1708630236~hmac=3a24653385c59df7f073e04cdccae6de137977c6015c8142022d8e131cd3db84",
+      "id": 19,
+      "comentary": "Los croissants son un clásico desayuno francés, ¡perfectos cuando se acompañan con café caliente!",
+      "date": "2023-01-30"
+    },
+    {
+      "title": "Canelones",
+      "user": "@Laura",
+      "image": "https://img.freepik.com/foto-gratis/lasana-recien-cocinada-salsa-bolonesa-salada-generada-ia_188544-43143.jpg?w=1060&t=st=1708629583~exp=1708630183~hmac=8baff02bef4560c643ab8a3f08a716ceee895aaf71db2a1afe91a2eb386c5c33",
+      "id": 20,
+      "comentary": "Los canelones son una comida reconfortante y deliciosa, ¡perfectos para una comida en familia!",
+      "date": "2023-02-14"
+    },
+    {
+      "title": "Fajitas de Pollo",
+      "user": "@Rosa",
+      "image": "https://img.freepik.com/foto-gratis/deliciosos-tacos-angulo-alto-tablero-madera_23-2148629324.jpg?w=1060&t=st=1708629503~exp=1708630103~hmac=9b938b40f58c0e313930ac7b7593c56a1d1c36d49824375a787dcf8a784879c8",
+      "id": 21,
+      "comentary": "Las fajitas de pollo son una opción rápida y deliciosa para una cena entre semana. ¡Tan llenas de sabor!",
+      "date": "2023-03-25"
+    },
+    {
+      "title": "Tarta de Chocolate",
+      "user": "@Marcela",
+      "image": "https://img.freepik.com/foto-gratis/delicioso-pastel-sobre-mesa_144627-12755.jpg?w=1060&t=st=1708629466~exp=1708630066~hmac=c063e151cd98d58d1741c0890b7f4dc3ec8c9903cbc6661c33e50cd41c064321",
+      "id": 22,
+      "comentary": "La tarta de chocolate es un placer para los amantes del chocolate. ¡Un postre irresistible!",
+      "date": "2023-04-10"
+    },
+    {
+      "title": "Gyoza",
+      "user": "@Hiroshi",
+      "image": "https://img.freepik.com/foto-gratis/gyoza-dumplings-cerca-aperitivos-menu-comida-asiatica_1268-29313.jpg?w=1060&t=st=1708629415~exp=1708630015~hmac=4900cd92332a3248c7c431b35af5c46a39b4e746b52eae3657b148c80f9192fb",
+      "id": 23,
+      "comentary": "Los gyoza son bocados deliciosos y adictivos, ¡perfectos como aperitivo o acompañamiento!",
+      "date": "2023-05-20"
+    },
+    {
+      "title": "Empanadas Argentinas",
+      "user": "@Diego",
+      "image": "https://img.freepik.com/foto-gratis/vista-lateral-albondigas-cordero-frito-gurza-cebolla-sal-pimienta-plato_141793-4949.jpg?w=1060&t=st=1708629357~exp=1708629957~hmac=85dc550613d5d4ef374545814694de827a1aae9bcffb517bef9c9f4674ee424a",
+      "id": 24,
+      "comentary": "Las empanadas argentinas son un clásico de la gastronomía, ¡rellenas de sabrosa carne y horneadas a la perfección!",
+      "date": "2023-06-30"
+    },
+    {
+      "title": "Cuscús",
+      "user": "@Sara",
+      "image": "https://img.freepik.com/foto-gratis/cuscus-israeli-carne-res-comida-sabrosa-comida-asiatica_2829-7118.jpg?w=1060&t=st=1708629284~exp=1708629884~hmac=10c8c7c0e0b7f24c4c5c064783a1c7e4513f5af83879da92c0d2b7d71c550280",
+      "id": 25,
+      "comentary": "El cuscús es un acompañamiento versátil y delicioso, ¡lleno de sabor y fácil de preparar!",
+      "date": "2023-07-10"
+    },
+    {
+      "title": "Ceviche de Camarón",
+      "user": "@Luisa",
+      "image": "https://img.freepik.com/foto-gratis/vista-superior-plato-mariscos-lima-aguacate_181624-59141.jpg?w=1060&t=st=1708629231~exp=1708629831~hmac=c66f813ffceebef344ac2d2c3f76891f21f190ba1bcb956674bf9c7fdd3b46a0",
+      "id": 26,
+      "comentary": "El ceviche de camarón es refrescante y delicioso, ¡perfecto para los días calurosos de verano!",
+      "date": "2023-08-15"
+    },
+    {
+      "title": "Moussaka",
+      "user": "@Nikos",
+      "image": "https://img.freepik.com/foto-gratis/moussaka-griega-plato-horno-blanco_2829-14276.jpg?w=1380&t=st=1717009300~exp=1717009900~hmac=fe6924620d1670a56a896358a500a6e7e7fc0457a3fd8f569fd3df6eeb37265d",
+      "id": 27,
+      "comentary": "La moussaka es un plato griego tradicional, ¡lleno de sabor y aroma a Mediterráneo!",
+      "date": "2023-09-25"
+    },
+    {
+      "title": "Enchiladas Verdes",
+      "user": "@Isabel",
+      "image": "https://img.freepik.com/foto-gratis/sabrosa-comida-mexicana-guacamole-res-vegetales-frescos-generada-inteligencia-artificial_25030-65269.jpg?w=1060&t=st=1708628309~exp=1708628909~hmac=4be6d1bf2fe5e87afd9a91ff79dd4cd07c9913b59d5f2ec53065b03dcf74eb15",
+      "id": 28,
+      "comentary": "Las enchiladas verdes son una explosión de sabor mexicano, ¡llenas de pollo, queso y salsa verde!",
+      "date": "2023-10-30"
+    },
+    {
+      "title": "Ratatouille",
+      "user": "@Pierre",
+      "image": "https://img.freepik.com/foto-gratis/ratatouille-verduras-sarten-sobre-mesa-madera_2829-19906.jpg?w=1380&t=st=1708627465~exp=1708628065~hmac=b95c629a743b710193b0595ab22e2ccc0f2fa45036541765fff0bc60303fa461",
+      "id": 29,
+      "comentary": "El ratatouille es un plato francés lleno de vegetales asados, ¡perfecto para los amantes de la comida saludable!",
+      "date": "2023-11-15"
+    },
+    {
+      "title": "Tarta de Limón",
+      "user": "@Lorena",
+      "image": "https://img.freepik.com/foto-gratis/tarta-queso-casera-nueva-york-limon-menta-postre-organico-saludable-vista-superior_114579-9384.jpg?w=1060&t=st=1708628382~exp=1708628982~hmac=385a9cbb8bb52d14e2d7dc234ebcdc952aecfd32a41d5e64abed7fd9c7e9b8fd",
+      "id": 30,
+      "comentary": "La tarta de limón es refrescante y deliciosa, ¡perfecta para el verano o cualquier ocasión!",
+      "date": "2023-12-20"
+    },
+    {
+      "title": "Pizza Margarita",
+      "user": "@Giovanni",
+      "image": "https://img.freepik.com/foto-gratis/pizza-carne-pimientos-tomate-queso_140725-5865.jpg?w=1060&t=st=1708627877~exp=1708628477~hmac=15ee566d7c5a105b66d3c69aee022471e9d9de4a90fdd640083997bca2226b56",
+      "id": 31,
+      "comentary": "La pizza margarita es un clásico italiano que destaca por su sencillez y sabores frescos.",
+      "date": "2024-01-25"
+    },
+    {
+      "title": "Ceviche de Pescado",
+      "user": "@Maria",
+      "image": "https://img.freepik.com/foto-gratis/primer-plano-deliciosa-ensalada-mariscos-verduras-recipiente-sobre-mesa_181624-39561.jpg?w=1060&t=st=1708629161~exp=1708629761~hmac=149b1cdc6192b3516028553d5c2381948bf6a40da24c0d386ed1706aca3a634e",
+      "id": 32,
+      "comentary": "El ceviche de pescado es una explosión de frescura y sabor, ¡perfecto para los amantes de los mariscos!",
+      "date": "2024-01-10"
+    },
+    {
+      "title": "Tacos de Pescado",
+      "user": "@Pedro",
+      "image": "https://img.freepik.com/foto-gratis/tacos-carne-verduras-perejil_23-2148750426.jpg?w=1060&t=st=1708628982~exp=1708629582~hmac=49e835a38afb14892500b38d364a59ff1545b365fd329f9a3054d41880037fc0",
+      "id": 33,
+      "comentary": "Los tacos de pescado son una opción ligera y deliciosa, ¡perfectos para una comida fresca y rápida!",
+      "date": "2024-01-15"
+    },
+    {
+      "title": "Arroz con Pollo",
+      "user": "@Lucia",
+      "image": "https://img.freepik.com/foto-gratis/plato-indio-tradicional-primer-plano-arroz-pollo_23-2148294955.jpg?w=1060&t=st=1708628020~exp=1708628620~hmac=85e1ce9995848ed4fee4225d1694073cafecc91962c151ae4bf399700177554c",
+      "id": 34,
+      "comentary": "El arroz con pollo es un plato reconfortante y lleno de sabor, ¡perfecto para una comida casera!",
+      "date": "2024-01-20"
+    },
+    {
+      "title": "Pasta Alfredo",
+      "user": "@Giuseppe",
+      "image": "https://img.freepik.com/foto-gratis/espaguetis-salsa-bolonesa-tablexa-madera_123827-22959.jpg?w=1060&t=st=1708628933~exp=1708629533~hmac=2a4d2a97662fbc2c9394c4fe0e2975bd398e72f46e8460c554c04bf56cdab412",
+      "id": 35,
+      "comentary": "La pasta Alfredo es cremosa y reconfortante, ¡perfecta para los amantes de la cocina italiana!",
+      "date": "2024-01-25"
+    },
+    {
+      "title": "Burritos",
+      "user": "@Carlos",
+      "image": "https://img.freepik.com/foto-gratis/vista-superior-delicioso-sandwich-carne-sandwich-hecho-carne-parrilla-asador-verduras-frescas-piso-azul-oscuro-sandwich-hamburguesa-comida-comida-almuerzo-carne_140725-64483.jpg?w=1060&t=st=1708627958~exp=1708628558~hmac=1acf8b9278063e05e8d060c661cb4305b581c61b7f4604e4fddd120303745a66",
+      "id": 36,
+      "comentary": "Los burritos son una comida reconfortante y versátil, ¡llenos de sabores y texturas!",
+      "date": "2024-01-30"
+    },
+    {
+      "title": "Sopa de Tortilla",
+      "user": "@Martina",
+      "image": "https://img.freepik.com/foto-gratis/vista-superior-apetitoso-tazon-pozole_23-2149248560.jpg?w=1060&t=st=1708628713~exp=1708629313~hmac=aacdb915f0259edb6bde99196c87da959532103a4f79200b2e497b2d568b45da",
+      "id": 37,
+      "comentary": "La sopa de tortilla es reconfortante y llena de sabores mexicanos, ¡perfecta para una comida caliente!",
+      "date": "2024-02-10"
+    },
+    {
+      "title": "Hummus",
+      "user": "@Amira",
+      "image": "https://img.freepik.com/foto-gratis/arreglo-delicioso-plato-comida-local_23-2148833845.jpg?w=1060&t=st=1708628063~exp=1708628663~hmac=da5d3d4c4f4cbda27ff89c073302e8c4c5e761ba1683fe9c381fd213659aa76f",
+      "id": 38,
+      "comentary": "El hummus es un dip delicioso y saludable, ¡perfecto para acompañar con pan de pita o vegetales!",
+      "date": "2024-02-13"
+    },
+    {
+      "title": "Pancakes",
+      "user": "@Emily",
+      "image": "https://img.freepik.com/foto-gratis/deliciosos-panqueques-platanos_23-2150830494.jpg?w=1060&t=st=1708628446~exp=1708629046~hmac=8a91b98a453ed322993b5ac7db2ded935e7f0a7171ea424d7885a914e5c5203e",
+      "id": 39,
+      "comentary": "Los pancakes son un desayuno clásico y reconfortante, ¡perfectos con sirope de arce y frutas frescas!",
+      "date": "2024-02-14"
+    },
+    {
+      "title": "Chili con Carne",
+      "user": "@Javier",
+      "image": "https://img.freepik.com/foto-gratis/carne-res-recien-cocinada-especias-chile-generada-ia_188544-38801.jpg?w=1060&t=st=1708628144~exp=1708628744~hmac=6848e29f8f4a60c32d8de8851fe0f696427650c6b617604b79722754d81ee0de",
+      "id": 40,
+      "comentary": "El chili con carne es un plato reconfortante y lleno de sabor, ¡perfecto para una comida abundante y caliente!",
+      "date": "2024-02-15"
+    }
+  ]
+}
