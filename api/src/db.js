@@ -5,18 +5,15 @@ const fs = require("fs");
 const path = require("path");
 const { DB_PG_URL } = process.env;
 
-const sequelize = new Sequelize(
-  DB_PG_URL,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-    dialect: "postgres",
-    dialectModule: require("pg"),
-    dialectOptions: {
-      ssl: { require: true },
-    },
-  }
-);
+const sequelize = new Sequelize(DB_PG_URL, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  dialect: "postgres",
+  dialectModule: require("pg"),
+  dialectOptions: {
+    ssl: { require: true },
+  },
+});
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -64,8 +61,8 @@ Recipe.belongsToMany(Category, { through: "RecipeCategory" });
 Category.belongsToMany(Recipe, { through: "RecipeCategory" });
 
 //Relacion Receta con Ingrediente
-// Recipe.belongsToMany(Ingredient, { through: "RecipeIngredient" });
-// Ingredient.belongsToMany(Recipe, { through: "RecipeIngredient" });
+Recipe.belongsToMany(Ingredient, { through: "RecipeIngredient" });
+Ingredient.belongsToMany(Recipe, { through: "RecipeIngredient" });
 
 //Relacion entre Receta y Hashtag
 Recipe.belongsToMany(Hashtag, { through: "RecipeHashtag" });
@@ -80,14 +77,14 @@ User.hasMany(Recipe);
 User.hasMany(Review, { foreignKey: "userId" });
 Review.belongsTo(User, { foreignKey: "userId" });
 
-// Review con Producto (suponiendo que Product es en realidad Recipe)
+// Review con Recipe
 Recipe.hasMany(Review, { foreignKey: "recipeId" });
 Review.belongsTo(Recipe, { foreignKey: "recipeId" });
 
 //?-----Relaciones de Perfil-----//
 //Perfil con Usuario
-User.hasOne(Profile, {foreignKey:"UserId"});
-Profile.belongsTo(User, {foreignKey:"UserId"});
+User.hasOne(Profile, { foreignKey: "UserId" });
+Profile.belongsTo(User, { foreignKey: "UserId" });
 
 //?-----Relaciones de Favoritos-----//
 User.belongsToMany(Recipe, {

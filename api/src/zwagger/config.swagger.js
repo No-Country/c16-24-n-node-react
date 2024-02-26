@@ -4,7 +4,9 @@ const { authOkResponse, authPaths } = require("./auth.swagger");
 const googleOauthPaths = require("./oauth-google.swagger");
 const profilePaths = require("./profile.swagger");
 const userPaths = require("./user.swagger");
+const recipePaths = require("./recipe.swagger");
 const { SWR_CSS_URL1, SWR_CSS_URL2, SWR_JS_URL1, SWR_JS_URL2 } = process.env;
+const { IngredientSchema, CategorySchema, HashtagSchema} = require("./schemas");
 
 const swaggerDefinition = {
   definition: {
@@ -21,6 +23,7 @@ const swaggerDefinition = {
       ...googleOauthPaths,
       ...profilePaths,
       ...userPaths,
+      ...recipePaths,
     },
     definitions: { AuthOkResponse: authOkResponse },
     components: {
@@ -32,6 +35,7 @@ const swaggerDefinition = {
           description: "Token de authentication",
         },
       },
+      schemas:{IngredientSchema, CategorySchema, HashtagSchema}
     },
   },
   apis: [`${path.join(__dirname, "./routes/*.js")}`],
