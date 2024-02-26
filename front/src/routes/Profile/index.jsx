@@ -36,7 +36,7 @@ const Profile = () => {
           <div className=" w-1/4 max-md:w-full">
             <img
               className=" rounded-full w-44 h-44 mx-auto"
-              src={profileData.image}
+              src={profileData?.image? profileData?.image :'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}
               alt="Profile"
             />
           </div>
@@ -44,7 +44,9 @@ const Profile = () => {
             <div className="flex m-4 items-center gap-4 font-bold text-xl max-md:flex-col">
               <p>{user}</p>
               <p className="max-md:hidden">-</p>
-              <h1>{`${profileData.first_name.toUpperCase()} ${profileData.last_name.toUpperCase()}`}</h1>
+              <h1>{`
+              ${profileData?.first_name?.toUpperCase()? profileData?.first_name?.toUpperCase() : ''} 
+              ${profileData.last_name?.toUpperCase()? profileData.last_name?.toUpperCase() : '' }`}</h1>
               <div className="ml-auto max-md:mx-auto text-lg">
                 <Link
                   to="/userprofile"
@@ -56,11 +58,11 @@ const Profile = () => {
             </div>
             <p className="m-4 max-md:m-6 flex gap-2 items-center">
               <SiGooglemaps />
-              {profileData.country}
+              {profileData?.country? profileData?.country : 'Republica de Córdoba' }
             </p>
 
             <p className="border-2 bg-slate-200 m-4 border-black rounded-2xl p-2 overflow-y-auto">
-              {profileData.description}
+              {profileData?.description? profileData?.description : ''}
             </p>
           </div>
         </section>

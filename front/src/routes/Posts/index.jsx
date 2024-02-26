@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import logo from "./logo.png";
 
 const Post = () => {
@@ -16,9 +16,11 @@ const Post = () => {
   });
 
   useEffect(() => {
-    if (!logIn) {
-      navigate("/login");
-    }
+    document.addEventListener("DOMContentLoaded",()=>{
+      if (!logIn) {
+        navigate("/login");
+      }
+    })
   }, []);
 
   const handleInputChange = (event) => {
@@ -73,6 +75,8 @@ const Post = () => {
   };
 
   return (
+    <>
+    {!logIn&& <Navigate to="/login" />}
     <main className="text-center mt-10 mb-12">
       <div>
         <img className="mx-auto" src={logo} alt="Logo" />
@@ -150,6 +154,7 @@ const Post = () => {
         </button>
       </form>
     </main>
+    </>
   );
 };
 

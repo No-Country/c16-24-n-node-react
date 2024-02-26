@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
-// import endPoint from "./TemplateData.json";
+import endPoint from "./TemplateData.json";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";

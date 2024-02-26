@@ -13,9 +13,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [logIn, setLogIn] = useState(false);
   const [ favorites, setFavorites ] = useState([]);
-  const [fav, setFav] = useState(false);
-  // const [ bookMarks, setBookMarks ] = useState([]);
-
 
   let token = sessionStorage.getItem("token");
   let userApp = sessionStorage.getItem("user");
@@ -46,7 +43,6 @@ const AuthProvider = ({ children }) => {
  
   }, []);
 
-
   const favsDish = localStorage.getItem("favorites");
 
   let tempDishInFavs;
@@ -54,30 +50,23 @@ const AuthProvider = ({ children }) => {
   favsDish === null
   ? (tempDishInFavs = [])
   : (tempDishInFavs = JSON.parse(favsDish));
-
-  const handlerFav = () => {
-    setFav(!fav) 
-  }
   
   const addOrRemoveFromFavs = (e) => {
     e.preventDefault();
     const btn = e.currentTarget;
     const parent = btn.parentElement.parentElement.parentElement;
-    const imgUrl = parent.querySelector("img").src
-    const userPost = parent.querySelector("#userPost").textContent;
+    const image = parent.querySelector("img").src
+    const user = parent.querySelector("#userPost").textContent;
     const date = parent.querySelector("#date").textContent;
     const title = parent.querySelector("#titulo").textContent;
-    const overview = parent.querySelector("#comentario").textContent;
+    const comentary = parent.querySelector("#comentario").textContent;
 
-    
-      
-     const dishData = {
-      userPost,
+    const dishData = {
+      user,
       date,
       title,
-      imgUrl,
-      overview,
-      fav: fav,
+      image,
+      comentary,
       id: btn.dataset.dishId
     };
     
@@ -108,8 +97,6 @@ const AuthProvider = ({ children }) => {
         addOrRemoveFromFavs, 
         favorites, 
         setFavorites, 
-        handlerFav,
-        // bookMarks 
       }}>
       {children}
     </AuthContext.Provider>

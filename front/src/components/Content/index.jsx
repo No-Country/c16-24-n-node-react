@@ -11,6 +11,7 @@ import About from "../../routes/About";
 import Privacy from "../../routes/Privacy";
 import Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const Content = () => {
   return (
@@ -20,7 +21,7 @@ const Content = () => {
         <Route path="/posts" element={<Posts />} />
         <Route path="/search" element={<Search />} />
         <Route path="/reviews" element={<Reviews />} />
-        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes" element={<PrivateRoute><Recipes /></PrivateRoute>} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy" element={<Privacy />} />
