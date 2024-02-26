@@ -37,6 +37,18 @@ const getUserById = async (userId) => {
   }
 };
 
+const getUserByUsernameOrThrow = async (userName) => {
+  try {
+    return await User.findOne({
+      where: { user_name: userName },
+      include: [{ model: Profile }],
+      attributes: ["id", "user_name", "email"]
+    });
+  } catch (error) {
+    throw { status: 400, msg: responseMessages.userNotRegistered };
+  }
+}
+
 const updatePassword = async (newPasswordData, userId) => {
   try {
     const { password, new_password } = newPasswordData;
@@ -141,7 +153,7 @@ const getUserRecipes = async (
         id: val.id,
         name: val.name,
         image: getCloudinaryResizedImage(val.primaryimage, 400),
-        hidden: val.hidden
+        hidden: userReqId === userProfileId ? val.hidden : undefined,
       };
     });
 
@@ -160,4 +172,5 @@ module.exports = {
   updateUserName,
   getUserRecipes,
   deleteUser,
+  getUserByUsernameOrThrow
 };
