@@ -7,7 +7,7 @@ const { passwordValidOptions } = require("./auth.validations");
 const changePasswordValidation = checkSchema({
   password: {
     ...passwordValidOptions,
-    optional:true,
+    optional: true,
     custom: {
       options: (value, { req }) => value !== req.body.new_password,
       errorMessage: validationErrorMessages.samePassword,
@@ -23,4 +23,8 @@ const changePasswordValidation = checkSchema({
   },
 });
 
-module.exports = { changePasswordValidation };
+const deleteUserValidation = checkSchema({
+  password: passwordValidOptions,
+});
+
+module.exports = { changePasswordValidation, deleteUserValidation };

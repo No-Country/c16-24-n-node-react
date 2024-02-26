@@ -1,7 +1,9 @@
-const { User, Profile } = require("../db");
+const { User, Profile, Recipe } = require("../db");
 const { SignInMethods } = require("../enums/signin-methods.enum");
 const { compareHash, passwordHash } = require("../utils/bcrypt.helper");
+const { deleteCloudinaryImage } = require("../utils/cloudinary.helper");
 const { responseMessages } = require("../utils/validation-errors.values");
+const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
 
 const createUser = async (newUserData) => {
   try {
@@ -87,6 +89,68 @@ const updateUserName = async (newUserData, userId) => {
   }
 };
 
+const deleteUser = async (password, userId) => {
+  try {
+    const user = await getUserById(userId);
+    await compareHash(password, user.password);
+    user.deleted = true;
+    user.email = `deleted_${new Date().getTime()}_@`;
+    user.password = `$deleted_`;
+    if(!!user.Profile.image){
+      await deleteCloudinaryImage(user.Profile.image);
+    }
+    user.Profile.image = null;
+    user.Profile.description = null;
+    await user.Profile.save();
+    const posts = await Recipe.findAll({ where: { UserId: userId } });
+    for (const post of posts) {
+      post.hidden = true;
+      await post.save();
+    }
+    await user.save();
+    return { ok: true };
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUserRecipes = async (
+  userReqId,
+  userProfileId,
+  page = 1,
+  perPage = 9
+) => {
+  const whereClause = { UserId: userProfileId };
+
+  const _page = page < 1 ? 1 : page;
+  const _perPage = perPage > 10 ? 10 : perPage;
+
+  if (userReqId === userProfileId) {
+    whereClause.hidden = false;
+  }
+  try {
+    const posts = await Recipe.findAll({
+      where: whereClause,
+      offset: (_page - 1) * _perPage,
+      limit: _perPage,
+      order: [["createdAt", "DESC"]],
+      attributes: ["id", "primaryimage", "name", "hidden"],
+    });
+    const responsePosts = posts.map((val) => {
+      return {
+        id: val.id,
+        name: val.name,
+        image: getCloudinaryResizedImage(val.primaryimage, 400),
+        hidden: val.hidden
+      };
+    });
+
+    return responsePosts;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -94,4 +158,6 @@ module.exports = {
   updatePassword,
   updateEmail,
   updateUserName,
+  getUserRecipes,
+  deleteUser,
 };
