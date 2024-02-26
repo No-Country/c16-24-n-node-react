@@ -125,7 +125,7 @@ const getUserRecipes = async (
   const _page = page < 1 ? 1 : page;
   const _perPage = perPage > 10 ? 10 : perPage;
 
-  if (userReqId === userProfileId) {
+  if (userReqId != userProfileId) {
     whereClause.hidden = false;
   }
   try {
