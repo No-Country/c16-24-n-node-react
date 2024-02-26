@@ -29,6 +29,7 @@ const swaggerDefinition = {
       ...profilePaths,
       ...userPaths,
       ...recipePaths,
+      ...userPaths,
       ...usersPaths,
     },
     definitions: { AuthOkResponse: authOkResponse },
