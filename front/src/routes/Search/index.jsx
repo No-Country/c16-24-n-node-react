@@ -14,38 +14,39 @@ const Seach = () => {
   const [dishList, setDishList] = useState([]);
   let navigate = useNavigate();
 
-  const endPoint = 'https://7d8adbaec89f45858404e53f8bde9adc.api.mockbin.io/'
+  const endPoint = "https://7d8adbaec89f45858404e53f8bde9adc.api.mockbin.io/";
 
   useEffect(() => {
-  axios.get(endPoint)
-    .then((res) =>{
-      const apiData = res.data; 
-      const favs = favorites.map(fav => fav.id)
-      
-      const newDataApi = apiData.map((data) =>{
-        const newArray = favs.find((fav)=> fav === data.id);
-        if(newArray){
-          return {...data, favorites: true}
-        }else {
-          return {...data, favorites: false}
-        }
+    axios
+      .get(endPoint)
+      .then((res) => {
+        const apiData = res.data;
+        const favs = favorites.map((fav) => fav.id);
+
+        const newDataApi = apiData.map((data) => {
+          const newArray = favs.find((fav) => fav === data.id);
+          if (newArray) {
+            return { ...data, favorites: true };
+          } else {
+            return { ...data, favorites: false };
+          }
+        });
+        setDishList(newDataApi);
       })
-    setDishList(newDataApi)
-    }).catch((err)=>{
-      console.log(err)
-    });}, [setDishList, favorites]);
-    
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setDishList, favorites]);
+
   useEffect(() => {
-    document.addEventListener("DOMContentLoaded", ()=>{
-      if(!logIn){
-        navigate('/login')
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!logIn) {
+        navigate("/login");
       }
     });
-   
-    },[logIn, navigate])
-  
+  }, [logIn, navigate]);
 
-   return (
+  return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px]">
         <div className="my-[5%] mx-0">
@@ -146,8 +147,8 @@ const Seach = () => {
           </div>
         </div>
       </section>
-   </main>
-  )
+    </main>
+  );
 };
 
 export default Seach;
