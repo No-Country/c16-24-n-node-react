@@ -93,7 +93,7 @@ userRoutes.delete(
   [jwtValidator, deleteUserValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await deleteUser(req.body, req.user.id);
+      const data = await deleteUser(req.body.password, req.user.id);
       return res.status(200).json({ ...data });
     } catch (error) {
       console.log(error);

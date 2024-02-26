@@ -96,15 +96,18 @@ const deleteUser = async (password, userId) => {
     user.deleted = true;
     user.email = `deleted_${new Date().getTime()}_@`;
     user.password = `$deleted_`;
+    if(!!user.Profile.image){
+      await deleteCloudinaryImage(user.Profile.image);
+    }
     user.Profile.image = null;
     user.Profile.description = null;
-    user.Profile.first_name = process.env.DELETED_FIRST_NAME;
+    await user.Profile.save();
     const posts = await Recipe.findAll({ where: { UserId: userId } });
     for (const post of posts) {
       post.hidden = true;
-      await post.update();
+      await post.save();
     }
-    await deleteCloudinaryImage(user.Profile.image);
+    await user.save();
     return { ok: true };
   } catch (error) {
     throw error;
@@ -131,13 +134,14 @@ const getUserRecipes = async (
       offset: (_page - 1) * _perPage,
       limit: _perPage,
       order: [["createdAt", "DESC"]],
-      attributes: ["id", "primaryimage", "name"],
+      attributes: ["id", "primaryimage", "name", "hidden"],
     });
     const responsePosts = posts.map((val) => {
       return {
         id: val.id,
         name: val.name,
         image: getCloudinaryResizedImage(val.primaryimage, 400),
+        hidden: val.hidden
       };
     });
 
