@@ -17,13 +17,11 @@ const Seach = () => {
     axios
       .get(endPoint)
       .then((res) => {
-        console.log(res);
-        const apiData = res.config.url.data;
+        const apiData = res.data;
         const favs = favorites.map((fav) => fav.id);
-        console.log(favs);
-        const newDataApi = apiData.map((data) => {
-          const newArray = favs.find((fav) => parseInt(fav) === data.id);
 
+        const newDataApi = apiData.map((data) => {
+          const newArray = favs.find((fav) => fav === data.id);
           if (newArray) {
             return { ...data, favorites: true };
           } else {
@@ -36,6 +34,14 @@ const Seach = () => {
         console.log(err);
       });
   }, [setDishList, favorites]);
+
+  useEffect(() => {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!logIn) {
+        navigate("/login");
+      }
+    });
+  }, [logIn, navigate]);
 
   return (
     <>
