@@ -5,22 +5,13 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 const Seach = () => {
   const { addOrRemoveFromFavs, favorites, logIn } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [dishList, setDishList] = useState([]);
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    document.addEventListener("DOMContentLoaded", () => {
-      if (!logIn) {
-        navigate("/login");
-      }
-    });
-  }, [logIn, navigate]);
 
   useEffect(() => {
     axios
@@ -48,7 +39,7 @@ const Seach = () => {
 
   return (
     <>
-      {/* {!logIn&& <Navigate to="/login" />} */}
+      {!logIn && <Navigate to="/login" />}
       <main className="flex justify-center px-4 mt-5">
         <section className="lg:w-[1200px]">
           <div className="my-[5%] mx-0">

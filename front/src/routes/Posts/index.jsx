@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../context/AuthProvider";
-import { useNavigate, Navigate } from "react-router-dom";
+import {  Navigate } from "react-router-dom";
 import logo from "./logo.png";
 
 const Post = () => {
   const { logIn } = useAuthContext();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     ingredients: "",
@@ -14,14 +13,6 @@ const Post = () => {
     author: "",
     image: null,
   });
-
-  useEffect(() => {
-    document.addEventListener("DOMContentLoaded",()=>{
-      if (!logIn) {
-        navigate("/login");
-      }
-    })
-  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
