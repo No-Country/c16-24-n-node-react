@@ -35,14 +35,6 @@ const Seach = () => {
       });
   }, [setDishList, favorites]);
 
-  useEffect(() => {
-    document.addEventListener("DOMContentLoaded", () => {
-      if (!logIn) {
-        navigate("/login");
-      }
-    });
-  }, [logIn, navigate]);
-
   return (
     <>
       {!logIn && <Navigate to="/login" />}
