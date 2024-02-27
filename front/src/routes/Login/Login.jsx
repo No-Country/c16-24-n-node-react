@@ -56,8 +56,8 @@ export default function Login() {
   return (
     <article className="grid grid-cols-1 grid-flow-col items-center justify-items-center h-[calc(100vh-5rem)] w-full md:grid-cols-2">
       <div className="hidden md:block">
-        <img src={logo} alt="Logo" className="max-h-28 mx-auto" />
-        <img src={login} alt="Login image" />
+        <img src={logo} alt="Logo" className="max-h-28 mx-auto object-cover" />
+        <img src={login} alt="Login image" className="object-cover h-full"/>
       </div>
 
       {/* <div className="-top-2 -left-2 -right-2 -bottom-2 rounded-lg  shadow-lg animate-pulse"></div> */}

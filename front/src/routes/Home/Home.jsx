@@ -11,7 +11,9 @@ const Home = () => {
   const [ dishList, setDishList ] = useState([]);
   const { addOrRemoveFromFavs, handlerFav } = useAuthContext();
 
-  const endPoint = "https://7d8adbaec89f45858404e53f8bde9adc.api.mockbin.io/";
+  const currentData = new Date();
+
+  const endPoint = "https://c16-24-n-node-react.vercel.app/api/recipes/";
 
   useEffect(() => {
     getData();
@@ -31,9 +33,10 @@ const Home = () => {
     const res = await axios.get(endPoint).catch((err) => {
       console.log(err);
     });
-    const resApi = res.data
+    const resApi = res?.data?.recipes
+    console.log(resApi)
     resApi.sort((a, b) => new Date(b.date) - new Date(a.date))
-    setDishList(resApi.slice(0, resApi.length));
+    setDishList(resApi);
   }
  
 
@@ -52,15 +55,15 @@ const Home = () => {
                       <h3 className="flex justify-between items-center pl-2 pb-1">
                         <span className="flex justify-between items-center gap-2 text-l">
                           <FaRegUserCircle size={20} />
-                          <p id="userPost">{val.user}</p>
+                          <p id="userPost">{val.UserId}</p>
                         </span>
                         <p id="date" className="text-sm pr-5">
-                          {val.date}
+                          {currentData.toDateString('es-AR', val.createdAt)}
                         </p>
                       </h3>
                       <img
                         className="pt-2 md:w-[500px] md:max-h-[230px] lg:w-full lg:max-h-[400px] object-cover rounded-xl"
-                        src={val.image}
+                        src={val.primaryimage}
                         alt=""
                       />
                       <div className="flex justify-between items-center py-3">
@@ -103,13 +106,13 @@ const Home = () => {
                         </div>
                       </div>
                       <h3 id="titulo" className="pb-2">
-                        {val.title}
+                        {val.name}
                       </h3>
                       <p
                         id="comentario"
-                        className="border border-solid rounded-xl p-2 md:h-20 lg:h-12 "
+                        className="border border-solid rounded-xl p-2 md:h-20 lg:h-20 "
                       >
-                        {val.comentary.substring(0, 120)}...
+                        {val.process.substring(0, 120)}...
                       </p>
                     </div>
                   </div>

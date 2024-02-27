@@ -17,7 +17,7 @@ const Seach = () => {
     axios
       .get(endPoint)
       .then((res) => {
-        const apiData = res.data;
+        const apiData = res?.config?.url?.data;
         const favs = favorites.map((fav) => fav.id);
 
         const newDataApi = apiData.map((data) => {
