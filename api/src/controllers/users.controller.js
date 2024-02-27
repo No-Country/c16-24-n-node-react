@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Profile } = require("../db");
+const { User, Profile, Folower } = require("../db");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
 const searchUser = async (searchTerm, page = 1, perPage = 5) => {
   const _page = page < 1 ? 1 : page;
@@ -37,6 +37,35 @@ const searchUser = async (searchTerm, page = 1, perPage = 5) => {
   } catch (error) {
     throw error;
   }
+};
+
+const follow = async (followerId, userId) => {
+  if (followerId === userId) {
+    return res.status(400).json({ error: "No puedes seguirte a ti mismo" });
+  }
+
+  const user = await User.findByPk(userId);
+  if (!user) {
+    return res.status(404).json({ error: "Usuario no encontrado" });
+  }
+
+  const existingFollow = await Folower.findOne({
+    where: {
+      followerId,
+      userId,
+    },
+  });
+
+  if (existingFollow) {
+    return res.status(400).json({ error: "Ya estás siguiendo a este usuario" });
+  }
+
+  await Folower.create({
+    followerId,
+    userId,
+  });
+
+  res.status(201).json({ message: "Usuario seguido exitosamente" });
 };
 
 module.exports = { searchUser };
