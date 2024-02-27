@@ -64,7 +64,11 @@ const UserProfile = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (userData.first_name.length < 2 || userData.first_name.length > 12) {
+    if (
+      !userData.first_name ||
+      userData.first_name.length < 2 ||
+      userData.first_name.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -75,7 +79,11 @@ const UserProfile = () => {
       return;
     }
 
-    if (userData.last_name.length < 2 || userData.last_name.length > 12) {
+    if (
+      !userData.last_name ||
+      userData.last_name.length < 2 ||
+      userData.last_name.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -85,7 +93,12 @@ const UserProfile = () => {
       });
       return;
     }
-    if (userData.mobilenumber.length < 9 || userData.mobilenumber.length > 12) {
+
+    if (
+      !userData.mobilenumber.length ||
+      userData.mobilenumber.length.length < 9 ||
+      userData.mobilenumber.length.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -96,7 +109,11 @@ const UserProfile = () => {
       return;
     }
 
-    if (userData.description.length < 2 || userData.description.length > 256) {
+    if (
+      !userData.description.length ||
+      userData.description.length.length < 2 ||
+      userData.description.length.length > 256
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -174,7 +191,7 @@ const UserProfile = () => {
                 name="first_name"
                 value={userData.first_name}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
@@ -189,7 +206,7 @@ const UserProfile = () => {
                 name="last_name"
                 value={userData.last_name}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
@@ -206,7 +223,7 @@ const UserProfile = () => {
                   name="description"
                   value={userData.description}
                   onChange={handleInputChange}
-                  className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 focus:h-28 transition-all duration-300 ${
+                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 focus:h-28 transition-all duration-300 ${
                     editEnabled ? "" : "pointer-events-none bg-gray-100"
                   }`}
                   disabled={!editEnabled}
@@ -250,7 +267,7 @@ const UserProfile = () => {
                 name="mobilenumber"
                 value={userData.mobilenumber}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
