@@ -29,12 +29,12 @@ export default function Login() {
       );
       const user = "@" + res?.data?.user?.user_name;
       const accessToken = res?.data?.user?.token;
-      setAuth({ email, password, user, accessToken });
-      navigate("/");
       console.log(res.data);
       sessionStorage.setItem("token", accessToken);
       sessionStorage.setItem("user", user);
       setLogIn(true);
+      setAuth({ email, password, user, accessToken });
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }
