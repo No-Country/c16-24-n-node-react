@@ -1,18 +1,27 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useAuthContext } from "../../context/AuthProvider";
-import {  Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import logo from "./logo.png";
+import appApi from "../../api/appApi";
 
 const Post = () => {
+  const imageMaxSize = 1;
   const { logIn } = useAuthContext();
   const [formData, setFormData] = useState({
-    title: "",
-    ingredients: "",
-    steps: "",
-    author: "",
-    image: null,
+    name: "",
+    imageFile: "",
+    description: "",
+    portion: 0,
+    preparation_time: 0,
+    difficulty: 0,
+    process: "",
+    ingredients: [{ name: "" }],
+    categories: [{ name: "" }],
+    hashtags: [{ name: "" }],
   });
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -22,18 +31,59 @@ const Post = () => {
     });
   };
 
-  const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
+  const handleIngredientChange = (index, event) => {
+    const { value } = event.target;
+    const newIngredients = [...formData.ingredients];
+    newIngredients[index].name = value;
     setFormData({
       ...formData,
-      image: imageFile,
+      ingredients: newIngredients,
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleCategoryChange = (index, event) => {
+    const { value } = event.target;
+    const newCategories = [...formData.categories];
+    newCategories[index].name = value;
+    setFormData({
+      ...formData,
+      categories: newCategories,
+    });
+  };
+
+  const handleHashtagChange = (index, event) => {
+    const { value } = event.target;
+    const newHashtags = [...formData.hashtags];
+    newHashtags[index].name = value;
+    setFormData({
+      ...formData,
+      hashtags: newHashtags,
+    });
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const maxSizeInBytes = imageMaxSize * 1024 * 1024;
+
+    if (file.size > maxSizeInBytes) {
+      Swal.fire({
+        icon: "warning",
+        title: "File too big",
+        text: `The selected file is larger than ${imageMaxSize} MB.`,
+      }).then(() => {
+        event.target.value = null;
+        setSelectedFile(null);
+      });
+      return;
+    }
+
+    setSelectedFile(file);
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const confirmResult = Swal.fire({
+    const confirmResult = await Swal.fire({
       icon: "question",
       title: "Are you sure to submit this post?",
       showCancelButton: true,
@@ -46,23 +96,54 @@ const Post = () => {
       return;
     }
 
-    console.log(formData);
+    try {
+      if (!selectedFile) {
+        throw new Error("Please select an image.");
+      }
 
-    Swal.fire({
-      icon: "success",
-      title: "Éxito",
-      text: "Receta publicada con exito",
-      timer: 2000,
-      showConfirmButton: false,
-    });
+      const reader = new FileReader();
 
-    setFormData({
-      title: "",
-      ingredients: "",
-      steps: "",
-      author: "",
-      image: null,
-    });
+      reader.onloadend = async () => {
+        const base64 = reader.result.split(",")[1];
+
+        const response = await appApi.post("/recipes/", {
+          ...formData,
+          imageFile: `data:${selectedFile.type};base64,${base64}`,
+        });
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Recipe uploaded successfully",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
+        setFormData({
+          name: "",
+          imageFile: "",
+          description: "",
+          portion: 0,
+          preparation_time: 0,
+          difficulty: 0,
+          process: "",
+          ingredients: [{ name: "" }],
+          categories: [{ name: "" }],
+          hashtags: [{ name: "" }],
+        });
+
+        setSelectedFile(null);
+      };
+
+      reader.readAsDataURL(selectedFile);
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to upload recipe",
+      });
+    }
   };
 
   return (
@@ -75,54 +156,158 @@ const Post = () => {
         <h1 className="text-3xl">Recipes Upload</h1>
         <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
           <div className="mb-4">
-            <label htmlFor="title" className="block mb-2 ">
-              Title:
+            <label htmlFor="name" className="block mb-2 ">
+              Recipe Name:
             </label>
             <input
               type="text"
-              id="title"
-              name="title"
-              value={formData.title}
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
               className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="description" className="block mb-2">
+              Description:
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="portion" className="block mb-2">
+              Portion:
+            </label>
+            <input
+              type="number"
+              id="portion"
+              name="portion"
+              value={formData.portion}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="preparation_time" className="block mb-2">
+              Preparation Time (minutes):
+            </label>
+            <input
+              type="number"
+              id="preparation_time"
+              name="preparation_time"
+              value={formData.preparation_time}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="difficulty" className="block mb-2">
+              Difficulty:
+            </label>
+            <input
+              type="number"
+              id="difficulty"
+              name="difficulty"
+              value={formData.difficulty}
+              onChange={handleInputChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="process" className="block mb-2">
+              Process:
+            </label>
+            <textarea
+              id="process"
+              name="process"
+              value={formData.process}
+              onChange={handleInputChange}
+              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="ingredients" className="block mb-2">
               Ingredients:
             </label>
-            <textarea
-              id="ingredients"
-              name="ingredients"
-              value={formData.ingredients}
-              onChange={handleInputChange}
-              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-            />
+            {formData.ingredients.map((ingredient, index) => (
+              <input
+                key={index}
+                type="text"
+                value={ingredient.name}
+                onChange={(event) => handleIngredientChange(index, event)}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              />
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  ingredients: [...formData.ingredients, { name: "" }],
+                })
+              }
+              className="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              Add Ingredient
+            </button>
           </div>
           <div className="mb-4">
-            <label htmlFor="steps" className="block mb-2">
-              Steps:
+            <label htmlFor="categories" className="block mb-2">
+              Categories:
             </label>
-            <textarea
-              id="steps"
-              name="steps"
-              value={formData.steps}
-              onChange={handleInputChange}
-              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-            />
+            {formData.categories.map((category, index) => (
+              <input
+                key={index}
+                type="text"
+                value={category.name}
+                onChange={(event) => handleCategoryChange(index, event)}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              />
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  categories: [...formData.categories, { name: "" }],
+                })
+              }
+              className="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              Add Category
+            </button>
           </div>
           <div className="mb-4">
-            <label htmlFor="author" className="block mb-2">
-              Author:
+            <label htmlFor="hashtags" className="block mb-2">
+              Hashtags:
             </label>
-            <input
-              type="text"
-              id="author"
-              name="author"
-              value={formData.author}
-              onChange={handleInputChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-            />
+            {formData.hashtags.map((hashtag, index) => (
+              <input
+                key={index}
+                type="text"
+                value={hashtag.name}
+                onChange={(event) => handleHashtagChange(index, event)}
+                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              />
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  hashtags: [...formData.hashtags, { name: "" }],
+                })
+              }
+              className="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            >
+              Add Hashtag
+            </button>
           </div>
           <div className="mb-4">
             <label htmlFor="image" className="block mb-2">

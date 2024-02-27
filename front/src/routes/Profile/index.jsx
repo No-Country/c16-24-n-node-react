@@ -2,8 +2,8 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import appApi from "../../api/appApi";
 import { useState, useEffect } from "react";
-import userAvatar from "./homero.jpg";
 import { SiGooglemaps } from "react-icons/si";
+import GetRecipes from "./GetRecipes";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -30,13 +30,17 @@ const Profile = () => {
   }
 
   return (
-    <article className="mt-4">
+    <article className="mt-4 ">
       {profileData && (
-        <section className="flex justify-center items-center gap-6 max-md:flex-col">
+        <section className="flex justify-center items-center gap-6 max-md:flex-col ">
           <div className=" w-1/4 max-md:w-full">
             <img
-              className=" rounded-full w-44 h-44 mx-auto"
-              src={profileData?.image? profileData?.image :'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}
+              className=" rounded-full w-44 h-44 mx-auto border-2"
+              src={
+                profileData?.image
+                  ? profileData?.image
+                  : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+              }
               alt="Profile"
             />
           </div>
@@ -45,8 +49,16 @@ const Profile = () => {
               <p>{user}</p>
               <p className="max-md:hidden">-</p>
               <h1>{`
-              ${profileData?.first_name?.toUpperCase()? profileData?.first_name?.toUpperCase() : ''} 
-              ${profileData.last_name?.toUpperCase()? profileData.last_name?.toUpperCase() : '' }`}</h1>
+              ${
+                profileData?.first_name?.toUpperCase()
+                  ? profileData?.first_name?.toUpperCase()
+                  : ""
+              } 
+              ${
+                profileData.last_name?.toUpperCase()
+                  ? profileData.last_name?.toUpperCase()
+                  : ""
+              }`}</h1>
               <div className="ml-auto max-md:mx-auto text-lg">
                 <Link
                   to="/userprofile"
@@ -58,25 +70,20 @@ const Profile = () => {
             </div>
             <p className="m-4 max-md:m-6 flex gap-2 items-center">
               <SiGooglemaps />
-              {profileData?.country? profileData?.country : 'Republica de Córdoba' }
+              {profileData?.country
+                ? profileData?.country
+                : "Republica de Córdoba"}
             </p>
 
             <p className="border-2 bg-slate-200 m-4 border-black rounded-2xl p-2 overflow-y-auto">
-              {profileData?.description? profileData?.description : ''}
+              {profileData?.description ? profileData?.description : ""}
             </p>
           </div>
         </section>
       )}
 
-      <hr className="my-10" />
-      <section className="grid grid-cols-3 max-md:grid-cols-1 gap-4 p-4">
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-        <img className="border-2 mx-auto" src={userAvatar} alt="Profile" />
-      </section>
+      <hr className="mt-10 mb-5" />
+      <GetRecipes />
       <hr className="my-10" />
     </article>
   );

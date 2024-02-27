@@ -9,6 +9,9 @@ import ChangePassword from "./ChangePassword";
 import ChangeEmail from "./ChangeEmail";
 import PhotoUpdater from "./ChangeImage";
 import appApi from "../../api/appApi";
+import DeleteUser from "./DeleteUser";
+import { TbFileDescription } from "react-icons/tb";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const UserProfile = () => {
   const [editEnabled, setEditEnabled] = useState(false);
@@ -61,7 +64,11 @@ const UserProfile = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (userData.first_name.length < 2 || userData.first_name.length > 12) {
+    if (
+      !userData.first_name ||
+      userData.first_name.length < 2 ||
+      userData.first_name.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -72,7 +79,11 @@ const UserProfile = () => {
       return;
     }
 
-    if (userData.last_name.length < 2 || userData.last_name.length > 12) {
+    if (
+      !userData.last_name ||
+      userData.last_name.length < 2 ||
+      userData.last_name.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -82,7 +93,12 @@ const UserProfile = () => {
       });
       return;
     }
-    if (userData.mobilenumber.length < 9 || userData.mobilenumber.length > 12) {
+
+    if (
+      !userData.mobilenumber.length ||
+      userData.mobilenumber.length.length < 9 ||
+      userData.mobilenumber.length.length > 12
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -93,7 +109,11 @@ const UserProfile = () => {
       return;
     }
 
-    if (userData.description.length < 2 || userData.description.length > 256) {
+    if (
+      !userData.description.length ||
+      userData.description.length.length < 2 ||
+      userData.description.length.length > 256
+    ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
@@ -150,7 +170,11 @@ const UserProfile = () => {
       <section className="flex flex-row-reverse justify-center gap-20 items-center h-40">
         <h1 className="text-4xl">Edit profile</h1>
         <img
-          src={userData?.image? userData?.image :'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'}
+          src={
+            userData?.image
+              ? userData?.image
+              : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+          }
           alt="Foto de perfil"
           className="rounded-full w-28 h-28 border-blue-500 border-2"
         />
@@ -167,7 +191,7 @@ const UserProfile = () => {
                 name="first_name"
                 value={userData.first_name}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
@@ -182,7 +206,7 @@ const UserProfile = () => {
                 name="last_name"
                 value={userData.last_name}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
@@ -192,41 +216,47 @@ const UserProfile = () => {
           <div>
             <label className="block">
               Description:
-              <textarea
-                type="text"
-                name="description"
-                value={userData.description}
-                onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 focus:h-28 transition-all duration-300 ${
-                  editEnabled ? "" : "pointer-events-none bg-gray-100"
-                }`}
-                disabled={!editEnabled}
-              />
+              <div className="flex items-center gap-2">
+                <TbFileDescription className="text-4xl" />
+                <textarea
+                  type="text"
+                  name="description"
+                  value={userData.description}
+                  onChange={handleInputChange}
+                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 focus:h-28 transition-all duration-300 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  }`}
+                  disabled={!editEnabled}
+                />
+              </div>
             </label>
           </div>
           <div>
             <label className="block">
               Country:
-              <Select
-                placeholder="Select country"
-                value={
-                  userCountry
-                    ? {
-                        value: userCountry.name,
-                        label: userCountry.name,
-                      }
-                    : null
-                }
-                options={countriesData.countries.map((country) => ({
-                  value: country.name,
-                  label: country.name,
-                }))}
-                onChange={handleCountryChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                  editEnabled ? "" : "pointer-events-none bg-gray-100"
-                }`}
-                disabled={!editEnabled}
-              />
+              <div className="flex items-center gap-3">
+                <FaMapMarkerAlt className="text-2xl ml-1" />
+                <Select
+                  placeholder="Select country"
+                  value={
+                    userCountry
+                      ? {
+                          value: userCountry.name,
+                          label: userCountry.name,
+                        }
+                      : null
+                  }
+                  options={countriesData.countries.map((country) => ({
+                    value: country.name,
+                    label: country.name,
+                  }))}
+                  onChange={handleCountryChange}
+                  className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  }`}
+                  disabled={!editEnabled}
+                />
+              </div>
             </label>
           </div>
           <div>
@@ -237,7 +267,7 @@ const UserProfile = () => {
                 name="mobilenumber"
                 value={userData.mobilenumber}
                 onChange={handleInputChange}
-                className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
                   editEnabled ? "" : "pointer-events-none bg-gray-100"
                 }`}
                 disabled={!editEnabled}
@@ -291,6 +321,8 @@ const UserProfile = () => {
       <section>
         <UpdateUserName />
       </section>
+      <hr className="my-10" />
+      <DeleteUser />
       <hr className="my-10" />
     </article>
   );

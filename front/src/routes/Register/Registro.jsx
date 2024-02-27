@@ -68,8 +68,8 @@ export default function Registro() {
   }
 
   return (
-    <article>
-      <div className="flex flex-col items-center justify-center h-[100%] dark">
+    <article className="grid place-content-center h-[90vh]">
+      <div className=" h-[100%] dark">
         {loadingAuth ? (
           <LoadingSpinner className="w-32 h-32" />
         ) : (
@@ -78,7 +78,7 @@ export default function Registro() {
               <img src={logo} className="h-[5rem]" alt="chetifabene" />
               <p className=" text-center text-sm font-semibold text-slate-500 pb-1">
                 Sign up to see recipes, ingredients and dishes from around the
-                world. world.
+                world.
               </p>
             </div>
             {errors.general && (
@@ -125,10 +125,10 @@ export default function Registro() {
               setIsLoading={setLoadingAuth}
               setErrors={setFormErrors}
             />
-            <p className="mt-4 text-sm text-center">
+            <p className="mt-4 text-sm text-center relative">
               Do you already have an account?
               <Link
-                className="ml-2 w-full h-12 bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
+                className="ml-2  md:w-full md:h-12 bg-gray-800 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline
             "
                 to="/login"
                 disabled={loading}
