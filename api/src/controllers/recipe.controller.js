@@ -139,7 +139,7 @@ const getRecipes = async () => {
       },
       {
         model: User,
-        attributes: ["name"],
+        attributes: ["user_name"],
       },
     ],
   });
@@ -163,7 +163,7 @@ const getRecipeById = async (recipeId) => {
       },
       {
         model: User,
-        attributes: ["name"],
+        attributes: ["user_name"],
       },
     ],
   });
@@ -199,7 +199,7 @@ const searchRecipesByName = async (name) => {
         },
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["user_name"],
         },
       ],
       order: [["createdAt", "DESC"]],
