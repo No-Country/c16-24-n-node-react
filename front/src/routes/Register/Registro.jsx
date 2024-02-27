@@ -78,7 +78,7 @@ export default function Registro() {
               <img src={logo} className="h-[5rem]" alt="chetifabene" />
               <p className=" text-center text-sm font-semibold text-slate-500 pb-1">
                 Sign up to see recipes, ingredients and dishes from around the
-                world. world.
+                world.
               </p>
             </div>
             {errors.general && (
