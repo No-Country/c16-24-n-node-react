@@ -10,3 +10,13 @@
 .btn_shadow:hover {
   box-shadow: 0px 3px 5px 1px #000000bf;
 }
+
+.login-shadow {
+  box-shadow: -14px 0px 14px -11px rgba(0,0,0,0.53);
+}
+
+@media (max-width: 767px) {
+  .login-shadow {
+    box-shadow: unset;
+  }
+}
