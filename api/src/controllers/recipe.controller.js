@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Recipe, Ingredient, Category, Hashtag } = require("../db");
+const { Recipe, Ingredient, Category, Hashtag, User } = require("../db");
 const { cloudinary } = require("../utils/cloudinary.helper");
 
 const uploadImageToCloudinary = async (imageBase64) => {
@@ -137,6 +137,10 @@ const getRecipes = async () => {
         model: Hashtag,
         attributes: ["name"],
       },
+      {
+        model: User,
+        attributes: ["name"],
+      },
     ],
   });
   return recipes;
@@ -155,6 +159,10 @@ const getRecipeById = async (recipeId) => {
       },
       {
         model: Hashtag,
+        attributes: ["name"],
+      },
+      {
+        model: User,
         attributes: ["name"],
       },
     ],
@@ -187,6 +195,10 @@ const searchRecipesByName = async (name) => {
         },
         {
           model: Hashtag,
+          attributes: ["name"],
+        },
+        {
+          model: User,
           attributes: ["name"],
         },
       ],
