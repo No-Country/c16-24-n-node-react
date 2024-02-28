@@ -16,7 +16,6 @@ const {
   CategorySchema,
  
   HashtagSchema,
-,
 } = require("./schemas");
 
 const swaggerDefinition = {
