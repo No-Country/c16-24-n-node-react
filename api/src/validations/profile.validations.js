@@ -18,7 +18,6 @@ const profileValidationSchema = checkSchema({
   first_name: {
     optional: true,
     isString: { errorMessage: "No válido" },
-    notEmpty: true,
     matches: {
       options: /^[a-zA-Z\s]*$/,
       errorMessage: validationErrorMessages.general,
@@ -30,9 +29,10 @@ const profileValidationSchema = checkSchema({
     trim: true,
   },
   last_name: {
-    optional: true,
+    optional: {
+      options: { values: "falsy" },
+    },
     isString: true,
-    notEmpty: true,
     matches: {
       options: /^[a-zA-Z\s]*$/,
       errorMessage: validationErrorMessages.general,
@@ -44,7 +44,9 @@ const profileValidationSchema = checkSchema({
     trim: true,
   },
   description: {
-    optional: true,
+    optional: {
+      options: { values: "falsy" },
+    },
     isLength: {
       options: { min: 2, max: 256 },
       errorMessage: validationErrorMessages.lengthMinMax(2, 256),
@@ -53,16 +55,20 @@ const profileValidationSchema = checkSchema({
     trim: true,
   },
   country: {
+    optional: {
+      options: { values: "falsy" },
+    },
     isString: true,
-    optional: true,
     isLength: {
       options: { min: 2, max: 40 },
       errorMessage: validationErrorMessages.lengthMinMax(2, 40),
     },
   },
   mobilenumber: {
+    optional: {
+      options: { values: "falsy" },
+    },
     isString: true,
-    optional: true,
     isLength: {
       options: { min: 9, max: 12 },
       errorMessage: validationErrorMessages.lengthMinMax(9, 12),

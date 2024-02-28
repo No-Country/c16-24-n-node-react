@@ -3,7 +3,7 @@ const RecipeSchema = {
   required: [
     "userId",
     "name",
-    "primaryimage",
+    "imageFile",
     "description",
     "portion",
     "preparation_time",

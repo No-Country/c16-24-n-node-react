@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Recipe, Ingredient, Category, Hashtag } = require("../db");
+const { Recipe, Ingredient, Category, Hashtag, User } = require("../db");
 const { cloudinary } = require("../utils/cloudinary.helper");
 
 const uploadImageToCloudinary = async (imageBase64) => {
@@ -110,19 +110,25 @@ const createRecipe = async (
   return newRecipe;
 };
 
-const updateRecipe = async (recipeId, updateFields) => {
-
-  const existingRecipe = await Recipe.findByPk(recipeId,{
-    include:[Ingredient, Hashtag, Category], 
-  });
+const updateRecipe = async (recipeId, updatedAttributes) => {
+  // Buscar la receta por ID
+  const existingRecipe = await Recipe.findByPk(recipeId);
 
   if (!existingRecipe) {
-    return res.status(404).json({ error: "Receta no encontrada" });
+    throw new Error("Receta no encontrada");
   }
-  console.log(existingRecipe.Ingredients)
-  existingRecipe.Ingredients = [...existingRecipe.Ingredients, ...updateFields.ingredients]
-  existingRecipe.Ingredients.save();
-  await existingRecipe.update(updateFields);
+
+  // Actualizar los atributos proporcionados en updatedAttributes
+  Object.keys(updatedAttributes).forEach((key) => {
+    if (updatedAttributes[key] !== undefined) {
+      existingRecipe[key] = updatedAttributes[key];
+    }
+  });
+
+  // Guardar los cambios en la base de datos
+  await existingRecipe.save();
+
+  return existingRecipe;
 };
 
 const getRecipes = async () => {
@@ -143,6 +149,10 @@ const getRecipes = async () => {
         model: Hashtag,
         attributes: ["name"],
       },
+      {
+        model: User,
+        attributes: ["user_name"],
+      },
     ],
   });
   return recipes;
@@ -162,6 +172,10 @@ const getRecipeById = async (recipeId) => {
       {
         model: Hashtag,
         attributes: ["name"],
+      },
+      {
+        model: User,
+        attributes: ["user_name"],
       },
     ],
   });
@@ -194,6 +208,10 @@ const searchRecipesByName = async (name) => {
         {
           model: Hashtag,
           attributes: ["name"],
+        },
+        {
+          model: User,
+          attributes: ["user_name"],
         },
       ],
       order: [["createdAt", "DESC"]],

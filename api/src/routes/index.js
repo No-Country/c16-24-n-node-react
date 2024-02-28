@@ -5,6 +5,8 @@ const oauthGoogleRoutes = require("./oauth-google.routes");
 const recipesRoutes = require("./recipes.routes");
 const profileRoutes = require("./profile.routes");
 const userRoutes = require("./user.routes");
+const reviewsRoutes = require("./review.routes");
+const likesRoutes = require("./like.routes");
 const usersRoutes = require("./users.routes");
 
 const apiRouter = new Router()
@@ -13,6 +15,8 @@ const apiRouter = new Router()
   .use("/profile", profileRoutes)
   .use("/recipes", recipesRoutes)
   .use("/user", userRoutes)
-  .use("/users", usersRoutes);
+  .use("/users", usersRoutes)
+  .use("/reviews", reviewsRoutes)
+  .use("/recipe", likesRoutes);
 
 module.exports = apiRouter;
