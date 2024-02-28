@@ -39,20 +39,20 @@ const searchUser = async (searchTerm, page = 1, perPage = 5) => {
   }
 };
 
-const follow = async (followerId, userId) => {
-  if (followerId === userId) {
+const follow = async (toFollowId, myUserId) => {
+  if (toFollowId === myUserId) {
     return res.status(400).json({ error: "No puedes seguirte a ti mismo" });
   }
 
-  const user = await User.findByPk(userId);
+  const user = await User.findByPk(myUserId);
   if (!user) {
     return res.status(404).json({ error: "Usuario no encontrado" });
   }
 
   const existingFollow = await Folower.findOne({
     where: {
-      followerId,
-      userId,
+      followerId: myUserId,
+      userId: toFollowId,
     },
   });
 
@@ -61,8 +61,8 @@ const follow = async (followerId, userId) => {
   }
 
   await Folower.create({
-    followerId,
-    userId,
+    followerId: myUserId,
+    userId: toFollowId,
   });
 
   res.status(201).json({ message: "Usuario seguido exitosamente" });

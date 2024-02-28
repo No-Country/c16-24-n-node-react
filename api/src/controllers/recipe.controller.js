@@ -111,11 +111,17 @@ const createRecipe = async (
 };
 
 const updateRecipe = async (recipeId, updateFields) => {
-  const existingRecipe = await Recipe.findByPk(recipeId);
+
+  const existingRecipe = await Recipe.findByPk(recipeId,{
+    include:[Ingredient, Hashtag, Category], 
+  });
 
   if (!existingRecipe) {
     return res.status(404).json({ error: "Receta no encontrada" });
   }
+  console.log(existingRecipe.Ingredients)
+  existingRecipe.Ingredients = [...existingRecipe.Ingredients, ...updateFields.ingredients]
+  existingRecipe.Ingredients.save();
   await existingRecipe.update(updateFields);
 };
 

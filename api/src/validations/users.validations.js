@@ -4,6 +4,13 @@ const {
 } = require("../utils/validation-errors.values");
 const { userNameValidOptions } = require("./auth.validations");
 
+const uUIDValidOptions = {
+  in: "params",
+  trim: true,
+  notEmpty: { errorMessage: validationErrorMessages.notEmpty },
+  isUUID: { errorMessage: validationErrorMessages.notUUID },
+}
+
 const searchUserValidation = checkSchema({
   term: {
     in: "query",
@@ -46,16 +53,18 @@ const getUserValidation = checkSchema({
 });
 
 const getUserRecipesValidation = checkSchema({
-  userId: {
-    in: "params",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isUUID: { errorMessage: validationErrorMessages.notUUID },
-  },
+  userId: uUIDValidOptions,
 });
+
+const followUserValidation = checkSchema({
+  to_follow_id:{...uUIDValidOptions, in:"body"}
+})
+
+
 
 module.exports = {
   searchUserValidation,
   getUserValidation,
   getUserRecipesValidation,
+  followUserValidation,
 };
