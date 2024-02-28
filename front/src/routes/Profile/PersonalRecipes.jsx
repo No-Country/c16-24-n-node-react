@@ -40,7 +40,7 @@ const PersonalRecipes = () => {
 
 const RecipeCardComponent = ({ recipe }) => {
   return (
-    <div className="mx-auto relative">
+    <Link className="mx-auto relative" to={`/recipe/${recipe.id}`}>
       <img
         className="aspect-square w-full object-cover rounded-xl"
         src={recipe.image}
@@ -49,7 +49,7 @@ const RecipeCardComponent = ({ recipe }) => {
       <p className="text-white [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] w-full py-3 px-2 bg-opacity-25 absolute top-0 rounded-t-xl bg-slate-900 text-ellipsis text-nowrap overflow-x-hidden">
         {recipe.name}
       </p>
-    </div>
+    </Link>
   );
 };
 
