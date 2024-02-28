@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { User, Profile, Folower } = require("../db");
+const { User, Profile, Follower } = require("../db");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
 const searchUser = async (searchTerm, page = 1, perPage = 5) => {
   const _page = page < 1 ? 1 : page;
@@ -40,32 +40,68 @@ const searchUser = async (searchTerm, page = 1, perPage = 5) => {
 };
 
 const follow = async (toFollowId, myUserId) => {
-  if (toFollowId === myUserId) {
-    return res.status(400).json({ error: "No puedes seguirte a ti mismo" });
-  }
+  try {
+    if (toFollowId === myUserId) {
+      throw { status: 400, msg: "No puedes seguirte a ti mismo" };
+    }
 
-  const user = await User.findByPk(myUserId);
-  if (!user) {
-    return res.status(404).json({ error: "Usuario no encontrado" });
-  }
+    const user = await User.findOne({
+      where: {
+        id: toFollowId,
+        deleted: false,
+        banned: false,
+      },
+    });
+    if (!user) {
+      throw { status: 404, msg: "Usuario no encontrado o baneado" };
+    }
 
-  const existingFollow = await Folower.findOne({
-    where: {
+    const existingFollow = await Follower.findOne({
+      where: {
+        followerId: myUserId,
+        userId: toFollowId,
+      },
+    });
+
+    if (existingFollow) {
+      throw { status: 400, msg: "Ya estás siguiendo a este usuario" };
+    }
+
+    await Follower.create({
       followerId: myUserId,
       userId: toFollowId,
-    },
-  });
+    });
 
-  if (existingFollow) {
-    return res.status(400).json({ error: "Ya estás siguiendo a este usuario" });
+    return { message: "Usuario seguido exitosamente" };
+  } catch (error) {
+    throw error;
   }
-
-  await Folower.create({
-    followerId: myUserId,
-    userId: toFollowId,
-  });
-
-  res.status(201).json({ message: "Usuario seguido exitosamente" });
 };
 
-module.exports = { searchUser };
+const unfollow = async (toUnfollowId, myUserId) => {
+  try {
+    const existingFollow = await Follower.findOne({
+      where: {
+        followerId: myUserId,
+        userId: toUnfollowId,
+      },
+    });
+
+    if (!existingFollow) {
+      throw { status: 400, msg: "No estás siguiendo a este usuario" };
+    }
+
+    await Follower.destroy({
+      where: {
+        followerId: myUserId,
+        userId: toUnfollowId,
+      },
+    });
+
+    return { message: "Follow eliminado exitosamente" };
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { searchUser, follow, unfollow };
