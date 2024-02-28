@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { User, Profile, Follower } = require("../db");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
+const { responseMessages } = require("../utils/validation-errors.values");
 const searchUser = async (searchTerm, page = 1, perPage = 5) => {
   const _page = page < 1 ? 1 : page;
   const _perPage = perPage > 10 ? 10 : perPage;
@@ -42,7 +43,7 @@ const searchUser = async (searchTerm, page = 1, perPage = 5) => {
 const follow = async (toFollowId, myUserId) => {
   try {
     if (toFollowId === myUserId) {
-      throw { status: 400, msg: "No puedes seguirte a ti mismo" };
+      throw { status: 400, msg: responseMessages.cantFollowYou };
     }
 
     const user = await User.findOne({
@@ -53,7 +54,7 @@ const follow = async (toFollowId, myUserId) => {
       },
     });
     if (!user) {
-      throw { status: 404, msg: "Usuario no encontrado o baneado" };
+      throw { status: 404, msg: responseMessages.notFoundOrBanned };
     }
 
     const existingFollow = await Follower.findOne({
@@ -64,7 +65,7 @@ const follow = async (toFollowId, myUserId) => {
     });
 
     if (existingFollow) {
-      throw { status: 400, msg: "Ya estás siguiendo a este usuario" };
+      throw { status: 400, msg: responseMessages.alreadyFollowing };
     }
 
     await Follower.create({
@@ -72,7 +73,7 @@ const follow = async (toFollowId, myUserId) => {
       userId: toFollowId,
     });
 
-    return { message: "Usuario seguido exitosamente" };
+    return { ok:true, message: responseMessages.followAdded };
   } catch (error) {
     throw error;
   }
@@ -88,17 +89,12 @@ const unfollow = async (toUnfollowId, myUserId) => {
     });
 
     if (!existingFollow) {
-      throw { status: 400, msg: "No estás siguiendo a este usuario" };
+      throw { status: 400, msg: responseMessages.notFollowing };
     }
 
-    await Follower.destroy({
-      where: {
-        followerId: myUserId,
-        userId: toUnfollowId,
-      },
-    });
+    await existingFollow.destroy();
 
-    return { message: "Follow eliminado exitosamente" };
+    return { ok: true, message: responseMessages.followRemoved };
   } catch (error) {
     throw error;
   }

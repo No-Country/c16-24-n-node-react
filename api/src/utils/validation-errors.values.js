@@ -29,6 +29,12 @@ const responseMessages = {
   updatedUserName: "Nombre de usuario actualizado correctamente",
   blockEmailUpdate:
     "No puede cambiar su email sin antes configurar una contraseña",
+  cantFollowYou: "No puedes seguirte a ti mismo",
+  alreadyFollowing: "Ya sigues a este usuario",
+  notFollowing: "No estás siguiendo a ese usuario",
+  followAdded: "Usuario seguido exitosamente",
+  followRemoved: "Dejaste de seguir a este usuario",
+  notFoundOrBanned: "Usuario no encontrado o baneado",
 };
 
 module.exports = { validationErrorMessages, responseMessages };

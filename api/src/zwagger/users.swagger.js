@@ -218,10 +218,119 @@ const usersRecipesPath = {
   },
 };
 
+const followUserPath = {
+  post:{
+    tags:["Users"],
+    security: [
+      {
+        apiKeyAuth: [],
+      },
+    ],
+    description:"Follow another user",
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              to_follow_id: {
+                type: "string",
+                description: "The user's to follow ID",
+                example: "UUID",
+              },
+            },
+          },
+        },
+      },
+    },
+    responses:{
+      200: {
+        description: "Update correct",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                ok:{
+                  type:"boolean",
+                  example: true,
+                },
+                message: {
+                  type:"string",
+                  example: "El mensaje correspondiente"
+                }
+              },
+            },
+          },
+        },
+      },
+      400: response400,
+      401: response40X,
+      500: response500
+    }
+  }
+}
+
+const unFollowUserPath = {
+  delete:{
+    tags:["Users"],
+    security: [
+      {
+        apiKeyAuth: [],
+      },
+    ],
+    description:"UnFollow another user",
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              to_follownt_id: {
+                type: "string",
+                description: "The user's to follow ID",
+                example: "UUID",
+              },
+            },
+          },
+        },
+      },
+    },
+    responses:{
+      200: {
+        description: "Update correct",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                ok:{
+                  type:"boolean",
+                  example: true,
+                },
+                message: {
+                  type:"string",
+                  example: "El mensaje correspondiente"
+                }
+              },
+            },
+          },
+        },
+      },
+      400: response400,
+      401: response40X,
+      500: response500
+    }
+  }
+}
+
 const usersPaths = {
   "/api/users/search": usersSearchPath,
   "/api/users/{userName}": usersByUNamePath,
   "/api/users/recipes/{userId}":usersRecipesPath,
+  "/api/users/follow":{...followUserPath, ...unFollowUserPath}
 };
 
 module.exports = usersPaths;
