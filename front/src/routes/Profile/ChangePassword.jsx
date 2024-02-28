@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
+import { PiPassword } from "react-icons/pi";
+import { MdPassword } from "react-icons/md";
 
 const ChangePassword = () => {
-  const token = sessionStorage.getItem("token");
   const [passwordData, setPasswordData] = useState({
     password: "",
     new_password: "",
@@ -75,36 +76,46 @@ const ChangePassword = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="password">Current password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={passwordData.password}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-          />
+
+          <div className="flex items-center gap-2">
+            <MdPassword className="text-3xl" />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={passwordData.password}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
         </div>
         <div>
           <label htmlFor="new_password">New Password:</label>
-          <input
-            type="password"
-            id="new_password"
-            name="new_password"
-            value={passwordData.new_password}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-          />
+          <div className="flex items-center gap-2">
+            <PiPassword className="text-3xl" />
+            <input
+              type="password"
+              id="new_password"
+              name="new_password"
+              value={passwordData.new_password}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
         </div>
         <div>
           <label htmlFor="new_password_confirm">Confirm new password:</label>
-          <input
-            type="password"
-            id="new_password_confirm"
-            name="new_password_confirm"
-            value={passwordData.new_password_confirm}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-          />
+          <div className="flex items-center gap-2">
+            <PiPassword className="text-3xl" />
+            <input
+              type="password"
+              id="new_password_confirm"
+              name="new_password_confirm"
+              value={passwordData.new_password_confirm}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
         </div>
         <div className="text-center">
           <button

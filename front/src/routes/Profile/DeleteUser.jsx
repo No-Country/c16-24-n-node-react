@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
 import { useAuthContext } from "../../context/AuthProvider";
+import { BiSolidUserMinus } from "react-icons/bi";
 
 const DeleteUser = () => {
   const [password, setPassword] = useState("");
@@ -30,7 +31,7 @@ const DeleteUser = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await appApi.delete("/user", {
+          await appApi.delete("/user", {
             data: { password },
           });
 
@@ -55,20 +56,23 @@ const DeleteUser = () => {
 
   return (
     <section className="mx-auto max-w-md mt-14">
-      <h1 className="mb-4 text-center text-2xl">Eliminar Usuario</h1>
-      <input
-        className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder=" Contraseña"
-      />
+      <h1 className="mb-4 text-center text-2xl">Delete User</h1>
+      <div className="flex items-center gap-2">
+        <BiSolidUserMinus className="text-4xl" />
+        <input
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder=" Contraseña"
+        />
+      </div>
       <div className="text-center mt-2">
         <button
           className="w-3/6 bg-red-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           onClick={handleDeleteUser}
         >
-          Eliminar Usuario
+          Delete
         </button>
       </div>
     </section>

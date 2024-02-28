@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
+import { FaUserEdit } from "react-icons/fa";
 
 const UpdateUserName = () => {
   const [userName, setUserName] = useState("");
@@ -62,12 +63,15 @@ const UpdateUserName = () => {
       <form onSubmit={handleSubmit}>
         <label>
           New User Name:
-          <input
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-            type="text"
-            value={userName}
-            onChange={handleChange}
-          />
+          <div className="flex items-center gap-2">
+            <FaUserEdit className="text-3xl" />
+            <input
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+              type="text"
+              value={userName}
+              onChange={handleChange}
+            />
+          </div>
         </label>
         <div className="text-center mt-2">
           <button
