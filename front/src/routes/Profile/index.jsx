@@ -2,8 +2,9 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import appApi from "../../api/appApi";
 import { useState, useEffect } from "react";
+import userAvatar from "./homero.jpg";
 import { SiGooglemaps } from "react-icons/si";
-import GetRecipes from "./GetRecipes";
+import PersonalRecipes from "./PersonalRecipes";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -30,9 +31,10 @@ const Profile = () => {
   }
 
   return (
-    <article className="mt-4 ">
+
+    <article className="mt-4 flex flex-col items-center">
       {profileData && (
-        <section className="flex justify-center items-center gap-6 max-md:flex-col ">
+        <section className="flex justify-center items-center gap-6 max-md:flex-col">
           <div className=" w-1/4 max-md:w-full">
             <img
               className=" rounded-full w-44 h-44 mx-auto border-2"
@@ -62,6 +64,7 @@ const Profile = () => {
               <div className="ml-auto max-md:mx-auto text-lg">
                 <Link
                   to="/userprofile"
+                  type="button"
                   className="bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 >
                   Edit Profile
@@ -81,9 +84,8 @@ const Profile = () => {
           </div>
         </section>
       )}
-
-      <hr className="mt-10 mb-5" />
-      <GetRecipes />
+      <hr className="my-10" />
+      <PersonalRecipes />
       <hr className="my-10" />
     </article>
   );
