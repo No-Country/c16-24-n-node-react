@@ -110,13 +110,25 @@ const createRecipe = async (
   return newRecipe;
 };
 
-const updateRecipe = async (recipeId, updateFields) => {
+const updateRecipe = async (recipeId, updatedAttributes) => {
+  // Buscar la receta por ID
   const existingRecipe = await Recipe.findByPk(recipeId);
 
   if (!existingRecipe) {
-    return res.status(404).json({ error: "Receta no encontrada" });
+    throw new Error("Receta no encontrada");
   }
-  await existingRecipe.update(updateFields);
+
+  // Actualizar los atributos proporcionados en updatedAttributes
+  Object.keys(updatedAttributes).forEach((key) => {
+    if (updatedAttributes[key] !== undefined) {
+      existingRecipe[key] = updatedAttributes[key];
+    }
+  });
+
+  // Guardar los cambios en la base de datos
+  await existingRecipe.save();
+
+  return existingRecipe;
 };
 
 const getRecipes = async () => {
