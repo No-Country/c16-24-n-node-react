@@ -10,6 +10,11 @@ const validationErrorMessages = {
     `File size exceeds the limit${size ? " of " + size + "Mb" : undefined}`,
   passwordMismatch: "Las contrseñas no coinciden",
   samePassword: "La nueva contraseña es la misma",
+  mustBeInt: (min, max) =>
+    `Debe ser un entero. ${min ? "Mínimo: " + min : undefined} ${
+      max ? "Máximo: " + max : ""
+    }`,
+  notUUID: "Not valid UUID",
 };
 
 const responseMessages = {
@@ -22,7 +27,14 @@ const responseMessages = {
   internalServerError: "Internal server error",
   updatedEmail: "Correo electrónico actualizado correctamente",
   updatedUserName: "Nombre de usuario actualizado correctamente",
-  blockEmailUpdate: "No puede cambiar su email sin antes configurar una contraseña"
+  blockEmailUpdate:
+    "No puede cambiar su email sin antes configurar una contraseña",
+  cantFollowYou: "No puedes seguirte a ti mismo",
+  alreadyFollowing: "Ya sigues a este usuario",
+  notFollowing: "No estás siguiendo a ese usuario",
+  followAdded: "Usuario seguido exitosamente",
+  followRemoved: "Dejaste de seguir a este usuario",
+  notFoundOrBanned: "Usuario no encontrado o baneado",
 };
 
 module.exports = { validationErrorMessages, responseMessages };
