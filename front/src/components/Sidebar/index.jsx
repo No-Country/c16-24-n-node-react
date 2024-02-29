@@ -10,11 +10,11 @@ const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
 
-  const changeSize = () => {
+  const changeSize = () => {    
     setWidth(window.innerWidth)
-    width < 900 ?setExpanded(false) : setExpanded(true)
+    width < 900 || width < 500 ?setExpanded(false) : setExpanded(true)
   }
-
+  
   useEffect(()=>{
     window.addEventListener('resize', changeSize)
     return()=>{

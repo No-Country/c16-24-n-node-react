@@ -55,7 +55,7 @@ const Home = () => {
                       <h3 className="flex justify-between items-center pl-2 pb-1">
                         <span className="flex justify-between items-center gap-2 text-l">
                           <FaRegUserCircle size={20} />
-                          <p id="userPost">{val.UserId}</p>
+                          <p id="userPost">@{val.User.user_name}</p>
                         </span>
                         <p id="date" className="text-sm pr-5">
                           {currentData.toDateString('es-AR', val.createdAt)}
@@ -108,12 +108,13 @@ const Home = () => {
                       <h3 id="titulo" className="pb-2">
                         {val.name}
                       </h3>
-                      <p
+                      <div 
+                      // dangerouslySetInnerHTML={{ __html: val.description.substring(0, 120) }}
                         id="comentario"
                         className="border border-solid rounded-xl p-2 md:h-20 lg:h-20 "
                       >
-                        {val.process.substring(0, 120)}...
-                      </p>
+                         {val.description.substring(0, 120)}... 
+                      </div>
                     </div>
                   </div>
                 )
