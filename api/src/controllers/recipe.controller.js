@@ -66,6 +66,39 @@ const updateHashtags = async (recipe, newHashtags) => {
   );
 };
 
+const DATA_TYPES = {
+  ingredient: Ingredient,
+  hashtag: Hashtag,
+  category: Category,
+};
+
+const addToRelations = async (arrayOfData, type) => {
+  try {
+    if (!DATA_TYPES[type]) {
+      throw {};
+    }
+    if (arrayOfData && arrayOfData.length > 0) {
+      const recipeData = await DATA_TYPES[type].bulkCreate(
+        arrayOfData.map((newData) => ({
+          name: newData.name.toLowerCase(),
+          image:
+            type === "ingredient" && !!newData.image
+              ? { image: newData.image }
+              : undefined,
+        })),
+        {
+          // Opciones para evitar duplicados
+          updateOnDuplicate: ["name", "image"],
+        }
+      );
+      return recipeData;
+    }
+    return [];
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Controlador para crear una nueva receta
 const createRecipe = async (
   {
@@ -116,66 +149,53 @@ const createRecipe = async (
   });
 
   // Asociar los ingredientes con la receta
-  if (ingredients && ingredients.length > 0) {
-    const recipeIngredients = await Promise.all(
-      ingredients.map(async (ingredient) => {
-        const [newIngredient, created] = await Ingredient.findOrCreate({
-          where: { name: ingredient.name.toLowerCase() },
-          defaults: { image: ingredient.image },
-        });
-        return newIngredient;
-      })
-    );
-
-    await newRecipe.addIngredients(recipeIngredients);
-  }
-
-  // Asociar las categorías con la receta
-  if (categories && categories.length > 0) {
-    const recipeCategories = await Promise.all(
-      categories.map(async (category) => {
-        const [newCategory, created] = await Category.findOrCreate({
-          where: { name: category.name.toLowerCase() },
-          defaults: { image: category.image },
-        });
-        return newCategory;
-      })
-    );
-
-    await newRecipe.addCategories(recipeCategories);
-  }
-
+  const ings = await addToRelations(ingredients, "ingredient");
+  await newRecipe.setIngredients(ings);
+  // Asociar las categorrías con la receta
+  const cats = await addToRelations(categories, "category");
+  await newRecipe.setCategories(cats);
   // Asociar los hashtags con la receta
-  if (hashtags && hashtags.length > 0) {
-    const recipeHashtags = await Promise.all(
-      hashtags.map(async (hashtag) => {
-        const [newHashtag, created] = await Hashtag.findOrCreate({
-          where: { name: hashtag.name.toLowerCase() },
-        });
-        return newHashtag;
-      })
-    );
-
-    await newRecipe.addHashtags(recipeHashtags);
-  }
-
+  const hashs = await addToRelations(hashtags, "hashtag");
+  await newRecipe.setHashtags(hashs);
   return newRecipe;
 };
 
 const updateRecipe = async (recipeId, updatedAttributes) => {
-  // Buscar la receta por ID
+  if (
+    !updatedAttributes.name ||
+    !updatedAttributes.description ||
+    !updatedAttributes.portion ||
+    !updatedAttributes.preparation_time ||
+    !updatedAttributes.difficulty ||
+    !updatedAttributes.process ||
+    !updatedAttributes.ingredients ||
+    !updatedAttributes.categories ||
+    !updatedAttributes.hashtags
+  )
+    throw Error("Faltan datos");
+  console.log(updatedAttributes.ingredients);
+  if (updatedAttributes.ingredients.length < 1) {
+    throw new Error("Debe tener al menos un ingrediente");
+  }
   const existingRecipe = await Recipe.findByPk(recipeId);
 
   if (!existingRecipe) {
     throw new Error("Receta no encontrada");
   }
 
-  // Actualizar los atributos proporcionados en updatedAttributes
-  Object.keys(updatedAttributes).forEach((key) => {
-    if (updatedAttributes[key] !== undefined) {
-      existingRecipe[key] = updatedAttributes[key];
-    }
-  });
+  existingRecipe.set(updatedAttributes);
+
+  const ings = await addToRelations(
+    updatedAttributes.ingredients,
+    "ingredient"
+  );
+  await existingRecipe.setIngredients(ings);
+
+  const cats = await addToRelations(updatedAttributes.categories, "category");
+  await existingRecipe.setCategories(cats);
+
+  const hashs = await addToRelations(updatedAttributes.hashtags, "hashtag");
+  await existingRecipe.setHashtags(hashs);
 
   // Guardar los cambios en la base de datos
   await existingRecipe.save();
@@ -223,14 +243,17 @@ const getRecipes = async () => {
       {
         model: Ingredient,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: Category,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: Hashtag,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: User,
@@ -247,14 +270,17 @@ const getRecipeById = async (recipeId) => {
       {
         model: Ingredient,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: Category,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: Hashtag,
         attributes: ["name"],
+        through: { attributes: [] },
       },
       {
         model: User,
