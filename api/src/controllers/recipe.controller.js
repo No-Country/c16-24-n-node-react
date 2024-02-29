@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const { Recipe, Ingredient, Category, Hashtag, User } = require("../db");
-const { cloudinary } = require("../utils/cloudinary.helper");
+const { cloudinary, deleteCloudinaryImage } = require("../utils/cloudinary.helper");
 
 const uploadImageToCloudinary = async (imageBase64) => {
   try {
@@ -241,6 +241,8 @@ const updateRecipeImage = async (recipeId, newImageFile) => {
 
   // Actualizar el atributo de imagen de la receta
   existingRecipe.primaryimage = newImageUrl;
+
+  await deleteCloudinaryImage(existingRecipe.primaryimage);
 
   // Guardar los cambios en la base de datos
   await existingRecipe.save();

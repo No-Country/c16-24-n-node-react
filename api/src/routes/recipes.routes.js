@@ -85,7 +85,7 @@ recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
   }
 });
 
-recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
+recipesRoutes.patch("/image/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
     const imageFile = req.body;

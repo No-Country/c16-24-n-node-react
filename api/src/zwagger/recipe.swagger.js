@@ -309,7 +309,7 @@ const recipePaths = {
     ...getOneRecipePath,
     ...updateRecipePath,
     ...deleteRecipePath,
-    ...recipeImageUpdatePath,
   },
+  "/api/recipes/image/{recipeId}": recipeImageUpdatePath,
 };
 module.exports = recipePaths;
