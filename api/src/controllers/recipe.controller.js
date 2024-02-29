@@ -131,6 +131,25 @@ const updateRecipe = async (recipeId, updatedAttributes) => {
   return existingRecipe;
 };
 
+const updateRecipeImage = async (recipeId, newImageFile) => {
+  const existingRecipe = await Recipe.findByPk(recipeId);
+
+  if (!existingRecipe) {
+    throw new Error("Receta no encontrada");
+  }
+
+  // Subir la nueva imagen a Cloudinary
+  const newImageUrl = await uploadImageToCloudinary(newImageFile);
+
+  // Actualizar el atributo de imagen de la receta
+  existingRecipe.primaryimage = newImageUrl;
+
+  // Guardar los cambios en la base de datos
+  await existingRecipe.save();
+
+  return existingRecipe;
+};
+
 const getRecipes = async () => {
   // Obtener todas las recetas ordenadas por fecha de creación de forma descendente
   const recipes = await Recipe.findAll({
@@ -248,5 +267,6 @@ module.exports = {
   getRecipeById,
   searchRecipesByName,
   updateRecipe,
+  updateRecipeImage,
   deleteRecipe,
 };

@@ -7,6 +7,7 @@ const profileRoutes = require("./profile.routes");
 const userRoutes = require("./user.routes");
 const reviewsRoutes = require("./review.routes");
 const likesRoutes = require("./like.routes");
+const ingredientRoutes = require("./ingredient.routes");
 const usersRoutes = require("./users.routes");
 
 const apiRouter = new Router()
@@ -17,6 +18,7 @@ const apiRouter = new Router()
   .use("/user", userRoutes)
   .use("/users", usersRoutes)
   .use("/reviews", reviewsRoutes)
-  .use("/recipe", likesRoutes);
+  .use("/recipe", likesRoutes)
+  .use("ingredients", ingredientRoutes);
 
 module.exports = apiRouter;
