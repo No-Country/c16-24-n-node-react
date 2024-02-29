@@ -9,7 +9,7 @@ const createIngredient = async (req, res) => {
 
     // Verificar si el ingrediente ya existe en la base de datos
     const existingIngredient = await Ingredient.findOne({
-      where: { nameToLowerCase },
+      where: { name: nameToLowerCase },
     });
     if (existingIngredient) {
       return res.status(400).json({ error: "El ingrediente ya existe" });
@@ -24,37 +24,46 @@ const createIngredient = async (req, res) => {
   }
 };
 
-// Controlador para actualizar un ingrediente existente
-const updateIngredient = async (req, res) => {
+const updateIngredients = async (req, res) => {
   try {
-    const { name, image } = req.body;
+    const ingredientsToUpdate = req.body;
 
-    const nameToLowerCase = name.toLowerCase();
+    // Iterar sobre cada ingrediente en la lista
+    const updatedIngredients = await Promise.all(
+      ingredientsToUpdate.map(async (ingredientData) => {
+        const { name, image } = ingredientData;
 
-    const existingIngredient = await Ingredient.findOne({
-      where: { nameToLowerCase },
-    });
+        const nameToLowerCase = name.toLowerCase();
 
-    if (!existingIngredient) {
-      existingIngredient = await Ingredient.create({
-        name: nameToLowerCase,
-        image,
-      });
-      return res.status(201).json(existingIngredient);
-    }
+        // Verificar si el ingrediente existe en la base de datos
+        let existingIngredient = await Ingredient.findOne({
+          where: { name: nameToLowerCase },
+        });
 
-    if (name !== undefined) {
-      existingIngredient.name = nameToLowerCase;
-    }
+        // Si el ingrediente no existe, crear uno nuevo
+        if (!existingIngredient) {
+          existingIngredient = await Ingredient.create({
+            name: nameToLowerCase,
+            image,
+          });
+        } else {
+          // Actualizar los atributos del ingrediente solo si se proporcionan en la solicitud
+          if (name !== undefined) {
+            existingIngredient.name = nameToLowerCase;
+          }
+          if (image !== undefined) {
+            existingIngredient.image = image;
+          }
 
-    if (image !== undefined) {
-      existingIngredient.image = image;
-    }
+          // Guardar los cambios en la base de datos
+          await existingIngredient.save();
+        }
 
-    // Guardar los cambios en la base de datos
-    await existingIngredient.save();
+        return existingIngredient;
+      })
+    );
 
-    return res.status(200).json(existingIngredient);
+    return res.status(200).json(updatedIngredients);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -108,7 +117,7 @@ const deleteIngredient = async (req, res) => {
 
 module.exports = {
   createIngredient,
-  updateIngredient,
+  updateIngredients,
   getAllIngredients,
   getIngredientById,
   deleteIngredient,

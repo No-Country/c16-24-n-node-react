@@ -7,7 +7,7 @@ const createCategory = async (req, res) => {
     const nameToLowerCase = name.toLowerCase();
 
     const existingCategory = await Category.findOne({
-      where: { nameToLowerCase },
+      where: { name: nameToLowerCase },
     });
     if (existingCategory) {
       return res.status(400).json({ error: "La categoría ya existe" });
@@ -21,35 +21,46 @@ const createCategory = async (req, res) => {
   }
 };
 
-const updateCategory = async (req, res) => {
+// Controlador para actualizar parcialmente o crear nuevas categorías
+const updateCategories = async (req, res) => {
   try {
-    const { name, image } = req.body;
+    const categoriesToUpdate = req.body;
 
-    const nameToLowerCase = name.toLowerCase();
+    // Iterar sobre cada categoría en la lista
+    const updatedCategories = await Promise.all(
+      categoriesToUpdate.map(async (categoryData) => {
+        const { name, image } = categoryData;
 
-    const existingCategory = await Category.findOne({
-      where: { nameToLowerCase },
-    });
+        const nameToLowerCase = name.toLowerCase();
+        // Verificar si la categoría existe en la base de datos
+        let existingCategory = await Category.findOne({
+          where: { name: nameToLowerCase },
+        });
 
-    if (!existingCategory) {
-      existingCategory = await Category.create({
-        name: nameToLowerCase,
-        image,
-      });
-      return res.status(201).json(existingCategory);
-    }
+        // Si la categoría no existe, crear una nueva
+        if (!existingCategory) {
+          existingCategory = await Category.create({
+            name: nameToLowerCase,
+            image,
+          });
+        } else {
+          // Actualizar los atributos de la categoría solo si se proporcionan en la solicitud
+          if (name !== undefined) {
+            existingCategory.name = nameToLowerCase;
+          }
+          if (image !== undefined) {
+            existingCategory.image = image;
+          }
 
-    if (name !== undefined) {
-      existingCategory.name = nameToLowerCase;
-    }
+          // Guardar los cambios en la base de datos
+          await existingCategory.save();
+        }
 
-    if (image !== undefined) {
-      existingCategory.image = image;
-    }
+        return existingCategory;
+      })
+    );
 
-    await existingCategory.save();
-
-    return res.status(200).json(existingCategory);
+    return res.status(200).json(updatedCategories);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
