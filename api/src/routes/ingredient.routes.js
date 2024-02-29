@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { jwtValidator } = require("../middlewares");
 const {
   createIngredient,
-  updateIngredient,
+  updateIngredients,
   getAllIngredients,
   getIngredientById,
   deleteIngredient,
@@ -12,12 +12,12 @@ const ingredientRoutes = Router();
 
 ingredientRoutes.post("/", [jwtValidator], createIngredient);
 
-ingredientRoutes.patch("/:ingredientId", [jwtValidator], updateIngredient);
+ingredientRoutes.patch("/", [jwtValidator], updateIngredients);
 
 ingredientRoutes.get("/:ingredientId", getIngredientById);
 
 ingredientRoutes.get("/", getAllIngredients);
 
-ingredientRoutes.delete("/", [jwtValidator], deleteIngredient);
+ingredientRoutes.delete("/:ingredientId", [jwtValidator], deleteIngredient);
 
 module.exports = ingredientRoutes;
