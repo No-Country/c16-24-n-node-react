@@ -44,7 +44,7 @@ const updateIngredient = async (req, res) => {
     }
 
     if (name !== undefined) {
-      existingIngredient.name = name;
+      existingIngredient.name = nameToLowerCase;
     }
 
     if (image !== undefined) {
