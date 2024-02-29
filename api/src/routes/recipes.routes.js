@@ -73,7 +73,7 @@ recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
     const updateFields = req.body;
-    const updatedRecipe = await updateRecipe(recipeId, updateFields);
+    const updatedRecipe = await updateRecipe(req.user.id, recipeId, updateFields);
     return res.status(200).json({
       message: "Receta actualizada exitosamente",
       recipe: updatedRecipe,

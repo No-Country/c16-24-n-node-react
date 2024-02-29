@@ -91,6 +91,15 @@ const addToRelations = async (arrayOfData, type) => {
           updateOnDuplicate: ["name", "image"],
         }
       );
+      // const recipeData = await Promise.all(
+      //   arrayOfData.map(async (data) => {
+      //     const [newData, created] = await DATA_TYPES[type].findOrCreate({
+      //       where: { name: data.name },
+      //       defaults: type === "ingredient" ? { image: data.image } : undefined,
+      //     });
+      //     return newData;
+      //   })
+      // );
       return recipeData;
     }
     return [];
@@ -160,7 +169,8 @@ const createRecipe = async (
   return newRecipe;
 };
 
-const updateRecipe = async (recipeId, updatedAttributes) => {
+const updateRecipe = async (userId, recipeId, updatedAttributes) => {
+  console.log(updatedAttributes);
   if (
     !updatedAttributes.name ||
     !updatedAttributes.description ||
@@ -173,12 +183,15 @@ const updateRecipe = async (recipeId, updatedAttributes) => {
     !updatedAttributes.hashtags
   )
     throw Error("Faltan datos");
-  console.log(updatedAttributes.ingredients);
+
   if (updatedAttributes.ingredients.length < 1) {
     throw new Error("Debe tener al menos un ingrediente");
   }
   const existingRecipe = await Recipe.findByPk(recipeId);
 
+  if (userId != existingRecipe.UserId) {
+    throw Error("No puede modificar recetas de otros");
+  }
   if (!existingRecipe) {
     throw new Error("Receta no encontrada");
   }
