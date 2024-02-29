@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { jwtValidator } = require("../middlewares");
 const {
   createCategory,
-  updateCategory,
+  updateCategories,
   getAllCategories,
   getCategoryById,
   deleteCategory,
@@ -12,7 +12,7 @@ const categoryRoutes = Router();
 
 categoryRoutes.post("/", [jwtValidator], createCategory);
 
-categoryRoutes.patch("/", [jwtValidator], updateCategory);
+categoryRoutes.patch("/", [jwtValidator], updateCategories);
 
 categoryRoutes.get("/:categoryId", getCategoryById);
 
