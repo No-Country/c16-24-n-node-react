@@ -2,7 +2,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import appApi from "../../api/appApi";
 import { useState, useEffect } from "react";
-import userAvatar from "./homero.jpg";
+// import userAvatar from "./homero.jpg";
 import { SiGooglemaps } from "react-icons/si";
 import PersonalRecipes from "./PersonalRecipes";
 

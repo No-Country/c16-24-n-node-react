@@ -18,7 +18,7 @@ const Header = () => {
 
   const logOut = () => {
     handlerLogOut()
-    navigate('/login', {replace:true},)
+    navigate('/login')
   }
 
   return (

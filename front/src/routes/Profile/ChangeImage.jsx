@@ -49,13 +49,14 @@ const PhotoUpdater = () => {
           icon: "success",
           title: "Image uploaded successfully",
         });
-      } catch (error) {
+      }catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error uploading image",
           text: error.message,
         });
       }
+      window.location.reload();
     };
 
     reader.readAsDataURL(selectedFile);

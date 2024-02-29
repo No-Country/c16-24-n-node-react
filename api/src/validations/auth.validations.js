@@ -21,20 +21,22 @@ const emailValidOptions = {
   toLowerCase: true,
 };
 
-const signInValidations = checkSchema({
-  user_name: {
-    in: "body",
-    trim: true,
-    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
-    isLength: {
-      options: { min: 2, max: 12 },
-      errorMessage: validationErrorMessages.namesLenght,
-    },
-    matches: {
-      options: /^[a-zA-Z0-9_]+$/,
-      errorMessage: validationErrorMessages.general,
-    },
+const userNameValidOptions = {
+  in: "body",
+  trim: true,
+  notEmpty: { errorMessage: validationErrorMessages.notEmpty },
+  isLength: {
+    options: { min: 2, max: 12 },
+    errorMessage: validationErrorMessages.lengthMinMax(2, 12),
   },
+  matches: {
+    options: /^[a-zA-Z0-9_]+$/,
+    errorMessage: validationErrorMessages.general,
+  },
+};
+
+const signInValidations = checkSchema({
+  user_name: userNameValidOptions,
   email: emailValidOptions,
   password: passwordValidOptions,
 });
@@ -48,4 +50,5 @@ module.exports = {
   signInValidations,
   emailPassValidations,
   passwordValidOptions,
+  userNameValidOptions
 };
