@@ -7,6 +7,7 @@ const userPaths = require("./user.swagger");
 const recipePaths = require("./recipe.swagger");
 const reviewPaths = require("./review.swagger");
 const likePaths = require("./like.swagger");
+const ingredientPaths = require("./ingredient.swagger");
 const { SWR_CSS_URL1, SWR_CSS_URL2, SWR_JS_URL1, SWR_JS_URL2 } = process.env;
 const {
   IngredientSchema,
@@ -32,6 +33,7 @@ const swaggerDefinition = {
       ...recipePaths,
       ...reviewPaths,
       ...likePaths,
+      ...ingredientPaths,
     },
     definitions: { AuthOkResponse: authOkResponse },
     components: {
