@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import appApi from "../../api/appApi";
 import Swal from "sweetalert2";
 import { MdDelete } from "react-icons/md";
@@ -8,7 +8,7 @@ import logo2 from "./logo2.png";
 
 const PatchEdit = () => {
   const { recipeId } = useParams();
-
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     imageFile: null,
@@ -32,9 +32,7 @@ const PatchEdit = () => {
       try {
         const response = await appApi.get(`/recipes/${recipeId}`);
         setFormData(response.data.recipe);
-        console.log(response.data.recipe);
 
-        console.log(response.data.recipe.primaryimage);
         if (response.data.recipe.primaryimage) {
           setImageUrl(response.data.recipe.primaryimage);
         }
@@ -56,72 +54,72 @@ const PatchEdit = () => {
   const handleIngredientChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newIngredients = [...prevFormData.ingredients]; // <-- Corrected casing
+      const newIngredients = [...prevFormData.ingredients];
       newIngredients[index] = { name: value };
-      return { ...prevFormData, ingredients: newIngredients }; // <-- Corrected casing
+      return { ...prevFormData, ingredients: newIngredients };
     });
   };
 
   const handleRemoveIngredient = (index) => {
     setFormData((prevFormData) => {
-      const newIngredients = [...prevFormData.ingredients]; // <-- Corrected casing
+      const newIngredients = [...prevFormData.ingredients];
       newIngredients.splice(index, 1);
-      return { ...prevFormData, ingredients: newIngredients }; // <-- Corrected casing
+      return { ...prevFormData, ingredients: newIngredients };
     });
   };
 
   const handleAddIngredient = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      ingredients: [...prevFormData.ingredients, { name: "" }], // <-- Corrected casing
+      ingredients: [...prevFormData.ingredients, { name: "" }],
     }));
   };
 
   const handleCategoryChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newCategories = [...prevFormData.categories]; // <-- Corrected casing
+      const newCategories = [...prevFormData.categories];
       newCategories[index] = { name: value };
-      return { ...prevFormData, categories: newCategories }; // <-- Corrected casing
+      return { ...prevFormData, categories: newCategories };
     });
   };
 
   const handleRemoveCategory = (index) => {
     setFormData((prevFormData) => {
-      const newCategories = [...prevFormData.categories]; // <-- Corrected casing
+      const newCategories = [...prevFormData.categories];
       newCategories.splice(index, 1);
-      return { ...prevFormData, categories: newCategories }; // <-- Corrected casing
+      return { ...prevFormData, categories: newCategories };
     });
   };
 
   const handleAddCategory = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      categories: [...prevFormData.categories, { name: "" }], // <-- Corrected casing
+      categories: [...prevFormData.categories, { name: "" }],
     }));
   };
 
   const handleHashtagChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newHashtags = [...prevFormData.hashtags]; // <-- Corrected casing
+      const newHashtags = [...prevFormData.hashtags];
       newHashtags[index] = { name: value };
-      return { ...prevFormData, hashtags: newHashtags }; // <-- Corrected casing
+      return { ...prevFormData, hashtags: newHashtags };
     });
   };
 
   const handleRemoveHashtag = (index) => {
     setFormData((prevFormData) => {
-      const newHashtags = [...prevFormData.hashtags]; // <-- Corrected casing
+      const newHashtags = [...prevFormData.hashtags];
       newHashtags.splice(index, 1);
-      return { ...prevFormData, hashtags: newHashtags }; // <-- Corrected casing
+      return { ...prevFormData, hashtags: newHashtags };
     });
   };
 
   const handleAddHashtag = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      hashtags: [...prevFormData.hashtags, { name: "" }], // <-- Corrected casing
+      hashtags: [...prevFormData.hashtags, { name: "" }],
     }));
   };
 
@@ -144,22 +142,22 @@ const PatchEdit = () => {
     setSelectedFile(file);
     setPreviewImage(URL.createObjectURL(file));
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      if (!selectedFile) {
-        await submitForm(formData);
-        return;
+      if (selectedFile) {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+
+        reader.onloadend = async () => {
+          const base64 = reader.result.split(",")[1];
+          await updateImage(base64);
+        };
       }
 
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-
-      reader.onloadend = async () => {
-        const base64 = reader.result.split(",")[1];
-        await submitForm({ ...formData, imageFile: base64 });
-      };
+      await updateRecipe(formData);
     } catch (error) {
       console.error(error);
       Swal.fire({
@@ -169,7 +167,24 @@ const PatchEdit = () => {
       });
     }
   };
-  const submitForm = async (data) => {
+
+  const updateImage = async (base64) => {
+    try {
+      const imageData = `data:${selectedFile.type};base64,${base64}`;
+      await appApi.patch(`/recipes/image/${recipeId}`, {
+        imageFile: imageData,
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update recipe image",
+      });
+    }
+  };
+
+  const updateRecipe = async (data) => {
     try {
       await appApi.patch(`/recipes/${recipeId}`, data);
 
@@ -177,10 +192,12 @@ const PatchEdit = () => {
         icon: "success",
         title: "Success",
         text: "Recipe updated successfully",
-        timer: 2000,
+        timer: 2500,
         showConfirmButton: false,
       });
-      console.log("Data", data);
+      setTimeout(() => {
+        navigate(`/profile`);
+      }, 2600);
     } catch (error) {
       console.error(error);
       Swal.fire({

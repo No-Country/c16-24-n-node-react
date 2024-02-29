@@ -56,7 +56,7 @@ const PhotoUpdater = () => {
           icon: "success",
           title: "Image uploaded successfully",
         });
-      }catch (error) {
+      } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error uploading image",
@@ -89,7 +89,7 @@ const PhotoUpdater = () => {
             <img
               src={previewUrl}
               alt="Preview"
-              className="my-4 mx-auto w-64 h-auto  border-2 rounded-lg"
+              className="my-4 mx-auto w-64 h-auto  border-2 rounded-lg border-green-600"
             />
             <button
               className="bg-red-500 text-white px-3 py-2 rounded-md"
