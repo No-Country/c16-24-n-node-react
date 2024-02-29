@@ -7,6 +7,9 @@ import appApi from "../../api/appApi";
 import { MdDelete } from "react-icons/md";
 import { GrAdd } from "react-icons/gr";
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 const Post = () => {
   const imageMaxSize = 1;
   const { logIn } = useAuthContext();
@@ -313,8 +316,8 @@ const Post = () => {
           categories: [{ name: "" }],
           hashtags: [{ name: "" }],
         });
-
         setSelectedFile(null);
+        window.location.reload();
       };
 
       reader.readAsDataURL(selectedFile);
@@ -328,6 +331,7 @@ const Post = () => {
     }
   };
 
+  console.log(formData);
   return (
     <>
       {!logIn && <Navigate to="/login" />}
@@ -407,13 +411,28 @@ const Post = () => {
             <label htmlFor="process" className="block mb-2 text-xl">
               Process:
             </label>
-            <textarea
+            <CKEditor
+              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 h-48 transition-all duration-300"
+              editor={ClassicEditor}
+              data="<p>Aqui puedes decribir el proceso de las recetas</p>"
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                let name = "process";
+                setFormData({
+                  ...formData,
+                  [name]: data,
+                });
+              }}
+              id="process"
+              value={formData.process}
+            />
+            {/* <textarea
               id="process"
               name="process"
               value={formData.process}
               onChange={handleInputChange}
               className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-            />
+            /> */}
           </div>
           <hr className="my-5" />
           <div className="mb-4">

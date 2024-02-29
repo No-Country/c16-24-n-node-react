@@ -132,17 +132,12 @@ const getUserRecipes = async (
   page = 1,
   perPage = 9
 ) => {
-  const whereClause = { UserId: userProfileId };
-
   const _page = page < 1 ? 1 : page;
   const _perPage = perPage > 10 ? 10 : perPage;
-
-  if (userReqId != userProfileId) {
-    whereClause.hidden = false;
-  }
+  
   try {
     const posts = await Recipe.findAll({
-      where: whereClause,
+      where: {UserId: userProfileId, hidden:false},
       offset: (_page - 1) * _perPage,
       limit: _perPage,
       order: [["createdAt", "DESC"]],
