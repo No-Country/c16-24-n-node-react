@@ -12,6 +12,7 @@ const {
   updateRecipe,
   deleteRecipe,
   searchRecipesByName,
+  updateRecipeImage,
 } = require("../controllers/recipe.controller");
 
 const recipesRoutes = Router();
@@ -81,6 +82,22 @@ recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
     // Manejar errores de servidor
     console.error("Error al actualizar la receta:", error);
     return res.status(500).json({ error: "Error al actualizar la receta" });
+  }
+});
+
+recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+    const imageFile = req.body;
+    const updatedImage = await updateRecipeImage(recipeId, imageFile);
+    return res.status(200).json({
+      message: "Imagen actualizada exitosamente",
+      image: updatedImage,
+    });
+  } catch (error) {
+    // Manejar errores de servidor
+    console.error("Error al actualizar la imagen:", error);
+    return res.status(500).json({ error: "Error al actualizar la imagen" });
   }
 });
 

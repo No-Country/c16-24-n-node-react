@@ -1,28 +1,28 @@
 const {
-  IngredientSchema,
+  CategorySchema,
   ValidationErrorSchema,
   InternalServerErrorSchema,
 } = require("./schemas");
 
-const ingredientPaths = {
-  "/api/ingredients/": {
+const categoryPaths = {
+  "/api/categories/": {
     post: {
-      tags: ["Ingredients"],
-      summary: "Create a new ingredient",
+      tags: ["Categories"],
+      summary: "Create a new category",
       requestBody: {
         required: true,
         content: {
           "application/json": {
-            schema: IngredientSchema,
+            schema: CategorySchema,
           },
         },
       },
       responses: {
         201: {
-          description: "Ingredient created successfully",
+          description: "Category created successfully",
           content: {
             "application/json": {
-              schema: IngredientSchema,
+              schema: CategorySchema,
             },
           },
         },
@@ -45,8 +45,8 @@ const ingredientPaths = {
       },
     },
     get: {
-      tags: ["Ingredients"],
-      summary: "Get all ingredients",
+      tags: ["Categories"],
+      summary: "Get all categories",
       responses: {
         200: {
           description: "Successful operation",
@@ -54,7 +54,7 @@ const ingredientPaths = {
             "application/json": {
               schema: {
                 type: "array",
-                items: IngredientSchema,
+                items: CategorySchema,
               },
             },
           },
@@ -70,15 +70,15 @@ const ingredientPaths = {
       },
     },
   },
-  "/api/ingredients/:ingredientId": {
+  "/api/categories/:categoryId": {
     get: {
-      tags: ["Ingredients"],
-      summary: "Get an ingredient by ID",
+      tags: ["Categories"],
+      summary: "Get a category by ID",
       parameters: [
         {
-          name: "ingredientId",
+          name: "categoryId",
           in: "path",
-          description: "ID of the ingredient",
+          description: "ID of the category",
           schema: {
             type: "integer",
           },
@@ -90,12 +90,12 @@ const ingredientPaths = {
           description: "Successful operation",
           content: {
             "application/json": {
-              schema: IngredientSchema,
+              schema: CategorySchema,
             },
           },
         },
         404: {
-          description: "Ingredient not found",
+          description: "Category not found",
           content: {
             "application/json": {
               schema: {
@@ -103,7 +103,7 @@ const ingredientPaths = {
                 properties: {
                   error: {
                     type: "string",
-                    example: "Ingredient not found",
+                    example: "Category not found",
                   },
                 },
               },
@@ -121,22 +121,33 @@ const ingredientPaths = {
       },
     },
     patch: {
-      tags: ["Ingredients"],
-      summary: "Update an existing ingredient",
+      tags: ["Categories"],
+      summary: "Update an existing category",
+      parameters: [
+        {
+          name: "categoryId",
+          in: "path",
+          required: true,
+          description: "ID of the category to update",
+          schema: {
+            type: "integer",
+          },
+        },
+      ],
       requestBody: {
         required: true,
         content: {
           "application/json": {
-            schema: IngredientSchema,
+            schema: CategorySchema,
           },
         },
       },
       responses: {
         200: {
-          description: "Ingredient updated successfully",
+          description: "Category updated successfully",
           content: {
             "application/json": {
-              schema: IngredientSchema,
+              schema: CategorySchema,
             },
           },
         },
@@ -149,7 +160,7 @@ const ingredientPaths = {
           },
         },
         404: {
-          description: "Ingredient not found",
+          description: "Category not found",
           content: {
             "application/json": {
               schema: {
@@ -157,7 +168,7 @@ const ingredientPaths = {
                 properties: {
                   error: {
                     type: "string",
-                    example: "Ingredient not found",
+                    example: "Category not found",
                   },
                 },
               },
@@ -175,14 +186,14 @@ const ingredientPaths = {
       },
     },
     delete: {
-      tags: ["Ingredients"],
-      summary: "Delete an existing ingredient",
+      tags: ["Categories"],
+      summary: "Delete an existing category",
       parameters: [
         {
-          name: "ingredientId",
+          name: "categoryId",
           in: "path",
           required: true,
-          description: "ID of the ingredient to delete",
+          description: "ID of the category to delete",
           schema: {
             type: "integer",
           },
@@ -190,10 +201,10 @@ const ingredientPaths = {
       ],
       responses: {
         204: {
-          description: "Ingredient deleted successfully",
+          description: "Category deleted successfully",
         },
         404: {
-          description: "Ingredient not found",
+          description: "Category not found",
           content: {
             "application/json": {
               schema: {
@@ -201,7 +212,7 @@ const ingredientPaths = {
                 properties: {
                   error: {
                     type: "string",
-                    example: "Ingredient not found",
+                    example: "Category not found",
                   },
                 },
               },
@@ -221,4 +232,4 @@ const ingredientPaths = {
   },
 };
 
-module.exports = ingredientPaths;
+module.exports = categoryPaths;
