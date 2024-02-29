@@ -378,7 +378,7 @@ const Post = () => {
               name="portion"
               value={formData.portion}
               onChange={handleInputChange}
-              className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
             />
           </div>
           <div className="mb-4">
@@ -391,7 +391,7 @@ const Post = () => {
               name="preparation_time"
               value={formData.preparation_time}
               onChange={handleInputChange}
-              className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
             />
           </div>
           <div className="mb-4">
@@ -404,7 +404,7 @@ const Post = () => {
               name="difficulty"
               value={formData.difficulty}
               onChange={handleInputChange}
-              className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+              className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
             />
           </div>
           <div className="mb-4">
@@ -414,7 +414,7 @@ const Post = () => {
             <CKEditor
               className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 h-48 transition-all duration-300"
               editor={ClassicEditor}
-              data="<p>Aqui puedes decribir el proceso de las recetas</p>"
+              data="<p>Here you can describe the recipe process...</p>"
               onChange={(event, editor) => {
                 const data = editor.getData();
                 let name = "process";

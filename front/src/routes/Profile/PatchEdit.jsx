@@ -17,9 +17,9 @@ const PatchEdit = () => {
     preparation_time: 0,
     difficulty: 0,
     process: "",
-    Ingredients: [{ name: "" }],
-    Categories: [{ name: "" }],
-    Hashtags: [{ name: "" }],
+    ingredients: [{ name: "" }],
+    categories: [{ name: "" }],
+    hashtags: [{ name: "" }],
   });
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -32,6 +32,8 @@ const PatchEdit = () => {
       try {
         const response = await appApi.get(`/recipes/${recipeId}`);
         setFormData(response.data.recipe);
+        console.log(response.data.recipe);
+
         console.log(response.data.recipe.primaryimage);
         if (response.data.recipe.primaryimage) {
           setImageUrl(response.data.recipe.primaryimage);
@@ -51,76 +53,75 @@ const PatchEdit = () => {
       [name]: value,
     });
   };
-
   const handleIngredientChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newIngredients = [...prevFormData.Ingredients];
+      const newIngredients = [...prevFormData.ingredients]; // <-- Corrected casing
       newIngredients[index] = { name: value };
-      return { ...prevFormData, Ingredients: newIngredients };
+      return { ...prevFormData, ingredients: newIngredients }; // <-- Corrected casing
     });
   };
 
   const handleRemoveIngredient = (index) => {
     setFormData((prevFormData) => {
-      const newIngredients = [...prevFormData.Ingredients];
+      const newIngredients = [...prevFormData.ingredients]; // <-- Corrected casing
       newIngredients.splice(index, 1);
-      return { ...prevFormData, Ingredients: newIngredients };
+      return { ...prevFormData, ingredients: newIngredients }; // <-- Corrected casing
     });
   };
 
   const handleAddIngredient = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      Ingredients: [...prevFormData.Ingredients, { name: "" }],
+      ingredients: [...prevFormData.ingredients, { name: "" }], // <-- Corrected casing
     }));
   };
 
   const handleCategoryChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newCategories = [...prevFormData.Categories];
+      const newCategories = [...prevFormData.categories]; // <-- Corrected casing
       newCategories[index] = { name: value };
-      return { ...prevFormData, Categories: newCategories };
+      return { ...prevFormData, categories: newCategories }; // <-- Corrected casing
     });
   };
 
   const handleRemoveCategory = (index) => {
     setFormData((prevFormData) => {
-      const newCategories = [...prevFormData.Categories];
+      const newCategories = [...prevFormData.categories]; // <-- Corrected casing
       newCategories.splice(index, 1);
-      return { ...prevFormData, Categories: newCategories };
+      return { ...prevFormData, categories: newCategories }; // <-- Corrected casing
     });
   };
 
   const handleAddCategory = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      Categories: [...prevFormData.Categories, { name: "" }],
+      categories: [...prevFormData.categories, { name: "" }], // <-- Corrected casing
     }));
   };
 
   const handleHashtagChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
-      const newHashtags = [...prevFormData.Hashtags];
+      const newHashtags = [...prevFormData.hashtags]; // <-- Corrected casing
       newHashtags[index] = { name: value };
-      return { ...prevFormData, Hashtags: newHashtags };
+      return { ...prevFormData, hashtags: newHashtags }; // <-- Corrected casing
     });
   };
 
   const handleRemoveHashtag = (index) => {
     setFormData((prevFormData) => {
-      const newHashtags = [...prevFormData.Hashtags];
+      const newHashtags = [...prevFormData.hashtags]; // <-- Corrected casing
       newHashtags.splice(index, 1);
-      return { ...prevFormData, Hashtags: newHashtags };
+      return { ...prevFormData, hashtags: newHashtags }; // <-- Corrected casing
     });
   };
 
   const handleAddHashtag = () => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      Hashtags: [...prevFormData.Hashtags, { name: "" }],
+      hashtags: [...prevFormData.hashtags, { name: "" }], // <-- Corrected casing
     }));
   };
 
@@ -238,7 +239,7 @@ const PatchEdit = () => {
             name="portion"
             value={formData.portion}
             onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
           />
         </div>
         <div className="mb-4">
@@ -251,7 +252,7 @@ const PatchEdit = () => {
             name="preparation_time"
             value={formData.preparation_time}
             onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
           />
         </div>
         <div className="mb-4">
@@ -264,7 +265,7 @@ const PatchEdit = () => {
             name="difficulty"
             value={formData.difficulty}
             onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/2 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
+            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
           />
         </div>
         <div className="mb-4">
@@ -284,7 +285,7 @@ const PatchEdit = () => {
           <label htmlFor="ingredients" className="block mb-2 text-xl">
             Ingredientes:
           </label>
-          {formData.Ingredients.map((ingredient, index) => (
+          {formData.ingredients.map((ingredient, index) => (
             <div key={index} className="mb-2 flex items-center">
               <input
                 type="text"
@@ -315,26 +316,24 @@ const PatchEdit = () => {
           <label htmlFor="categories" className="block mb-2">
             Categories:
           </label>
-          {formData.Categories &&
-            formData.Categories.length > 0 &&
-            formData.Categories.map((category, index) => (
-              <div key={index} className="mb-2 flex items-center">
-                <input
-                  type="text"
-                  value={category.name}
-                  placeholder="New category"
-                  onChange={(e) => handleCategoryChange(index, e)}
-                  className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveCategory(index)}
-                  className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
-                >
-                  <MdDelete />
-                </button>
-              </div>
-            ))}
+          {formData.categories.map((category, index) => (
+            <div key={index} className="mb-2 flex items-center">
+              <input
+                type="text"
+                value={category.name}
+                placeholder="New category"
+                onChange={(e) => handleCategoryChange(index, e)}
+                className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveCategory(index)}
+                className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              >
+                <MdDelete />
+              </button>
+            </div>
+          ))}
           <button
             type="button"
             onClick={handleAddCategory}
@@ -347,26 +346,24 @@ const PatchEdit = () => {
           <label htmlFor="hashtags" className="block mb-2">
             Hashtags:
           </label>
-          {formData.Hashtags &&
-            formData.Hashtags.length > 0 &&
-            formData.Hashtags.map((hashtag, index) => (
-              <div key={index} className="mb-2 flex items-center">
-                <input
-                  type="text"
-                  value={hashtag.name}
-                  placeholder="New hashtag"
-                  onChange={(e) => handleHashtagChange(index, e)}
-                  className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveHashtag(index)}
-                  className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
-                >
-                  <MdDelete />
-                </button>
-              </div>
-            ))}
+          {formData.hashtags.map((hashtag, index) => (
+            <div key={index} className="mb-2 flex items-center">
+              <input
+                type="text"
+                value={hashtag.name}
+                placeholder="New hashtag"
+                onChange={(e) => handleHashtagChange(index, e)}
+                className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveHashtag(index)}
+                className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              >
+                <MdDelete />
+              </button>
+            </div>
+          ))}
           <button
             type="button"
             onClick={handleAddHashtag}

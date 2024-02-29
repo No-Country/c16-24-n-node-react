@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Route, Routes, Navigate } from "react-router-dom";
 import Login from "../../routes/Login/Login";
 import Home from "../../routes/Home/Home";
@@ -13,6 +14,7 @@ import About from "../../routes/About";
 import Privacy from "../../routes/Privacy";
 import Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro";
+import Detail from "../../routes/Home/Detail";
 
 const Content = () => {
   return (
@@ -33,6 +35,8 @@ const Content = () => {
         <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/recipes/:recipeId" element={<PatchEdit />} />
+        <Route path="/detail" element={<Detail />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </div>
   );

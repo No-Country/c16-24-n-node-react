@@ -6,6 +6,7 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Seach = () => {
@@ -84,11 +85,13 @@ const Seach = () => {
                             {val.date}
                           </p>
                         </h3>
+                        <Link to={`/detail?dishID=${val.id}`}>
                         <img
                           className="pt-2 w-[500px] max-h-[230px] object-cover rounded-xl"
                           src={val.image}
                           alt=""
                         />
+                        </Link>
                         <div className="flex justify-between items-center py-3">
                           <div className="flex flex-row">
                             <button

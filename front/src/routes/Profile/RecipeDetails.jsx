@@ -14,7 +14,7 @@ const RecipeDetails = () => {
     const fetchRecipe = async () => {
       try {
         const response = await appApi.get(`/recipes/${recipeId}`);
-        console.log(response.data.recipe.Ingredients);
+        console.log(response.data.recipe.ingredients);
         setRecipe(response.data.recipe);
       } catch (error) {
         console.error("Error fetching recipe:", error);
@@ -67,7 +67,7 @@ const RecipeDetails = () => {
           <div className="mt-4">
             <p className="text-3xl font-semibold">Ingredients</p>
             <ul className="list-disc list-inside border-2 p-2 mt-3 bg-gray-100 rounded-lg  w-4/5">
-              {recipe.Ingredients.map((ingredient, index) => (
+              {recipe.ingredients.map((ingredient, index) => (
                 <li key={index}>{ingredient.name}</li>
               ))}
             </ul>
@@ -76,7 +76,7 @@ const RecipeDetails = () => {
           <div className="mt-4">
             <p className="text-3xl font-semibold">Categories</p>
             <ul className="list-disc list-inside border-2 p-2 mt-3 bg-gray-100 rounded-lg  w-4/5">
-              {recipe.Categories.map((category, index) => (
+              {recipe.categories.map((category, index) => (
                 <li key={index}>{category.name}</li>
               ))}
             </ul>
@@ -94,7 +94,7 @@ const RecipeDetails = () => {
           <div className="mt-4 mb-4 ">
             <p className="text-xl m-2">Hashtags</p>
             <ul className="list-disc list-inside flex m-2">
-              {recipe.Hashtags.map((hashtag, index) => (
+              {recipe.hashtags.map((hashtag, index) => (
                 <li className="list-none p-1" key={index}>
                   #{hashtag.name}
                 </li>

@@ -5,6 +5,7 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   // const [ offset, setOffset ] = useState(0);
@@ -38,6 +39,7 @@ const Home = () => {
     resApi.sort((a, b) => new Date(b.date) - new Date(a.date));
     setDishList(resApi);
   }
+  console.log(dishList);
 
   return (
     <main className="flex justify-center px-4 mt-5">
@@ -53,19 +55,19 @@ const Home = () => {
                   <h3 className="flex justify-between items-center pl-2 pb-1">
                     <span className="flex justify-between items-center gap-2 text-l">
                       <FaRegUserCircle size={20} />
-                      <p className="font-semibold text-blue-600" id="userPost">
-                        @{val.User.user_name}
-                      </p>
+                      <p id="userPost">@{val.User.user_name}</p>
                     </span>
                     <p id="date" className="text-sm pr-5">
                       {currentData.toDateString("es-AR", val.createdAt)}
                     </p>
                   </h3>
-                  <img
-                    className="pt-2 md:w-[500px] md:max-h-[230px] lg:w-full lg:max-h-[400px] object-cover rounded-xl"
-                    src={val.primaryimage}
-                    alt=""
-                  />
+                  <Link to={`/detail?dishID=${val.id}`}>
+                    <img
+                      className="pt-2 md:w-[500px] md:max-h-[230px] lg:w-full lg:max-h-[400px] object-cover rounded-xl"
+                      src={val.primaryimage}
+                      alt=""
+                    />
+                  </Link>
                   <div className="flex justify-between items-center py-3">
                     <div className="flex flex-row">
                       <button
@@ -88,7 +90,7 @@ const Home = () => {
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
                         <HiOutlineBookmark
-                          className="cursor-pointer"
+                          className={`cursor-pointer `}
                           size={20}
                         />
                       </button>
@@ -102,9 +104,10 @@ const Home = () => {
                   <h3 id="titulo" className="pb-2">
                     {val.name}
                   </h3>
+
                   <div
                     id="comentario"
-                    className="border border-solid rounded-xl p-2 md:h-20 lg:h-20 "
+                    className="border border-solid rounded-xl p-2 md:h-[full] lg:[full] "
                   >
                     {val.description.substring(0, 120)}...
                   </div>
