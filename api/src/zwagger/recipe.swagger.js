@@ -181,6 +181,80 @@ const updateRecipePath = {
   },
 };
 
+const recipeImageUpdatePath = {
+  patch: {
+    tags: ["Recipes"],
+    summary: "Update recipe image by ID",
+    parameters: [
+      {
+        name: "recipeId",
+        in: "path",
+        description: "ID of the recipe",
+        schema: {
+          type: "string",
+          format: "uuid", // Assuming recipeId is a UUID format
+        },
+        required: true,
+      },
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              image: {
+                type: "string",
+                format: "base64",
+                description: "Recipe image in base64 format",
+              },
+            },
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: "Successful operation",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                message: {
+                  type: "string",
+                  example: "Imagen actualizada exitosamente",
+                },
+                image: {
+                  type: "string",
+                  example: "updated_image_filename.jpg",
+                },
+              },
+            },
+          },
+        },
+      },
+      500: {
+        description: "Internal server error",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                error: {
+                  type: "string",
+                  example: "Error al actualizar la imagen",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
 const deleteRecipePath = {
   delete: {
     tags: ["Recipes"],
@@ -230,7 +304,12 @@ const deleteRecipePath = {
 };
 
 const recipePaths = {
-  "/api/recipes/": {...createRecipePath,...getRecipePath},
-  "/api/recipes/:recipeId": {...getOneRecipePath,...updateRecipePath,...deleteRecipePath}
+  "/api/recipes/": { ...createRecipePath, ...getRecipePath },
+  "/api/recipes/:recipeId": {
+    ...getOneRecipePath,
+    ...updateRecipePath,
+    ...deleteRecipePath,
+    ...recipeImageUpdatePath,
+  },
 };
 module.exports = recipePaths;

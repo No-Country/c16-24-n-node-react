@@ -14,6 +14,58 @@ const uploadImageToCloudinary = async (imageBase64) => {
   }
 };
 
+const updateIngredients = async (recipe, newIngredients) => {
+  await Promise.all(
+    newIngredients.map(async (ingredientData) => {
+      const { name } = ingredientData;
+      const nameToLowerCase = name.toLowerCase();
+      let ingredient = await Ingredient.findOne({
+        where: { name: nameToLowerCase },
+      });
+
+      if (!ingredient) {
+        ingredient = await Ingredient.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addIngredient(ingredient);
+    })
+  );
+};
+
+const updateCategories = async (recipe, newCategories) => {
+  await Promise.all(
+    newCategories.map(async (categoryData) => {
+      const { name } = categoryData;
+      const nameToLowerCase = name.toLowerCase();
+      let category = await Category.findOne({
+        where: { name: nameToLowerCase },
+      });
+
+      if (!category) {
+        category = await Category.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addCategory(category);
+    })
+  );
+};
+
+const updateHashtags = async (recipe, newHashtags) => {
+  await Promise.all(
+    newHashtags.map(async (hashtagData) => {
+      const { name } = hashtagData;
+      const nameToLowerCase = name.toLowerCase();
+      let hashtag = await Hashtag.findOne({ where: { name: nameToLowerCase } });
+
+      if (!hashtag) {
+        hashtag = await Hashtag.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addHashtag(hashtag);
+    })
+  );
+};
+
 // Controlador para crear una nueva receta
 const createRecipe = async (
   {
@@ -68,7 +120,7 @@ const createRecipe = async (
     const recipeIngredients = await Promise.all(
       ingredients.map(async (ingredient) => {
         const [newIngredient, created] = await Ingredient.findOrCreate({
-          where: { name: ingredient.name },
+          where: { name: ingredient.name.toLowerCase() },
           defaults: { image: ingredient.image },
         });
         return newIngredient;
@@ -83,7 +135,7 @@ const createRecipe = async (
     const recipeCategories = await Promise.all(
       categories.map(async (category) => {
         const [newCategory, created] = await Category.findOrCreate({
-          where: { name: category.name },
+          where: { name: category.name.toLowerCase() },
           defaults: { image: category.image },
         });
         return newCategory;
@@ -98,7 +150,7 @@ const createRecipe = async (
     const recipeHashtags = await Promise.all(
       hashtags.map(async (hashtag) => {
         const [newHashtag, created] = await Hashtag.findOrCreate({
-          where: { name: hashtag.name },
+          where: { name: hashtag.name.toLowerCase() },
         });
         return newHashtag;
       })
@@ -124,6 +176,37 @@ const updateRecipe = async (recipeId, updatedAttributes) => {
       existingRecipe[key] = updatedAttributes[key];
     }
   });
+
+  // Guardar los cambios en la base de datos
+  await existingRecipe.save();
+
+  if (updatedAttributes.ingredients) {
+    await updateIngredients(existingRecipe, updatedAttributes.ingredients);
+  }
+
+  if (updatedAttributes.categories) {
+    await updateCategories(existingRecipe, updatedAttributes.categories);
+  }
+
+  if (updatedAttributes.hashtags) {
+    await updateHashtags(existingRecipe, updatedAttributes.hashtags);
+  }
+
+  return existingRecipe;
+};
+
+const updateRecipeImage = async (recipeId, newImageFile) => {
+  const existingRecipe = await Recipe.findByPk(recipeId);
+
+  if (!existingRecipe) {
+    throw new Error("Receta no encontrada");
+  }
+
+  // Subir la nueva imagen a Cloudinary
+  const newImageUrl = await uploadImageToCloudinary(newImageFile);
+
+  // Actualizar el atributo de imagen de la receta
+  existingRecipe.primaryimage = newImageUrl;
 
   // Guardar los cambios en la base de datos
   await existingRecipe.save();
@@ -248,5 +331,6 @@ module.exports = {
   getRecipeById,
   searchRecipesByName,
   updateRecipe,
+  updateRecipeImage,
   deleteRecipe,
 };
