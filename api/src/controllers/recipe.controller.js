@@ -68,7 +68,7 @@ const createRecipe = async (
     const recipeIngredients = await Promise.all(
       ingredients.map(async (ingredient) => {
         const [newIngredient, created] = await Ingredient.findOrCreate({
-          where: { name: ingredient.name },
+          where: { name: ingredient.name.toLowerCase() },
           defaults: { image: ingredient.image },
         });
         return newIngredient;
@@ -83,7 +83,7 @@ const createRecipe = async (
     const recipeCategories = await Promise.all(
       categories.map(async (category) => {
         const [newCategory, created] = await Category.findOrCreate({
-          where: { name: category.name },
+          where: { name: category.name.toLowerCase() },
           defaults: { image: category.image },
         });
         return newCategory;
@@ -98,7 +98,7 @@ const createRecipe = async (
     const recipeHashtags = await Promise.all(
       hashtags.map(async (hashtag) => {
         const [newHashtag, created] = await Hashtag.findOrCreate({
-          where: { name: hashtag.name },
+          where: { name: hashtag.name.toLowerCase() },
         });
         return newHashtag;
       })
