@@ -10,6 +10,7 @@ const uploadImageToCloudinary = async (imageBase64) => {
     });
     return result.secure_url; // Devuelve la URL segura de la imagen subida
   } catch (error) {
+    console.log(error)
     throw new Error("Error al subir la imagen a Cloudinary");
   }
 };
@@ -170,7 +171,6 @@ const createRecipe = async (
 };
 
 const updateRecipe = async (userId, recipeId, updatedAttributes) => {
-  console.log(updatedAttributes);
   if (
     !updatedAttributes.name ||
     !updatedAttributes.description ||
@@ -237,12 +237,12 @@ const updateRecipeImage = async (recipeId, newImageFile) => {
   }
 
   // Subir la nueva imagen a Cloudinary
-  const newImageUrl = await uploadImageToCloudinary(newImageFile);
+  const newImageUrl = await uploadImageToCloudinary(newImageFile.imageFile);
+  await deleteCloudinaryImage(existingRecipe.primaryimage);
 
   // Actualizar el atributo de imagen de la receta
   existingRecipe.primaryimage = newImageUrl;
 
-  await deleteCloudinaryImage(existingRecipe.primaryimage);
 
   // Guardar los cambios en la base de datos
   await existingRecipe.save();
