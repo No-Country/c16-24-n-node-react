@@ -75,6 +75,55 @@ const PatchEdit = () => {
       Ingredients: [...prevFormData.Ingredients, { name: "" }],
     }));
   };
+
+  const handleCategoryChange = (index, event) => {
+    const { value } = event.target;
+    setFormData((prevFormData) => {
+      const newCategories = [...prevFormData.Categories];
+      newCategories[index] = { name: value };
+      return { ...prevFormData, Categories: newCategories };
+    });
+  };
+
+  const handleRemoveCategory = (index) => {
+    setFormData((prevFormData) => {
+      const newCategories = [...prevFormData.Categories];
+      newCategories.splice(index, 1);
+      return { ...prevFormData, Categories: newCategories };
+    });
+  };
+
+  const handleAddCategory = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      Categories: [...prevFormData.Categories, { name: "" }],
+    }));
+  };
+
+  const handleHashtagChange = (index, event) => {
+    const { value } = event.target;
+    setFormData((prevFormData) => {
+      const newHashtags = [...prevFormData.Hashtags];
+      newHashtags[index] = { name: value };
+      return { ...prevFormData, Hashtags: newHashtags };
+    });
+  };
+
+  const handleRemoveHashtag = (index) => {
+    setFormData((prevFormData) => {
+      const newHashtags = [...prevFormData.Hashtags];
+      newHashtags.splice(index, 1);
+      return { ...prevFormData, Hashtags: newHashtags };
+    });
+  };
+
+  const handleAddHashtag = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      Hashtags: [...prevFormData.Hashtags, { name: "" }],
+    }));
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     const maxSizeInBytes = imageMaxSize * 1024 * 1024;
@@ -262,62 +311,70 @@ const PatchEdit = () => {
           </button>
         </div>
 
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="categories" className="block mb-2">
             Categories:
           </label>
-          {formData.categories &&
-            formData.categories.length > 0 &&
-            formData.categories.map((category, index) => (
-              <input
-                key={index}
-                type="text"
-                value={category.name}
-                onChange={(event) => handleCategoryChange(index, event)}
-                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-              />
+          {formData.Categories &&
+            formData.Categories.length > 0 &&
+            formData.Categories.map((category, index) => (
+              <div key={index} className="mb-2 flex items-center">
+                <input
+                  type="text"
+                  value={category.name}
+                  placeholder="New category"
+                  onChange={(e) => handleCategoryChange(index, e)}
+                  className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveCategory(index)}
+                  className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                >
+                  <MdDelete />
+                </button>
+              </div>
             ))}
           <button
             type="button"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                categories: [...formData.categories, { name: "" }],
-              })
-            }
-            className="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            onClick={handleAddCategory}
+            className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
-            Add Category
+            <GrAdd />
           </button>
         </div>
         <div className="mb-4">
           <label htmlFor="hashtags" className="block mb-2">
             Hashtags:
           </label>
-          {formData.hashtags &&
-            formData.hashtags.length > 0 &&
-            formData.hashtags.map((hashtag, index) => (
-              <input
-                key={index}
-                type="text"
-                value={hashtag.name}
-                onChange={(event) => handleHashtagChange(index, event)}
-                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-              />
+          {formData.Hashtags &&
+            formData.Hashtags.length > 0 &&
+            formData.Hashtags.map((hashtag, index) => (
+              <div key={index} className="mb-2 flex items-center">
+                <input
+                  type="text"
+                  value={hashtag.name}
+                  placeholder="New hashtag"
+                  onChange={(e) => handleHashtagChange(index, e)}
+                  className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveHashtag(index)}
+                  className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                >
+                  <MdDelete />
+                </button>
+              </div>
             ))}
           <button
             type="button"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                hashtags: [...formData.hashtags, { name: "" }],
-              })
-            }
-            className="mt-2 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            onClick={handleAddHashtag}
+            className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
-            Add Hashtag
+            <GrAdd />
           </button>
-        </div> */}
+        </div>
         <hr className="my-10" />
         <div className="mb-4">
           <label htmlFor="image" className="block mb-4 text-xl ">

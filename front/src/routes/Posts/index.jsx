@@ -447,7 +447,7 @@ const Post = () => {
                   ingredients: [...formData.ingredients, { name: "" }],
                 })
               }
-              className="px-3 py-3 mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              className="px-3 py-3 mt-1 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
               <GrAdd />
             </button>
@@ -484,7 +484,7 @@ const Post = () => {
                   categories: [...formData.categories, { name: "" }],
                 })
               }
-              className="px-3 py-3 mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              className="px-3 py-3 mt-1 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
               <GrAdd />
             </button>
@@ -521,7 +521,7 @@ const Post = () => {
                   hashtags: [...formData.hashtags, { name: "" }],
                 })
               }
-              className="px-3 py-3 mt-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+              className="px-3 py-3 mt-1 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
             >
               <GrAdd />
             </button>

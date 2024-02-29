@@ -46,7 +46,7 @@ const Profile = () => {
           </div>
           <div className="border-2 border-black rounded-2xl w-3/4  max-md:w-full ">
             <div className="flex m-4 items-center gap-4 font-bold text-xl max-md:flex-col">
-              <p>{user}</p>
+              <p className="text-blue-500">{user}</p>
               <p className="max-md:hidden">-</p>
               <h1>{`
               ${
