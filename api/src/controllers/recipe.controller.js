@@ -14,6 +14,58 @@ const uploadImageToCloudinary = async (imageBase64) => {
   }
 };
 
+const updateIngredients = async (recipe, newIngredients) => {
+  await Promise.all(
+    newIngredients.map(async (ingredientData) => {
+      const { name } = ingredientData;
+      const nameToLowerCase = name.toLowerCase();
+      let ingredient = await Ingredient.findOne({
+        where: { name: nameToLowerCase },
+      });
+
+      if (!ingredient) {
+        ingredient = await Ingredient.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addIngredient(ingredient);
+    })
+  );
+};
+
+const updateCategories = async (recipe, newCategories) => {
+  await Promise.all(
+    newCategories.map(async (categoryData) => {
+      const { name } = categoryData;
+      const nameToLowerCase = name.toLowerCase();
+      let category = await Category.findOne({
+        where: { name: nameToLowerCase },
+      });
+
+      if (!category) {
+        category = await Category.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addCategory(category);
+    })
+  );
+};
+
+const updateHashtags = async (recipe, newHashtags) => {
+  await Promise.all(
+    newHashtags.map(async (hashtagData) => {
+      const { name } = hashtagData;
+      const nameToLowerCase = name.toLowerCase();
+      let hashtag = await Hashtag.findOne({ where: { name: nameToLowerCase } });
+
+      if (!hashtag) {
+        hashtag = await Hashtag.create({ name: nameToLowerCase });
+      }
+
+      await recipe.addHashtag(hashtag);
+    })
+  );
+};
+
 // Controlador para crear una nueva receta
 const createRecipe = async (
   {
@@ -127,6 +179,18 @@ const updateRecipe = async (recipeId, updatedAttributes) => {
 
   // Guardar los cambios en la base de datos
   await existingRecipe.save();
+
+  if (updatedAttributes.ingredients) {
+    await updateIngredients(existingRecipe, updatedAttributes.ingredients);
+  }
+
+  if (updatedAttributes.categories) {
+    await updateCategories(existingRecipe, updatedAttributes.categories);
+  }
+
+  if (updatedAttributes.hashtags) {
+    await updateHashtags(existingRecipe, updatedAttributes.hashtags);
+  }
 
   return existingRecipe;
 };
