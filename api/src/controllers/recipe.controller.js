@@ -189,11 +189,12 @@ const updateRecipe = async (userId, recipeId, updatedAttributes) => {
   }
   const existingRecipe = await Recipe.findByPk(recipeId);
 
-  if (userId != existingRecipe.UserId) {
-    throw Error("No puede modificar recetas de otros");
-  }
   if (!existingRecipe) {
     throw new Error("Receta no encontrada");
+  }
+
+  if (userId != existingRecipe.UserId) {
+    throw Error("No puede modificar recetas de otros");
   }
 
   existingRecipe.set(updatedAttributes);
@@ -305,8 +306,11 @@ const getRecipeById = async (recipeId) => {
   if (!recipe) {
     throw new Error(`No se encontró ninguna receta con el ID ${recipeId}.`);
   }
-
-  return recipe;
+  const recipeData = {...JSON.parse(JSON.stringify(recipe)), ingredients:recipe.Ingredients, categories:recipe.Categories, hashtags: recipe.Hashtags}
+  delete recipeData.Ingredients;
+  delete recipeData.Categories;
+  delete recipeData.Hashtags;
+  return recipeData;
 };
 
 const searchRecipesByName = async (name) => {
