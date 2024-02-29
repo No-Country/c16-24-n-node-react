@@ -5,8 +5,12 @@ const createIngredient = async (req, res) => {
   try {
     const { name, image } = req.body;
 
+    const nameToLowerCase = name.toLowerCase();
+
     // Verificar si el ingrediente ya existe en la base de datos
-    const existingIngredient = await Ingredient.findOne({ where: { name } });
+    const existingIngredient = await Ingredient.findOne({
+      where: { nameToLowerCase },
+    });
     if (existingIngredient) {
       return res.status(400).json({ error: "El ingrediente ya existe" });
     }
@@ -23,17 +27,22 @@ const createIngredient = async (req, res) => {
 // Controlador para actualizar un ingrediente existente
 const updateIngredient = async (req, res) => {
   try {
-    const { ingredientId } = req.params;
     const { name, image } = req.body;
 
-    // Verificar si el ingrediente existe en la base de datos
-    const existingIngredient = await Ingredient.findByPk(ingredientId);
+    const nameToLowerCase = name.toLowerCase();
+
+    const existingIngredient = await Ingredient.findOne({
+      where: { nameToLowerCase },
+    });
+
     if (!existingIngredient) {
-      return res.status(404).json({ error: "Ingrediente no encontrado" });
+      existingIngredient = await Ingredient.create({
+        name: nameToLowerCase,
+        image,
+      });
+      return res.status(201).json(existingIngredient);
     }
 
-    // Actualizar los atributos del ingrediente
-    // Actualizar los atributos del ingrediente solo si se proporcionan en la solicitud
     if (name !== undefined) {
       existingIngredient.name = name;
     }
