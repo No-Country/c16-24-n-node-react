@@ -39,15 +39,27 @@ const getUserById = async (userId) => {
 
 const getUserByUsernameOrThrow = async (userName) => {
   try {
-    return await User.findOne({
+    const user = await User.findOne({
       where: { user_name: userName },
-      include: [{ model: Profile }],
-      attributes: ["id", "user_name", "email"]
+      include: [
+        {
+          model: Profile,
+          attributes: [
+            "first_name",
+            "last_name",
+            "country",
+            "description",
+            "image",
+          ],
+        },
+      ],
+      attributes: ["id", "user_name", "email"],
     });
+    return  {id:user.id, user_name:user.user_name, ...user.Profile.dataValues}
   } catch (error) {
     throw { status: 400, msg: responseMessages.userNotRegistered };
   }
-}
+};
 
 const updatePassword = async (newPasswordData, userId) => {
   try {
@@ -108,7 +120,7 @@ const deleteUser = async (password, userId) => {
     user.deleted = true;
     user.email = `deleted_${new Date().getTime()}_@`;
     user.password = `$deleted_`;
-    if(!!user.Profile.image){
+    if (!!user.Profile.image) {
       await deleteCloudinaryImage(user.Profile.image);
     }
     user.Profile.image = null;
@@ -134,10 +146,10 @@ const getUserRecipes = async (
 ) => {
   const _page = page < 1 ? 1 : page;
   const _perPage = perPage > 10 ? 10 : perPage;
-  
+
   try {
     const posts = await Recipe.findAll({
-      where: {UserId: userProfileId, hidden:false},
+      where: { UserId: userProfileId, hidden: false },
       offset: (_page - 1) * _perPage,
       limit: _perPage,
       order: [["createdAt", "DESC"]],
@@ -167,5 +179,5 @@ module.exports = {
   updateUserName,
   getUserRecipes,
   deleteUser,
-  getUserByUsernameOrThrow
+  getUserByUsernameOrThrow,
 };
