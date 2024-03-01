@@ -36,8 +36,8 @@ usersRoutes.get(
   [getUserValidation, fieldValidator],
   async (req, res) => {
     try {
-      const user = await getUserByUsernameOrThrow(req.params.userName);
-      return res.status(200).json({ ok: true, user });
+      const data = await getUserByUsernameOrThrow(req.params.userName);
+      return res.status(200).json({ ok: true, data });
     } catch (error) {
       console.log(error);
       if (error.status) {
