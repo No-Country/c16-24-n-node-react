@@ -39,7 +39,7 @@ const Sidebar = () => {
           </ul>
           <div className="border-t flex p-3">
             <Link to="/">
-              <img src={minlogo} className="w-10 h-10 rounded-md" />
+              <img src={minlogo} className="w-10 h-10 object-cover rounded-md" />
             </Link>
             <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
               <div className="leading-4">

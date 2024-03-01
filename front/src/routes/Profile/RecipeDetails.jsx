@@ -89,7 +89,7 @@ const RecipeDetails = () => {
           <p className="text-xl m-2">Difficulty: {recipe.difficulty}</p>
           <div>
             <p className=" text-xl m-2">Process:</p>
-            <p className="text-base m-2 w-4/5">{recipe.process}</p>
+            <p dangerouslySetInnerHTML={{ __html: recipe?.process }} className="text-base m-2 w-4/5"></p>
           </div>
           <div className="mt-4 mb-4 ">
             <p className="text-xl m-2">Hashtags</p>

@@ -426,13 +426,6 @@ const Post = () => {
               id="process"
               value={formData.process}
             />
-            {/* <textarea
-              id="process"
-              name="process"
-              value={formData.process}
-              onChange={handleInputChange}
-              className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-            /> */}
           </div>
           <hr className="my-5" />
           <div className="mb-4">

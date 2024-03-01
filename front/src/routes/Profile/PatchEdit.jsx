@@ -6,6 +6,9 @@ import { MdDelete } from "react-icons/md";
 import { GrAdd } from "react-icons/gr";
 import logo2 from "./logo2.png";
 
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 const PatchEdit = () => {
   const { recipeId } = useParams();
   let navigate = useNavigate();
@@ -31,10 +34,10 @@ const PatchEdit = () => {
     const fetchRecipe = async () => {
       try {
         const response = await appApi.get(`/recipes/${recipeId}`);
-        setFormData(response.data.recipe);
+        setFormData(response?.data?.recipe);
 
-        if (response.data.recipe.primaryimage) {
-          setImageUrl(response.data.recipe.primaryimage);
+        if (response.data?.recipe?.primaryimage) {
+          setImageUrl(response?.data?.recipe?.primaryimage);
         }
       } catch (error) {
         console.error("Error fetching recipe:", error);
@@ -212,7 +215,6 @@ const PatchEdit = () => {
     setSelectedFile(null);
     setPreviewImage(null);
   };
-
   return (
     <div className="max-w-4xl mx-auto">
       <img src={logo2} alt="logo2" className="w-1/2 mx-auto" />
@@ -229,7 +231,7 @@ const PatchEdit = () => {
             type="text"
             id="name"
             name="name"
-            value={formData.name}
+            value={formData?.name}
             onChange={handleInputChange}
             className="p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
           />
@@ -241,7 +243,7 @@ const PatchEdit = () => {
           <textarea
             id="description"
             name="description"
-            value={formData.description}
+            value={formData?.description}
             onChange={handleInputChange}
             className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
           />
@@ -280,7 +282,7 @@ const PatchEdit = () => {
             type="number"
             id="difficulty"
             name="difficulty"
-            value={formData.difficulty}
+            value={formData?.difficulty}
             onChange={handleInputChange}
             className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
           />
@@ -289,13 +291,28 @@ const PatchEdit = () => {
           <label htmlFor="process" className="block mb-2 text-xl">
             Process:
           </label>
-          <textarea
+          {console.log(formData)}
+          <CKEditor
+              editor={ClassicEditor}
+              data={formData?.process}
+              value={formData?.process}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                let name = "process";
+                if(formData !== "" )setFormData({
+                  ...formData,
+                   [name]: data,
+                }) 
+              }}
+              id="process"
+            />
+          {/* <textarea
             id="process"
             name="process"
             value={formData.process}
             onChange={handleInputChange}
             className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-          />
+          /> */}
         </div>
         <hr className="my-10" />
         <div className="mb-4">
