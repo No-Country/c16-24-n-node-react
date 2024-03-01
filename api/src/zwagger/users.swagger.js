@@ -159,10 +159,10 @@ const usersRecipesPath = {
     summary: "Get user recipes recipes",
     parameters: [
       {
-        name: "userId",
+        name: "userName",
         in: "path",
-        description: "The user Id",
-        type: "UUID",
+        description: "The username",
+        type: "string",
         required: true
       },
       {
@@ -329,7 +329,7 @@ const unFollowUserPath = {
 const usersPaths = {
   "/api/users/search": usersSearchPath,
   "/api/users/{userName}": usersByUNamePath,
-  "/api/users/recipes/{userId}":usersRecipesPath,
+  "/api/users/recipes/{userName}":usersRecipesPath,
   "/api/users/follow":{...followUserPath, ...unFollowUserPath}
 };
 

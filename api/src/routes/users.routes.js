@@ -51,11 +51,11 @@ usersRoutes.get(
 );
 
 usersRoutes.get(
-  "/recipes/:userId",
+  "/recipes/:userName",
   [getUserRecipesValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await getUserRecipes(null, req.params.userId);
+      const data = await getUserRecipes(null, req.params.userName);
       return res.status(200).json({ ok: true, data });
     } catch (error) {
       console.log(error);
