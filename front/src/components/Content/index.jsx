@@ -9,6 +9,7 @@ import Recipes from "../../routes/Recipes";
 import Profile from "../../routes/Profile";
 import RecipeDetails from "../../routes/Profile/RecipeDetails";
 import UserProfile from "../../routes/Profile/UserProfile";
+import PatchEdit from "../../routes/Profile/PatchEdit";
 import About from "../../routes/About";
 import Privacy from "../../routes/Privacy";
 import Terms from "../../routes/Terms";
@@ -32,7 +33,9 @@ const Content = () => {
         <Route path="/registro" element={<Registro />} />
         <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/recipe/:recipeId" element={<RecipeDetails />} />
-        <Route path="/detail" element={ <Detail/> } />
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/recipes/:recipeId" element={<PatchEdit />} />
+        <Route path="/detail" element={<Detail />} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </div>

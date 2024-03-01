@@ -12,6 +12,8 @@ import appApi from "../../api/appApi";
 import DeleteUser from "./DeleteUser";
 import { TbFileDescription } from "react-icons/tb";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { BiRename } from "react-icons/bi";
+import { FaMobileAlt } from "react-icons/fa";
 
 const UserProfile = () => {
   const [editEnabled, setEditEnabled] = useState(false);
@@ -95,9 +97,9 @@ const UserProfile = () => {
     }
 
     if (
-      !userData.mobilenumber.length ||
-      userData.mobilenumber.length.length < 9 ||
-      userData.mobilenumber.length.length > 12
+      !userData.mobilenumber ||
+      userData.mobilenumber.length < 9 ||
+      userData.mobilenumber.length > 12
     ) {
       Swal.fire({
         icon: "warning",
@@ -110,14 +112,25 @@ const UserProfile = () => {
     }
 
     if (
-      !userData.description.length ||
-      userData.description.length.length < 2 ||
-      userData.description.length.length > 256
+      !userData.description ||
+      userData.description.length < 2 ||
+      userData.description.length > 256
     ) {
       Swal.fire({
         icon: "warning",
         title: "Warning",
-        text: "Please enter between 2 and 256 characters!",
+        text: "Please enter between 2 and 256 characters in description!",
+        timer: 3000,
+        showConfirmButton: false,
+      });
+      return;
+    }
+
+    if (!userData.country) {
+      Swal.fire({
+        icon: "warning",
+        title: "Warning",
+        text: "Please select a country",
         timer: 3000,
         showConfirmButton: false,
       });
@@ -168,7 +181,7 @@ const UserProfile = () => {
   return (
     <article>
       <section className="flex flex-row-reverse justify-center gap-20 items-center h-40">
-        <h1 className="text-4xl">Edit profile</h1>
+        <h1 className="text-5xl">Edit profile</h1>
         <img
           src={
             userData?.image
@@ -176,48 +189,53 @@ const UserProfile = () => {
               : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
           }
           alt="Foto de perfil"
-          className="rounded-full w-28 h-28 border-blue-500 border-2"
+          className="rounded-full w-32 h-32 border-blue-500 border-2"
         />
       </section>
-      <hr className="text-7xl" />
-      <div className="mx-auto max-w-md mt-14">
-        <h1 className="mb-6 text-center text-2xl">Edit Profile</h1>
+      <hr className="my-5" />
+      <div className="mx-auto max-w-md mt-10">
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div>
             <label className="block">
               First Name:
-              <input
-                type="text"
-                name="first_name"
-                value={userData.first_name}
-                onChange={handleInputChange}
-                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                  editEnabled ? "" : "pointer-events-none bg-gray-100"
-                }`}
-                disabled={!editEnabled}
-              />
+              <div className="flex items-center gap-2">
+                <BiRename className="text-3xl" />
+                <input
+                  type="text"
+                  name="first_name"
+                  value={userData.first_name}
+                  onChange={handleInputChange}
+                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  }`}
+                  disabled={!editEnabled}
+                />
+              </div>
             </label>
           </div>
           <div>
             <label className="block">
               Last Name:
-              <input
-                type="text"
-                name="last_name"
-                value={userData.last_name}
-                onChange={handleInputChange}
-                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                  editEnabled ? "" : "pointer-events-none bg-gray-100"
-                }`}
-                disabled={!editEnabled}
-              />
+              <div className="flex items-center gap-2">
+                <BiRename className="text-3xl" />
+                <input
+                  type="text"
+                  name="last_name"
+                  value={userData.last_name}
+                  onChange={handleInputChange}
+                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  }`}
+                  disabled={!editEnabled}
+                />
+              </div>
             </label>
           </div>
           <div>
             <label className="block">
               Description:
               <div className="flex items-center gap-2">
-                <TbFileDescription className="text-4xl" />
+                <TbFileDescription className="text-3xl" />
                 <textarea
                   type="text"
                   name="description"
@@ -262,16 +280,19 @@ const UserProfile = () => {
           <div>
             <label className="block">
               Mobile Number:
-              <input
-                type="text"
-                name="mobilenumber"
-                value={userData.mobilenumber}
-                onChange={handleInputChange}
-                className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                  editEnabled ? "" : "pointer-events-none bg-gray-100"
-                }`}
-                disabled={!editEnabled}
-              />
+              <div className="flex items-center gap-3">
+                <FaMobileAlt className="text-2xl ml-1" />
+                <input
+                  type="text"
+                  name="mobilenumber"
+                  value={userData.mobilenumber}
+                  onChange={handleInputChange}
+                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  }`}
+                  disabled={!editEnabled}
+                />
+              </div>
             </label>
           </div>
 

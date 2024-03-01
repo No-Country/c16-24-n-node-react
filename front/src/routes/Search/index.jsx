@@ -74,7 +74,12 @@ const Seach = () => {
                         <h3 className="flex justify-between items-center pl-2 pb-1">
                           <span className="flex justify-between items-center gap-2 text-l">
                             <FaRegUserCircle size={20} />
-                            <p id="userPost">{val.user}</p>
+                            <p
+                              className="font-semibold text-blue-600"
+                              id="userPost"
+                            >
+                              {val.user}
+                            </p>
                           </span>
                           <p id="date" className="text-sm pr-5">
                             {val.date}

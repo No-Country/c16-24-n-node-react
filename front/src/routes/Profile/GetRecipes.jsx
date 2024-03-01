@@ -12,6 +12,7 @@ const GetRecipes = () => {
     const fetchRecipes = async () => {
       try {
         const response = await appApi.get("/user/recipes");
+
         setRecipes(response.data.data);
       } catch (error) {
         console.error("Error fetching recipes:", error);

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
+import { MdPassword } from "react-icons/md";
+import { MdAlternateEmail } from "react-icons/md";
 
 const ChangeEmail = () => {
   const [email, setEmail] = useState("");
@@ -75,27 +77,34 @@ const ChangeEmail = () => {
       <form onSubmit={handleSubmitEmail} className="space-y-4">
         <div>
           <label htmlFor="email">New Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={handleChangeEmail}
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-          />
+          <div className="flex items-center gap-2">
+            <MdAlternateEmail className="text-3xl" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={handleChangeEmail}
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
         </div>
+
         <div>
           <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={handleChangeEmail}
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-          />
+          <div className="flex items-center gap-2">
+            <MdPassword className="text-3xl" />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={handleChangeEmail}
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            />
+          </div>
         </div>
         <div className="text-center">
           <button

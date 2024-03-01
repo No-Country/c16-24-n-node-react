@@ -2,7 +2,6 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import appApi from "../../api/appApi";
 import { useState, useEffect } from "react";
-// import userAvatar from "./homero.jpg";
 import { SiGooglemaps } from "react-icons/si";
 import PersonalRecipes from "./PersonalRecipes";
 
@@ -31,7 +30,6 @@ const Profile = () => {
   }
 
   return (
-
     <article className="mt-4 flex flex-col items-center">
       {profileData && (
         <section className="flex justify-center items-center gap-6 max-md:flex-col">
@@ -48,7 +46,7 @@ const Profile = () => {
           </div>
           <div className="border-2 border-black rounded-2xl w-3/4  max-md:w-full ">
             <div className="flex m-4 items-center gap-4 font-bold text-xl max-md:flex-col">
-              <p>{user}</p>
+              <p className="text-blue-500">{user}</p>
               <p className="max-md:hidden">-</p>
               <h1>{`
               ${
