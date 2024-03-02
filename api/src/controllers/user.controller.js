@@ -4,6 +4,7 @@ const { compareHash, passwordHash } = require("../utils/bcrypt.helper");
 const { deleteCloudinaryImage } = require("../utils/cloudinary.helper");
 const { responseMessages } = require("../utils/validation-errors.values");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
+const { Op } = require("sequelize");
 
 const createUser = async (newUserData) => {
   try {
@@ -55,7 +56,11 @@ const getUserByUsernameOrThrow = async (userName) => {
       ],
       attributes: ["id", "user_name", "email"],
     });
-    return  {id:user.id, user_name:user.user_name, ...user.Profile.dataValues}
+    return {
+      id: user.id,
+      user_name: user.user_name,
+      ...user.Profile.dataValues,
+    };
   } catch (error) {
     throw { status: 400, msg: responseMessages.userNotRegistered };
   }
@@ -140,7 +145,7 @@ const deleteUser = async (password, userId) => {
 
 const getUserRecipes = async (
   userReqId,
-  userProfileId,
+  userProfileName,
   page = 1,
   perPage = 9
 ) => {
@@ -149,7 +154,16 @@ const getUserRecipes = async (
 
   try {
     const posts = await Recipe.findAll({
-      where: { UserId: userProfileId, hidden: false },
+      include: {
+        model: User,
+        attributes: ["user_name"],
+      },
+      where: {
+        [Op.or]: [
+          { "$User.user_name$": userProfileName },
+        ],
+        hidden: false,
+      },
       offset: (_page - 1) * _perPage,
       limit: _perPage,
       order: [["createdAt", "DESC"]],

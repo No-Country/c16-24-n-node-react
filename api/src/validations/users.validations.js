@@ -53,7 +53,19 @@ const getUserValidation = checkSchema({
 });
 
 const getUserRecipesValidation = checkSchema({
-  userId: uUIDValidOptions,
+  userId: {
+    in: "params",
+    trim: true,
+    notEmpty: { errorMessage: validationErrorMessages.notEmpty },
+    isLength: {
+      options: { min: 2, max: 12 },
+      errorMessage: validationErrorMessages.lengthMinMax(2, 12),
+    },
+    matches: {
+      options: /^[a-zA-Z0-9_-]+$/,
+      errorMessage: validationErrorMessages.general,
+    },
+  },
 });
 
 const followUserValidation = checkSchema({
