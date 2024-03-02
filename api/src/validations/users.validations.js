@@ -53,7 +53,7 @@ const getUserValidation = checkSchema({
 });
 
 const getUserRecipesValidation = checkSchema({
-  userId: {
+  userName: {
     in: "params",
     trim: true,
     notEmpty: { errorMessage: validationErrorMessages.notEmpty },
