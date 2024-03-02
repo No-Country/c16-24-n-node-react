@@ -26,8 +26,8 @@ const userNameValidOptions = {
   trim: true,
   notEmpty: { errorMessage: validationErrorMessages.notEmpty },
   isLength: {
-    options: { min: 2, max: 12 },
-    errorMessage: validationErrorMessages.lengthMinMax(2, 12),
+    options: { min: 2, max: 24 },
+    errorMessage: validationErrorMessages.lengthMinMax(2, 24),
   },
   matches: {
     options: /^[a-zA-Z0-9_]+$/,

@@ -2,7 +2,10 @@ const { checkSchema } = require("express-validator");
 const {
   validationErrorMessages,
 } = require("../utils/validation-errors.values");
-const { passwordValidOptions } = require("./auth.validations");
+const {
+  passwordValidOptions,
+  userNameValidOptions,
+} = require("./auth.validations");
 
 const changePasswordValidation = checkSchema({
   password: {
@@ -25,6 +28,10 @@ const changePasswordValidation = checkSchema({
 
 const deleteUserValidation = checkSchema({
   password: passwordValidOptions,
+});
+
+const changeUserNameValidation = checkSchema({
+  user_name: userNameValidOptions,
 });
 
 module.exports = { changePasswordValidation, deleteUserValidation };
