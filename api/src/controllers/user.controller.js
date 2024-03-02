@@ -159,9 +159,7 @@ const getUserRecipes = async (
         attributes: ["user_name"],
       },
       where: {
-        [Op.or]: [
-          { "$User.user_name$": userProfileName },
-        ],
+        "$User.user_name$": userProfileName,
         hidden: false,
       },
       offset: (_page - 1) * _perPage,
@@ -174,7 +172,6 @@ const getUserRecipes = async (
         id: val.id,
         name: val.name,
         image: getCloudinaryResizedImage(val.primaryimage, 400),
-        hidden: userReqId === userProfileId ? val.hidden : undefined,
       };
     });
 
