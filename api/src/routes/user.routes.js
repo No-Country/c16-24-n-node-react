@@ -78,7 +78,7 @@ userRoutes.put(
 userRoutes.get("/recipes", [jwtValidator], async (req, res) => {
   const {user, query} = req;
   try {
-    const data = await getUserRecipes(user.id, user.id, query.page, query.perPage);
+    const data = await getUserRecipes(user.id, user.user_name, query.page, query.perPage);
     return res.status(200).json({ data });
   } catch (error) {
     console.log(error);

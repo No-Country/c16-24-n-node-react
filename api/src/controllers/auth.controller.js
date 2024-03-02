@@ -10,7 +10,7 @@ const emailPasswordSignIn = async (newUserData) => {
     newUserData.password = await passwordHash(newUserData.password);
     newUserData.signin_method = SignInMethods.email_password;
     const user = await createUser(newUserData);
-    const signedToken = signToken({ id: user.id });
+    const signedToken = signToken({ id: user.id, user_name:user.user_name });
     return {
       token: signedToken,
       user_name: user.user_name,
@@ -31,7 +31,7 @@ const emailPasswordLogIn = async (userCredentials) => {
       user.password,
       responseMessages.notValidCredentials
     );
-    const signedToken = signToken({ id: user.id });
+    const signedToken = signToken({ id: user.id, user_name:user.user_name });
     return {
       token: signedToken,
       user_name: user.user_name,
@@ -42,9 +42,9 @@ const emailPasswordLogIn = async (userCredentials) => {
   }
 };
 
-const renewToken = (userId) => {
+const renewToken = (userId, userName) => {
   try {
-    return signToken({ id: userId });
+    return signToken({ id: userId, user_name:userName });
   } catch (error) {
     throw error;
   }

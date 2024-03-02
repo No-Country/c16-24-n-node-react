@@ -47,7 +47,7 @@ const googleRevalidateToken = async (userId) =>{
     if (!user) {
       throw { status: 400, msg: responseMessages.userNotRegistered };
     }
-    const signedToken = signToken({ id: user.id });
+    const signedToken = signToken({ id: user.id, user_name:user.user_name });
     return {
       token: signedToken,
       user_name: user.user_name,
