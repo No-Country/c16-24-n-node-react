@@ -12,7 +12,7 @@ const Dropdown = () => {
         <div ref={dropRef} onClick={()=>(setShow(!show))} >
             <CgMoreVerticalAlt size={20} />            
             {show && 
-            <ul className="min-w-max absolute z-10  left-[220px] mt-[-145px] bg-white divide-y divide-gray-100 rounded-lg shadow overflow-hidden">
+            <ul className="min-w-max absolute z-10 max-md:right-2 max-md:-top-32  md:left-16 md:-mt-40 bg-white divide-y divide-gray-100 rounded-lg shadow overflow-hidden">
                 <DropdownItem />
             </ul>
             }
