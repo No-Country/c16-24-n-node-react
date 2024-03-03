@@ -93,8 +93,8 @@ const ChangePassword = () => {
             </label>
           </div>
         </div>
-        <div className="flex justify-between items-center gap-x-2">
-          <div className="flex relative w-[50%]">
+        <div className="sm:flex xs:block justify-between items-center gap-x-2">
+          <div className="relative sm:w-[50%] mb-4">
             <div className="flex justify-center items-between gap-2">
               <PiPassword className="mt-2 text-indigo-500" size={30} />
               <input
@@ -106,14 +106,14 @@ const ChangePassword = () => {
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10 "
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-64px)] bg-white"
                 htmlFor="new_password"
               >
                 New Password:
               </label>
             </div>
           </div>
-          <div className="flex relative w-[50%]">
+          <div className="sm:flex xs:block relative sm:w-[50%]">
             <div className="flex items-center gap-2">
               <PiPassword className="mt-2 text-indigo-500" size={30} />
               <input
@@ -125,7 +125,7 @@ const ChangePassword = () => {
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[50px] bg-white"
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[50px] xs:left-[calc(50%-75px)] bg-white"
                 htmlFor="new_password_confirm"
               >
                 Confirm password:
@@ -135,7 +135,7 @@ const ChangePassword = () => {
         </div>
         <div className="text-end">
           <button
-            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="sm:w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="submit"
           >
             Change Password

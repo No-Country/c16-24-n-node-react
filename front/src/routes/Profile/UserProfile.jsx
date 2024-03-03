@@ -180,8 +180,8 @@ const UserProfile = () => {
 
   return (
     <article>
-      <section className="flex flex-row-reverse justify-center gap-20 items-center">
-        <h1 className="text-5xl">Edit profile</h1>
+      <section className="flex flex-row-reverse justify-center sm:gap-x-20 xs:gap-x-5 items-center">
+        <h2 className="md:text-5xl sm:text-4xl xs:text-3xl">Edit profile</h2>
         <img
           src={
             userData?.image
@@ -195,8 +195,8 @@ const UserProfile = () => {
       <hr className="my-5" />
       <div className="mx-auto max-w-md mt-10">
         <form onSubmit={handleFormSubmit} className="space-y-4">
-          <div className="flex justify-between items-center gap-x-2">
-            <div className="flex relative w-[50%]">
+          <div className="sm:flex xs:block justify-between items-center gap-x-2">
+            <div className="sm:flex xs:block relative sm:w-[50%] xs:w-[100%] xs:mb-4">
               <div className="flex justify-center items-between gap-2">
                 <BiRename className="mt-2 text-indigo-500" size={30} />
                 <input
@@ -210,14 +210,14 @@ const UserProfile = () => {
                   disabled={!editEnabled}
                 />
                 <label
-                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-49px)] bg-white"
                   htmlFor="FistName"
                 >
                   First Name:
                 </label>
               </div>
             </div>
-            <div className="flex relative">
+            <div className="sm:flex xs:block relative sm:w-[50%] xs:w-[100%] xs:mb-4">
               <div className="flex justify-center items-between gap-2">
                 <BiRename className="mt-2 text-indigo-500" size={30} />
                 <input
@@ -231,7 +231,7 @@ const UserProfile = () => {
                   disabled={!editEnabled}
                 />
                 <label
-                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-48px)] bg-white"
                   htmlFor="LastName"
                 >
                   Last Name:
@@ -239,8 +239,8 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center gap-x-2">
-            <div className="flex relative w-[49%] gap-2">
+          <div className="sm:flex xs:block justify-between items-center gap-x-2">
+            <div className="flex relative sm:w-[50%] xs:mb-4">
               <FaMapMarkerAlt className="mt-2 text-indigo-500" size={30} />
               <Select
                 placeholder="Select country"
@@ -257,19 +257,19 @@ const UserProfile = () => {
                   label: country.name,
                 }))}
                 onChange={handleCountryChange}
-                className={`mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10  ${
+                className={`ml-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10  ${
                   editEnabled ? "" : "pointer-events-none bg-gray-50"
                 }`}
                 disabled={!editEnabled}
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-40px)] bg-white"
                 htmlFor="Country"
               >
                 Country:
               </label>
             </div>
-            <div className="flex relative w-[51%] gap-x-2">
+            <div className="sm:flex xs:block relative sm:w-[51%] gap-x-2">
               <div className="flex justify-center items-between gap-2">
                 <FaMobileAlt className="mt-2 text-indigo-500" size={30} />
                 <input
@@ -283,7 +283,7 @@ const UserProfile = () => {
                   disabled={!editEnabled}
                 />
                 <label
-                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[50%-65px] bg-white"
                   htmlFor="MobileMumber"
                 >
                   Mobile Number:

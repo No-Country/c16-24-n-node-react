@@ -75,8 +75,8 @@ const ChangeEmail = () => {
     <section className="mx-auto max-w-md">
       <h1 className="mb-6 text-start text-2xl">Change Email</h1>
       <form onSubmit={handleSubmitEmail} className="space-y-4">
-        <div className="flex justify-between items-center gap-x-2">
-          <div className="flex relative w-[50%]">
+        <div className="sm:flex xs:block justify-between items-center gap-x-2">
+          <div className="sm:flex relative sm:w-[50%] mb-4">
             <div className="flex items-center gap-2">
               <MdAlternateEmail className="mt-2 text-indigo-500" size={30} />
               <input
@@ -89,15 +89,15 @@ const ChangeEmail = () => {
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-45px)] bg-white"
                 htmlFor="email"
               >
                 New Email:
               </label>
             </div>
           </div>
-          <div className="flex relative w-[50%]">
-              <div className="flex justify-center items-between gap-2">
+          <div className="sm:flex relative sm:w-[50%]">
+            <div className="flex items-center gap-2">
               <MdPassword className="mt-2 text-indigo-500" size={30} />
               <input
                 type="password"
@@ -108,12 +108,12 @@ const ChangeEmail = () => {
                 required
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
               />
-               <label
-                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
-                  htmlFor="password"
-                >
-                  Password:
-                </label>
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-44px)] bg-white"
+                htmlFor="password"
+              >
+                Password:
+              </label>
             </div>
           </div>
         </div>

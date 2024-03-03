@@ -98,11 +98,11 @@ const PhotoUpdater = () => {
                 </p>
               </div>
             ) : (
-              <div className="w-full max-h-[260px] relative">
+              <div className="w-full xs:h-[260px] relative">
                 <img
                   src={previewUrl}
                   alt="Preview"
-                  className="w-full max-h-[260px] mr-2 mx-auto object-cover h-auto border-2 rounded-lg border-green-600"
+                  className="w-full xs:h-[260px] mr-2 mx-auto object-cover border-2 rounded-lg border-green-600"
                 />
                 <button
                   className="absolute top-[-20px] right-[-15px] bg-red-500   text-white  rounded-[50%]"
