@@ -1,38 +1,51 @@
 import { useState, useEffect } from "react";
 import appApi from "../../api/appApi";
-import LoadingSpinner from "../../components/Spinner";
 import { Link } from "react-router-dom";
 
-const PersonalRecipes = () => {
+const PersonalRecipes = ({ userName }) => {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchPersonalRecipes();
   }, []);
 
   const fetchPersonalRecipes = async () => {
+    const apiUri = !!userName ? `/users/recipes/${userName}` : "/user/recipes";
     try {
-      const { data } = await appApi.get("/user/recipes");
+      const { data } = await appApi.get(apiUri);
       setMyRecipes(data.data);
-      console.log(!!myRecipes)
-      setLoading(false);
     } catch (error) {
-      console.log(error);
+      setError("An error ocurred loading, please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <section className="grid grid-cols-3 max-md:grid-cols-1 gap-4 max-w-fit">
-      {
-        loading ? (
-        <LoadingSpinner />
-      ) : myRecipes.length>0 ? (
+      {loading ? (
+        <span className="loader" />
+      ) : myRecipes.length > 0 ? (
         myRecipes.map((recipe) => {
           return <RecipeCardComponent recipe={recipe} key={recipe.id} />;
         })
       ) : (
-        <h3>Nothing to see yet... <Link to="/posts" className="text-blue-900 underline">Upload a recipe</Link></h3>
+        <h3>
+          {error ? (
+            {error}
+          ) : (
+            <>
+              {"Nothing to see yet..."}
+              {!userName && (
+                <Link to="/posts" className="text-blue-900 underline">
+                  Upload a recipe
+                </Link>
+              )}
+            </>
+          )}
+        </h3>
       )}
     </section>
   );
@@ -40,9 +53,13 @@ const PersonalRecipes = () => {
 
 const RecipeCardComponent = ({ recipe }) => {
   return (
-    <Link className="mx-auto relative" to={`/recipe/${recipe.id}`}>
+    <Link
+      className="mx-auto relative min-h-auto min-w-36"
+      to={`/recipe/${recipe.id}`}
+    >
+      <div className="absolute w-full h-full rounded-xl hover:bg-slate-900 hover:bg-opacity-35"></div>
       <img
-        className="aspect-square w-full object-cover rounded-xl"
+        className="aspect-square w-full object-cover rounded-xl hover:"
         src={recipe.image}
         alt={recipe.name}
       />

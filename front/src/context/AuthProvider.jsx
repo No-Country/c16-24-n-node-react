@@ -8,7 +8,7 @@ export const useAuthContext = () => useContext(AuthContext);
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
-  const [user, setUser] = useState(!!sessionStorage.getItem("user"));
+  const [user, setUser] = useState(sessionStorage.getItem("user"));
   const [logIn, setLogIn] = useState(!!sessionStorage.getItem("token"));
   const [favorites, setFavorites] = useState([]);
 

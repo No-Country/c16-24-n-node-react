@@ -15,6 +15,7 @@ import Privacy from "../../routes/Privacy";
 import Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro";
 import Detail from "../../routes/Detail/Detail";
+import UsersProfilePage from "../../routes/Users";
 
 const Content = () => {
   return (
@@ -36,6 +37,7 @@ const Content = () => {
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/recipes/:recipeId" element={<PatchEdit />} />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/:userName" element={<UsersProfilePage />} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </div>
