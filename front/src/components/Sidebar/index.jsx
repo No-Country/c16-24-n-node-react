@@ -28,10 +28,10 @@ const Sidebar = () => {
         <nav className="h-full max-w-[235px] flex flex-col bg-white border-r shadow-sm">
           <div className="p-4 pb-2">
             <Link to="/">
-              <img src={logo} className={`overflow-hidden transition-all h-[95px] ${expanded ? "w-[200px]" : "w-0 "}`} />
+              <img src={logo} className={`isMobile overflow-hidden transition-all h-[95px] ${expanded ? "w-[200px]" : "w-0 "}`} />
             </Link>
           </div>
-          <button onClick={() => setExpanded(() => !expanded)} className={`flex items-center p-1.5 rounded-lg ${expanded? "justify-end" : "justify-center"}`}>
+          <button onClick={() => setExpanded(() => !expanded)} className={`isMobile flex items-center p-1.5 rounded-lg ${expanded? "justify-end" : "justify-center"}`}>
               { expanded? <CgPushChevronLeft size={25} className="bg-gray-50 rounded-sm border-solid shadow-sm hover:bg-gray-100" />: <CgPushChevronRight size={25}  className="bg-gray-50 border-solid shadow-sm hover:bg-gray-100" />}
             </button>  
           <ul className="flex-1 px-3">
@@ -41,7 +41,7 @@ const Sidebar = () => {
             <Link to="/">
               <img src={minlogo} className="w-10 h-10 object-cover rounded-md" />
             </Link>
-            <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
+            <div className={`isMobile flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"} `}>
               <div className="leading-4">
                   <h4 className="font-semibold">CHETIFABENE</h4>
                   <span className="text-xs text-gray-600">info@chetifabene.com</span>

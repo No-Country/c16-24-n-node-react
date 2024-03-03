@@ -58,24 +58,31 @@ const UpdateUserName = () => {
   };
 
   return (
-    <section className="mx-auto max-w-md mt-14">
-      <h1 className="mb-4 text-center text-2xl">Change User</h1>
+    <section className="mx-auto max-w-md">
+      <h1 className="mb-4 text-start text-2xl">Change User</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          New User Name:
-          <div className="flex items-center gap-2">
-            <FaUserEdit className="text-3xl" />
-            <input
-              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-              type="text"
-              value={userName}
-              onChange={handleChange}
-            />
+        <div className="flex relative">
+          <div className="flex items-center gap-x-2 w-full">
+            <div className="flex items-center w-full gap-2">
+              <FaUserEdit className="mt-2 text-indigo-500" size={30} />
+              <input
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+                type="text"
+                value={userName}
+                onChange={handleChange}
+              />
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[calc(50%-70px)] bg-white"
+                htmlFor=" NewUserName:"
+              >
+                 New User Name:
+              </label>
+            </div>
           </div>
-        </label>
-        <div className="text-center mt-2">
+        </div>
+        <div className="text-end mt-2">
           <button
-            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="submit"
           >
             Update

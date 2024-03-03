@@ -195,9 +195,9 @@ const Detail = () => {
                     ></div>
                     <h2 className="text-xl font-semibold">Comentarios</h2>
                     <div className="flex flex-row gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
-                      <span className="flex w-content justify-between items-center gap-2 text-l">
+                      <span className="flex w-content justify-between items-center gap-x-2 text-l">
                         <FaRegUserCircle size={20} />
-                        <p id="userPost" className="pr-6">
+                        <p  className="text-sm font-semibold mr-1"  id="userPost">
                           {user}
                         </p>
                       </span>
@@ -208,11 +208,11 @@ const Detail = () => {
                         >
                           <input
                             placeholder="what do you think?"
-                            className="border-b focus:outline-non min-w-full hover:border-b-2  "
+                            className="focus:outline-none min-w-full hover:placeholder-gray-600"
                             onChange={handleComment}
                             name="commentary"
                           />
-                          <button className="absolute right-0" type="submit">
+                          <button className="absolute right-[5px]" type="submit">
                             <BiSolidSend className="ml-4" size={20} />{" "}
                           </button>
                         </form>

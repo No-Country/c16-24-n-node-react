@@ -180,7 +180,7 @@ const UserProfile = () => {
 
   return (
     <article>
-      <section className="flex flex-row-reverse justify-center gap-20 items-center h-40">
+      <section className="flex flex-row-reverse justify-center gap-20 items-center">
         <h1 className="text-5xl">Edit profile</h1>
         <img
           src={
@@ -195,113 +195,129 @@ const UserProfile = () => {
       <hr className="my-5" />
       <div className="mx-auto max-w-md mt-10">
         <form onSubmit={handleFormSubmit} className="space-y-4">
-          <div>
-            <label className="block">
-              First Name:
-              <div className="flex items-center gap-2">
-                <BiRename className="text-3xl" />
+          <div className="flex justify-between items-center gap-x-2">
+            <div className="flex relative w-[50%]">
+              <div className="flex justify-center items-between gap-2">
+                <BiRename className="mt-2 text-indigo-500" size={30} />
                 <input
                   type="text"
                   name="first_name"
                   value={userData.first_name}
                   onChange={handleInputChange}
-                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  className={`p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-50"
                   }`}
                   disabled={!editEnabled}
                 />
+                <label
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  htmlFor="FistName"
+                >
+                  First Name:
+                </label>
               </div>
-            </label>
-          </div>
-          <div>
-            <label className="block">
-              Last Name:
-              <div className="flex items-center gap-2">
-                <BiRename className="text-3xl" />
+            </div>
+            <div className="flex relative">
+              <div className="flex justify-center items-between gap-2">
+                <BiRename className="mt-2 text-indigo-500" size={30} />
                 <input
                   type="text"
                   name="last_name"
                   value={userData.last_name}
                   onChange={handleInputChange}
-                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  className={`p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-50"
                   }`}
                   disabled={!editEnabled}
                 />
+                <label
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  htmlFor="LastName"
+                >
+                  Last Name:
+                </label>
               </div>
-            </label>
+            </div>
           </div>
-          <div>
-            <label className="block">
-              Description:
-              <div className="flex items-center gap-2">
-                <TbFileDescription className="text-3xl" />
-                <textarea
-                  type="text"
-                  name="description"
-                  value={userData.description}
-                  onChange={handleInputChange}
-                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 focus:h-28 transition-all duration-300 ${
-                    editEnabled ? "" : "pointer-events-none bg-gray-100"
-                  }`}
-                  disabled={!editEnabled}
-                />
-              </div>
-            </label>
-          </div>
-          <div>
-            <label className="block">
-              Country:
-              <div className="flex items-center gap-3">
-                <FaMapMarkerAlt className="text-2xl ml-1" />
-                <Select
-                  placeholder="Select country"
-                  value={
-                    userCountry
-                      ? {
-                          value: userCountry.name,
-                          label: userCountry.name,
-                        }
-                      : null
-                  }
-                  options={countriesData.countries.map((country) => ({
-                    value: country.name,
-                    label: country.name,
-                  }))}
-                  onChange={handleCountryChange}
-                  className={`mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                    editEnabled ? "" : "pointer-events-none bg-gray-100"
-                  }`}
-                  disabled={!editEnabled}
-                />
-              </div>
-            </label>
-          </div>
-          <div>
-            <label className="block">
-              Mobile Number:
-              <div className="flex items-center gap-3">
-                <FaMobileAlt className="text-2xl ml-1" />
+          <div className="flex justify-between items-center gap-x-2">
+            <div className="flex relative w-[49%] gap-2">
+              <FaMapMarkerAlt className="mt-2 text-indigo-500" size={30} />
+              <Select
+                placeholder="Select country"
+                value={
+                  userCountry
+                    ? {
+                        value: userCountry.name,
+                        label: userCountry.name,
+                      }
+                    : null
+                }
+                options={countriesData.countries.map((country) => ({
+                  value: country.name,
+                  label: country.name,
+                }))}
+                onChange={handleCountryChange}
+                className={`mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10  ${
+                  editEnabled ? "" : "pointer-events-none bg-gray-50"
+                }`}
+                disabled={!editEnabled}
+              />
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                htmlFor="Country"
+              >
+                Country:
+              </label>
+            </div>
+            <div className="flex relative w-[51%] gap-x-2">
+              <div className="flex justify-center items-between gap-2">
+                <FaMobileAlt className="mt-2 text-indigo-500" size={30} />
                 <input
                   type="text"
                   name="mobilenumber"
                   value={userData.mobilenumber}
                   onChange={handleInputChange}
-                  className={`p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 ${
-                    editEnabled ? "" : "pointer-events-none bg-gray-100"
+                  className={`p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10 ${
+                    editEnabled ? "" : "pointer-events-none bg-gray-50"
                   }`}
                   disabled={!editEnabled}
                 />
+                <label
+                  className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                  htmlFor="MobileMumber"
+                >
+                  Mobile Number:
+                </label>
               </div>
-            </label>
+            </div>
           </div>
-
-          <div className="text-center">
+          <div className="flex relative">
+            <div className="flex items-center gap-x-2 w-full">
+              <TbFileDescription className="mt-2 text-indigo-500" size={30} />
+              <textarea
+                type="text"
+                name="description"
+                value={userData.description}
+                onChange={handleInputChange}
+                className={`p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-full resize-none ${
+                  editEnabled ? "" : "pointer-events-none bg-gray-50"
+                }`}
+                disabled={!editEnabled}
+              />
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[calc(50%-52px)] bg-white"
+                htmlFor="Description"
+              >
+                Description:
+              </label>
+            </div>
+          </div>
+          <div className="text-end">
             {!editEnabled && (
               <button
                 type="button"
                 onClick={handleEnableEdit}
-                className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               >
                 Enable Edit
               </button>
@@ -320,31 +336,30 @@ const UserProfile = () => {
         </form>
       </div>
 
-      <hr className="my-10" />
-
-      <section>
-        <PhotoUpdater />
-      </section>
-
-      <hr className="my-10" />
+      <hr className="my-5" />
 
       <section>
         <ChangePassword />
       </section>
 
-      <hr className="my-10" />
+      <hr className="my-5" />
 
       <section>
         <ChangeEmail />
       </section>
 
-      <hr className="my-10" />
+      <hr className="my-5" />
       <section>
         <UpdateUserName />
       </section>
-      <hr className="my-10" />
+      <hr className="my-5" />
+
+      <section>
+        <PhotoUpdater />
+      </section>
+      <hr className="my-5" />
       <DeleteUser />
-      <hr className="my-10" />
+      <hr className="my-5" />
     </article>
   );
 };

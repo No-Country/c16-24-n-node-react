@@ -25,7 +25,7 @@ const SidebarItem = ({expanded}) => {
         <li key={item.id} className="py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-indigo-50 text-gray-600">
           <NavLink to={item.to} className="relative flex items-center text-gray-800 hover:text-blue-400 duration-500" >
             <span className="">{item.icon} </span>
-            <span className={`text-xl overflow-hidden transition-all ${ expanded ? "w-52 ml-3" : "w-0"}`}>
+            <span className={`isMobile text-xl overflow-hidden transition-all ${ expanded ? "w-52 ml-3" : "w-0"}`}>
               {item.text}
             </span>
             {!expanded && (

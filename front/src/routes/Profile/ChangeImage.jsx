@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
-import { MdDelete } from "react-icons/md";
+import { SlClose } from "react-icons/sl";
 
 const PhotoUpdater = () => {
   const [selectedFile, setSelectedFile] = useState();
@@ -11,8 +12,8 @@ const PhotoUpdater = () => {
   const onFileChange = (event) => {
     const file = event.target.files[0];
     const maxSizeInBytes = imageMaxSize * 1024 * 1024;
-
-    if (file.size > maxSizeInBytes) {
+    
+    if (file.size > maxSizeInBytes ) {
       Swal.fire({
         icon: "warning",
         title: "File too big",
@@ -68,43 +69,66 @@ const PhotoUpdater = () => {
 
     reader.readAsDataURL(selectedFile);
   };
-  const removePreview = () => {
+  const removePreview = (e) => {
     setSelectedFile(null);
     setPreviewUrl(null);
+    e.preventDefault();
   };
 
   return (
-    <div className="mx-auto max-w-md mt-14">
-      <h1 className="mb-4 text-center text-2xl">Change Photo</h1>
+    <div className="mx-auto max-w-md">
+      <h1 className="mb-4 text-start text-2xl">Change Photo</h1>
       <div className="text-center">
-        <p>Maximum image size 1mb</p>
-        <input
-          className="my-7"
-          type="file"
-          accept="image/*"
-          onChange={onFileChange}
-        />
-        {previewUrl && (
-          <div>
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="my-4 mx-auto w-64 h-auto  border-2 rounded-lg border-green-600"
+        <div className="flex items-center justify-center w-full">
+          <label
+            htmlFor="dropzone-file"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            {!previewUrl ? (
+              <div className="flex flex-col items-center justify-center p-2 ">
+                <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor"  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Click to upload</span> or drag
+                  and drop
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  SVG, PNG, JPG or GIF (MAX. 1MB)
+                </p>
+              </div>
+            ) : (
+              <div className="w-full max-h-[260px] relative">
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="w-full max-h-[260px] mr-2 mx-auto object-cover h-auto border-2 rounded-lg border-green-600"
+                />
+                <button
+                  className="absolute top-[-20px] right-[-15px] bg-red-500   text-white  rounded-[50%]"
+                  onClick={removePreview}
+                >
+                  <SlClose size={30} />
+                </button>
+              </div>
+            )}
+            <input
+              id="dropzone-file"
+              type="file"
+              accept="image/*"
+              onChange={onFileChange}
+              className="hidden  my-7 p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
             />
-            <button
-              className="bg-red-500 text-white px-3 py-2 rounded-md"
-              onClick={removePreview}
-            >
-              <MdDelete />
-            </button>
-          </div>
-        )}
-        <button
-          className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          onClick={onFileUpload}
-        >
-          Update Photo
-        </button>
+          </label>
+        </div>
+        <div className="text-end">
+          <button
+            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            onClick={onFileUpload}
+          >
+            Update Photo
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -71,55 +71,71 @@ const ChangePassword = () => {
   };
 
   return (
-    <section className="mx-auto max-w-md mt-14">
-      <h1 className="mb-6 text-center text-2xl">Change Password</h1>
+    <section className="mx-auto max-w-md">
+      <h2 className="mb-6 text-start text-2xl">Change Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="password">Current password:</label>
-
-          <div className="flex items-center gap-2">
-            <MdPassword className="text-3xl" />
+        <div className="flex relative">
+          <div className="flex items-center gap-x-2 w-full">
+            <MdPassword className="mt-2 text-indigo-500" size={30} />
             <input
               type="password"
               id="password"
               name="password"
               value={passwordData.password}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+              className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
             />
+            <label
+              className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[calc(50%-72px)] bg-white"
+              htmlFor="password"
+            >
+              Current password:
+            </label>
           </div>
         </div>
-        <div>
-          <label htmlFor="new_password">New Password:</label>
-          <div className="flex items-center gap-2">
-            <PiPassword className="text-3xl" />
-            <input
-              type="password"
-              id="new_password"
-              name="new_password"
-              value={passwordData.new_password}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-            />
+        <div className="flex justify-between items-center gap-x-2">
+          <div className="flex relative w-[50%]">
+            <div className="flex justify-center items-between gap-2">
+              <PiPassword className="mt-2 text-indigo-500" size={30} />
+              <input
+                type="password"
+                id="new_password"
+                name="new_password"
+                value={passwordData.new_password}
+                onChange={handleChange}
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10 "
+              />
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[55px] bg-white"
+                htmlFor="new_password"
+              >
+                New Password:
+              </label>
+            </div>
+          </div>
+          <div className="flex relative w-[50%]">
+            <div className="flex items-center gap-2">
+              <PiPassword className="mt-2 text-indigo-500" size={30} />
+              <input
+                type="password"
+                id="new_password_confirm"
+                name="new_password_confirm"
+                value={passwordData.new_password_confirm}
+                onChange={handleChange}
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+              />
+              <label
+                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[50px] bg-white"
+                htmlFor="new_password_confirm"
+              >
+                Confirm password:
+              </label>
+            </div>
           </div>
         </div>
-        <div>
-          <label htmlFor="new_password_confirm">Confirm new password:</label>
-          <div className="flex items-center gap-2">
-            <PiPassword className="text-3xl" />
-            <input
-              type="password"
-              id="new_password_confirm"
-              name="new_password_confirm"
-              value={passwordData.new_password_confirm}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
-            />
-          </div>
-        </div>
-        <div className="text-center">
+        <div className="text-end">
           <button
-            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="submit"
           >
             Change Password
