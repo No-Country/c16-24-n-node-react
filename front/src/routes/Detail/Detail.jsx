@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import appApi from "../../api/appApi";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -8,9 +9,8 @@ import { Navigate } from "react-router-dom";
 import { BiSolidSend } from "react-icons/bi";
 import { GiFullPizza } from "react-icons/gi";
 
-
 const Detail = () => {
-  const { addOrRemoveFromFavs, handlerFav, user } = useAuthContext();
+  const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
   const [dish, setDish] = useState([]);
   const [comment, setComment] = useState({
     commentary: "",
@@ -28,16 +28,29 @@ const Detail = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await appApi.get(`/recipes/${dishID}`);
+        const res = await appApi.get(`/recipes/${dishID}`);
+        const resApi = res?.data?.recipe;
+        const favs = favorites.map((fav) => fav.id);
 
-        setDish(response.data.recipe);
+        const newDataApi = () => {
+          const data = resApi.id;
+          const newArray = favs.find((fav) => fav == data);
+
+          if (newArray) {
+            return { ...resApi, favorite: true };
+          } else {
+            return { ...resApi, favorite: false };
+          }
+        };
+
+        setDish(newDataApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
 
     fetchRecipe();
-  }, [dishID]);
+  }, [dishID, favorites]);
 
   const onClickHandler = (e) => {
     e.preventDefault();
@@ -64,24 +77,26 @@ const Detail = () => {
   sessionStorage.setItem("Comments", comments);
 
   return (
-    <div className="h-full flex justify-center items-center">
-      {!user && <span className="loader" />}
+    <div className="flex justify-center">
+      {!dish && <span className="loader" />}
       {!user && <Navigate to="/" />}
-      <main className="flex justify-center px-4 mt-5">
-        <section className="max-w-[1200px]">
+      <main className="flex justify-center item-center px-4 mt-5">
+        <section className="max-w-[1200px] md:w-full">
           <div className="my-[5%] mx-0">
-            <div className="flex md:flex-wrap lg:flex-col gap-x-4 md:gap-y-24 lg:gap-y-10 justify-center items-center pb-20">
+            <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-20">
               <div
                 className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
                 key={dish?.id}
               >
-                <div className="flex flex-col lg:min-w-[1000px] bg-white border border-solid rounded-xl md:p-5">
+                <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
                     <span className="flex justify-between items-center gap-2 text-l">
                       <FaRegUserCircle size={20} />
-                      <p id="userPost">@{dish?.User?.user_name}</p>
+                      <p className="text-sm font-semibold" id="UserPost">
+                        @{dish?.User?.user_name}
+                      </p>
                     </span>
-                    <p id="date" className="text-sm pr-5">
+                    <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData?.toDateString("es-AR", dish?.createdAt)}
                     </p>
                   </h3>
@@ -99,7 +114,6 @@ const Detail = () => {
                       >
                         {dish?.favorite ? (
                           <GiFullPizza
-                            onClick={handlerFav}
                             className="cursor-pointer fill-rose-700 text-rose-700"
                             size={20}
                           />
@@ -118,12 +132,12 @@ const Detail = () => {
                       </button>
                     </div>
                     <div>
-                      <button className="flex justify-center item-center pr-5">
+                      <button className="flex justify-center item-center pr-2">
                         <TfiCommentAlt className="cursor-pointer" size={20} />
                       </button>
                     </div>
                   </div>
-                  <h3 id="title" className="text-xl font-bold pb-2">
+                  <h3 id="name" className="text-xl font-bold pb-2">
                     {dish?.name}
                   </h3>
                   <div
@@ -139,7 +153,7 @@ const Detail = () => {
                   <div className="flex flex-col gap-y-4">
                     <div
                       id="comentary"
-                      className="border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
+                      className="border text-justify border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     >
                       {dish?.description?.charAt(0).toUpperCase() +
                         dish?.description?.slice(1).substring(0, 120)}
@@ -148,7 +162,7 @@ const Detail = () => {
                     <h2 className="text-xl font-semibold">Ingredientes</h2>
                     <div
                       id=""
-                      className="flex justify-between items-center border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
+                      className="md:flex md:justify-between sm:block items-center border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     >
                       <ul>
                         {dish?.ingredients?.map((item, index) => (
@@ -158,7 +172,7 @@ const Detail = () => {
                           </li>
                         ))}
                       </ul>
-                      <div className="block">
+                      <div className="block mt-4">
                         <span className="flex justify-between items-center">
                           <h3 className="font-normal pr-2">Portion</h3>
                           <span>{dish?.portion} </span>
@@ -180,30 +194,30 @@ const Detail = () => {
                       className="text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     ></div>
                     <h2 className="text-xl font-semibold">Comentarios</h2>
-                    <div className="flex gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
+                    <div className="flex flex-row gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
                       <span className="flex w-content justify-between items-center gap-2 text-l">
                         <FaRegUserCircle size={20} />
                         <p id="userPost" className="pr-6">
                           {user}
                         </p>
                       </span>
-                      <span>
+                      <span className="w-full">
                         <form
                           onSubmit={onClickHandler}
-                          className="flex justify-between items-center max-w-[1000px] w-[100%]"
+                          className="flex justify-between items-center relative "
                         >
                           <input
-                            className="border-b  focus:outline-none solid w-[1000px] hover:border-b-2  "
+                            placeholder="what do you think?"
+                            className="border-b focus:outline-non min-w-full hover:border-b-2  "
                             onChange={handleComment}
                             name="commentary"
                           />
-                          <button type="submit">
+                          <button className="absolute right-0" type="submit">
                             <BiSolidSend className="ml-4" size={20} />{" "}
                           </button>
                         </form>
                       </span>
                     </div>
-
                     {comments?.map((item, index) => (
                       <div
                         key={index}

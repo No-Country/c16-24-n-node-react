@@ -8,7 +8,7 @@ function App() {
       <Sidebar className="sidebar" />
       <div className="block w-full">
         <Header className="header" />
-        <div className="w-full h-full overflow-auto pl-6 pr-3">
+        <div className="w-full h-full overflow-auto md:pl-6 md:pr-3 sm:pl-3 sm:pr-0">
           <Content />
         </div>
       </div>

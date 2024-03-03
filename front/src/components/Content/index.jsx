@@ -14,11 +14,11 @@ import About from "../../routes/About";
 import Privacy from "../../routes/Privacy";
 import Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro";
-import Detail from "../../routes/Home/Detail";
+import Detail from "../../routes/Detail/Detail";
 
 const Content = () => {
   return (
-    <div className="p-3 pb-10 visible]">
+    <div className="p-3 pb-10 visible">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<Posts />} />

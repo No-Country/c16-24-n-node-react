@@ -1,4 +1,4 @@
-import aboutImg from '../../assets/about.jpg'
+import aboutImg from "../../assets/about.jpg";
 
 function About() {
   return (
@@ -6,8 +6,8 @@ function About() {
       <section className="max-w-[1000px]">
         <h2 className="text-[45px] mb-4 bold">About Chetifabene</h2>
         <img src={aboutImg} />
-        <h3 className='text-[30px] bold mb-4'> Overview</h3>
-        <p className='text-xl mb-3 text-justify'>
+        <h3 className="text-[30px] bold mb-4"> Overview</h3>
+        <p className="text-xl mb-3 text-justify">
           Chetifabenet website and application. To un-limit and expand the
           experience of talented food & drink lovers from everywhere. FoodyCraft
           platform is featured with many loaded functions to enjoy trading
@@ -15,7 +15,7 @@ function About() {
           European headquarter in Dublin, our team is crafting lots of
           tremendous work every day, to have a great food experience.
         </p>
-        <p className='text-xl mb-3 text-justify'>
+        <p className="text-xl mb-3 text-justify">
           We are around seven billion people living on earth. Our Mother Nature
           continued to enrich us with secrets. Secrets of food, to enjoy every
           new day a delicious experience. It is an excitement to connect people
@@ -29,9 +29,6 @@ function About() {
 }
 
 export default About;
-
-
-
 
 // useEffect(() => {
 //   addEventListener("DOMContentLoaded", () => {

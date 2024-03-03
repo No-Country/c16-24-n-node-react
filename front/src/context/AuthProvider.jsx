@@ -1,20 +1,17 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext } from "react";
 
-// eslint-disable-next-line react-refresh/only-export-components
 const AuthContext = createContext([]);
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => useContext(AuthContext);
 
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [user, setUser] = useState(!!sessionStorage.getItem("user"));
   const [logIn, setLogIn] = useState(!!sessionStorage.getItem("token"));
-  const [ favorites, setFavorites ] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
-  
   let userApp = sessionStorage.getItem("user");
 
   useEffect(() => {
@@ -28,15 +25,14 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const favsDish = localStorage.getItem("favorites"); 
+    const favsDish = localStorage.getItem("favorites");
 
-    let tempDishInFavs; 
+    let tempDishInFavs;
 
-    favsDish === null 
-      ? (tempDishInFavs = []) 
-      : (tempDishInFavs = JSON.parse(favsDish)); 
-    setFavorites(tempDishInFavs); 
- 
+    favsDish === null
+      ? (tempDishInFavs = [])
+      : (tempDishInFavs = JSON.parse(favsDish));
+    setFavorites(tempDishInFavs);
   }, []);
 
   const favsDish = localStorage.getItem("favorites");
@@ -44,29 +40,31 @@ const AuthProvider = ({ children }) => {
   let tempDishInFavs;
 
   favsDish === null
-  ? (tempDishInFavs = [])
-  : (tempDishInFavs = JSON.parse(favsDish));
-  
+    ? (tempDishInFavs = [])
+    : (tempDishInFavs = JSON.parse(favsDish));
+
   const addOrRemoveFromFavs = (e) => {
     e.preventDefault();
     const btn = e.currentTarget;
     const parent = btn.parentElement.parentElement.parentElement;
-    const image = parent.querySelector("img").src
-    const user = parent.querySelector("#userPost").textContent;
-    const date = parent.querySelector("#date").textContent;
-    const title = parent.querySelector("#titulo").textContent;
-    const comentary = parent.querySelector("#comentario").textContent;
+    const primaryimage = parent.querySelector("img").src;
+    const User = parent.querySelector("#userPost").textContent;
+    const createdAt = parent.querySelector("#date").textContent;
+    const name = parent.querySelector("#name").textContent;
+    const description = parent.querySelector("#comentary").textContent;
 
     const dishData = {
-      user,
-      date,
-      title,
-      image,
-      comentary,
-      id: btn.dataset.dishId
+      User,
+      createdAt,
+      name,
+      primaryimage,
+      description,
+      id: btn.dataset.dishId,
     };
-    
-    let dishInArray = tempDishInFavs.find( (dish) => dish.id === btn.dataset.dishId );   
+
+    let dishInArray = tempDishInFavs.find(
+      (dish) => dish.id === btn.dataset.dishId
+    );
 
     if (!dishInArray) {
       tempDishInFavs.push(dishData);
@@ -74,26 +72,29 @@ const AuthProvider = ({ children }) => {
       setFavorites(tempDishInFavs);
       console.log("Agregado a favoritos");
     } else {
-      tempDishInFavs = tempDishInFavs.filter( (dish) => dish.id !== btn.dataset.dishId );
+      tempDishInFavs = tempDishInFavs.filter(
+        (dish) => dish.id !== btn.dataset.dishId
+      );
       localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
       setFavorites(tempDishInFavs);
       console.log("Eliminado de favoritos");
     }
-  }
+  };
 
   return (
     <AuthContext.Provider
-      value={{ 
+      value={{
         auth,
         setAuth,
-        logIn, 
-        setLogIn, 
-        handlerLogOut, 
-        user, 
-        addOrRemoveFromFavs, 
-        favorites, 
-        setFavorites, 
-      }}>
+        logIn,
+        setLogIn,
+        handlerLogOut,
+        user,
+        addOrRemoveFromFavs,
+        favorites,
+        setFavorites,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
