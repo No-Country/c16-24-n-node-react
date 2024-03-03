@@ -24,30 +24,30 @@ const PersonalRecipes = ({ userName }) => {
   };
 
   return (
-    <section className="grid grid-cols-3 max-md:grid-cols-1 gap-4 max-w-fit">
+    <>
       {loading ? (
         <span className="loader" />
-      ) : myRecipes.length > 0 ? (
-        myRecipes.map((recipe) => {
-          return <RecipeCardComponent recipe={recipe} key={recipe.id} />;
-        })
       ) : (
-        <h3>
-          {error ? (
-            {error}
-          ) : (
-            <>
-              {"Nothing to see yet..."}
+        <>
+          {myRecipes.length === 0 ? (
+            <h3 className="">
+              {error ? error : "Nothing to see yet..."}
               {!userName && (
                 <Link to="/posts" className="text-blue-900 underline">
                   Upload a recipe
                 </Link>
               )}
-            </>
+            </h3>
+          ) : (
+            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-fit">
+              {myRecipes.map((recipe) => (
+                <RecipeCardComponent recipe={recipe} key={recipe.id} />
+              ))}
+            </section>
           )}
-        </h3>
+        </>
       )}
-    </section>
+    </>
   );
 };
 
