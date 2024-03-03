@@ -1,6 +1,7 @@
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
-import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
+import { HiOutlineBookmark } from "react-icons/hi2";
+import { GiFullPizza } from "react-icons/gi";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 
@@ -44,13 +45,13 @@ const Recipes = () => {
                         data-dish-id={val.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
-                        {val.fav ? (
-                          <HiOutlineStar
+                        {!val.fav ? (
+                          <GiFullPizza
                             className="cursor-pointer fill-red-700 text-red-700"
                             size={20}
                           />
                         ) : (
-                          <HiOutlineStar className="cursor-pointer" size={20} />
+                          <GiFullPizza className="cursor-pointer" size={20} />
                         )}
                       </button>
                       <button

@@ -14,12 +14,8 @@ const AuthProvider = ({ children }) => {
   const [logIn, setLogIn] = useState(!!sessionStorage.getItem("token"));
   const [ favorites, setFavorites ] = useState([]);
 
-  // let token = sessionStorage.getItem("token");
+  
   let userApp = sessionStorage.getItem("user");
-
-  // useEffect(() => {
-  //   token ? setLogIn(true) : setLogIn(false);
-  // }, [logIn, token]);
 
   useEffect(() => {
     userApp ? setUser(userApp) : setUser("");

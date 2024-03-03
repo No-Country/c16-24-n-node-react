@@ -1,28 +1,31 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
-import endPoint from "./TemplateData.json";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
-import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
+import { HiOutlineBookmark } from "react-icons/hi2";
+import { GiFullPizza } from "react-icons/gi";
 import { useAuthContext } from "../../context/AuthProvider";
+import { TbSearch } from "react-icons/tb";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import appApi from "../../api/appApi";
 
 const Seach = () => {
   const { addOrRemoveFromFavs, favorites, logIn } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [dishList, setDishList] = useState([]);
+  const currentData = new Date();
 
   useEffect(() => {
-    axios
-      .get(endPoint)
-      .then((res) => {
-        const apiData = res?.config?.url?.data;
+    const fetchRecipe = async () => {
+      try {
+        const res = await appApi.get("/recipes");
+        const resApi = res?.data?.recipes;
+        console.log(resApi)
         const favs = favorites.map((fav) => fav.id);
-
-        const newDataApi = apiData.map((data) => {
-          const newArray = favs.find((fav) => fav === data.id);
+        const newDataApi = resApi.map((data) => {
+        const newArray = favs.find((fav) => fav === data.id);
+          
           if (newArray) {
             return { ...data, favorites: true };
           } else {
@@ -30,10 +33,12 @@ const Seach = () => {
           }
         });
         setDishList(newDataApi);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    };
+
+    fetchRecipe();
   }, [setDishList, favorites]);
 
   return (
@@ -41,10 +46,11 @@ const Seach = () => {
       {!logIn && <Navigate to="/login" />}
       <main className="flex justify-center px-4 mt-5">
         <section className="lg:w-[1200px]">
-          <div className="my-[5%] mx-0">
+          <div className="mb-[5%] mt-[3%] mx-0">
             <div className="flex justify-center items-center pb-12 ">
+            <TbSearch size={35} className="ml-2  text-gray-800" />
               <input
-                className="w-[80%] p-[10px] outline-none border rounded-xl"
+                className="ml-2 w-[80%] p-[10px] outline-none border rounded-xl"
                 id="searchInput"
                 type="text"
                 placeholder="Search here..."
@@ -59,7 +65,7 @@ const Seach = () => {
                   if (searchTerm == "") {
                     return val;
                   } else if (
-                    val.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    val.name.toLowerCase().includes(searchTerm.toLowerCase())
                   ) {
                     return val;
                   }
@@ -78,17 +84,17 @@ const Seach = () => {
                               className="font-semibold text-blue-600"
                               id="userPost"
                             >
-                              {val.user}
+                              {val?.User?.user_name}
                             </p>
                           </span>
                           <p id="date" className="text-sm pr-5">
-                            {val.date}
+                          {currentData?.toDateString("es-AR", val?.createdAt)}
                           </p>
                         </h3>
                         <Link to={`/detail?dishID=${val.id}`}>
                         <img
                           className="pt-2 w-[500px] max-h-[230px] object-cover rounded-xl"
-                          src={val.image}
+                          src={val.primaryimage}
                           alt=""
                         />
                         </Link>
@@ -100,12 +106,12 @@ const Seach = () => {
                               className="flex seft-start item-center gap-x-2 pl-2"
                             >
                               {val.favorites ? (
-                                <HiOutlineStar
-                                  className="cursor-pointer fill-red-700 text-red-700"
+                                <GiFullPizza 
+                                  className="cursor-pointer fill-rose-700 text-rose-700"
                                   size={20}
                                 />
                               ) : (
-                                <HiOutlineStar
+                                <GiFullPizza 
                                   className="cursor-pointer"
                                   size={20}
                                 />
@@ -131,13 +137,13 @@ const Seach = () => {
                           </div>
                         </div>
                         <h3 id="titulo" className="pb-2">
-                          {val.title}
+                          {val.name}
                         </h3>
                         <p
                           id="comentario"
                           className="border border-solid rounded-xl p-2 h-20"
                         >
-                          {val.comentary.substring(0, 120)}...
+                          {val.description.substring(0, 120)}...
                         </p>
                       </div>
                     </div>

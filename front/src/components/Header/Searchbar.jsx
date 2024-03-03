@@ -1,35 +1,46 @@
-import { useState } from "react";
-import { TbSearch  } from "react-icons/tb";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+import { TbSearch } from "react-icons/tb";
 import { IoIosClose } from "react-icons/io";
-import axios from "axios"  
-import endPoint from "../../routes/Search/TemplateData.json";
+import { useRef } from "react";
+import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
 const SearchBar = ({ setResults }) => {
   const [input, setInput] = useState("");
-
+  const inputText = useRef(null);
+  const endPoint = "https://c16-24-n-node-react.vercel.app/api/recipes";
+  
+  useEffect
   const searchData = (value) => {
-    axios.get(endPoint)
-    .then((res) => {
-        const apiData = res.config.url; 
-        console.log(apiData)
-        const results = apiData.filter((title) => {
-          return (
+    axios
+      .get(endPoint)
+      .then((res) => {
+        const apiData = res.data.recipes;
+        const results = apiData.filter((name) => {
+          return ( 
+            name != "" ?
             value &&
-            title &&
-            title.title &&
-            title.title.toLowerCase().includes(value.toLowerCase())
-            );
-          }
-       
-        );
+            name &&
+            name.name &&
+            name.name.toLowerCase().includes(value.toLowerCase()) : "" 
+          );
+        });
         setResults(results);
-      }).catch(err=>console.log(err))
-    };
-    
+      })
+      .catch((err) => console.log(err));
+  };
+
   const handleChange = (value) => {
     setInput(value);
     searchData(value);
+  };
+
+  const handleReset = () => {
+    if (inputText.current) {
+      inputText.current.value = "";
+      inputText.current.type = "text";
+      setResults("")      
+    }
   };
 
   return (
@@ -39,11 +50,15 @@ const SearchBar = ({ setResults }) => {
         className="bg-transparent border-none h-full font-[1.25rem] w-full pl-5 outline-none"
         placeholder="Search..."
         value={input}
+        type="text" 
+        ref={inputText} 
         onChange={(e) => handleChange(e.target.value)}
       />
-      <IoIosClose size={20} className="mr-3" />
+      <button onClick={handleReset}>
+        <IoIosClose size={20} className="mr-3" />
+      </button>
     </div>
   );
 };
 
-export default SearchBar
+export default SearchBar;

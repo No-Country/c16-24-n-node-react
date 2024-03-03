@@ -18,7 +18,7 @@ import Detail from "../../routes/Home/Detail";
 
 const Content = () => {
   return (
-    <div className="p-3 pb-10 visible">
+    <div className="p-3 pb-10 visible]">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<Posts />} />

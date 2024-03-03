@@ -12,6 +12,7 @@ export const useForm = (initialForm, formValidations) => {
     if (!!formValidations && JSON.stringify(initialForm) !== JSON.stringify(formState)) {
       createValidators();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formState]);
 
   const onInputChange = ({ target }) => {
@@ -48,6 +49,7 @@ export const useForm = (initialForm, formValidations) => {
       return false;
     }
     return true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formErrors]);
 
   return {

@@ -10,8 +10,8 @@ const SidebarItem = ({expanded}) => {
     { id: 1, icon: <LuHome size={20} />, text: "Home", to: "/" },
     { id: 2, icon: <LuLayoutDashboard size={20} />, text: "Posts",to: "/posts"},
     { id: 3, icon: <TbSearch  size={20} />, text: "Search",to: "/search"},
-    { id: 4, icon: <TbFileLike size={20} />, text: "Reviews", to: "/reviews"},
-    { id: 5, icon: <LuChefHat  size={20} />, text: "Recipes", to: "/recipes" },
+    // { id: 4, icon: <LuChefHat size={20} />, text: "Reviews", to: "/reviews"},
+    { id: 5, icon: <TbFileLike  size={20} />, text: "Favorite recipes", to: "/recipes" },
     { id: 6, icon: <CgProfile  size={20} />, text: "Profile", to: "/profile" },
   ];
 

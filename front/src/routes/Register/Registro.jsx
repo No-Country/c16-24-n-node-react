@@ -71,7 +71,8 @@ export default function Registro() {
     <article className="grid place-content-center h-[90vh]">
       <div className=" h-[100%] dark">
         {loadingAuth ? (
-          <LoadingSpinner className="w-32 h-32" />
+            <span className="loader" />
+          // <LoadingSpinner className="w-32 h-32" />
         ) : (
           <div className="px-7 py-7 sm:px-10 max-w-md text-slate-800 rounded-2xl form-box">
             <div className="flex flex-col items-center">

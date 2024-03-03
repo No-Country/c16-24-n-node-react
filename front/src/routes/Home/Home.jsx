@@ -1,51 +1,38 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
-import { HiOutlineBookmark, HiOutlineStar } from "react-icons/hi2";
+import { HiOutlineBookmark } from "react-icons/hi2";
+import { GiFullPizza } from "react-icons/gi";
 import { useAuthContext } from "../../context/AuthProvider";
-import axios from "axios";
+import appApi from "../../api/appApi";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  // const [ offset, setOffset ] = useState(0);
   const [dishList, setDishList] = useState([]);
   const { addOrRemoveFromFavs, handlerFav } = useAuthContext();
 
   const currentData = new Date();
 
-  const endPoint = "https://c16-24-n-node-react.vercel.app/api/recipes/";
-
   useEffect(() => {
-    getData();
-
-    window.addEventListener("scroll", () => {
-      console.log(window.innerHeight);
-      if (
-        window.scrollY + window.innerHeight >=
-        document.documentElement.scrollHeight
-      ) {
-        console.log("hola");
+    const fetchRecipe = async () => {
+      try {
+        const res = await appApi.get(`/recipes/`);
+        const resApi = res?.data?.recipes;
+        resApi.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setDishList(resApi);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
       }
-    });
-  }, []);
+    };
 
-  async function getData() {
-    const res = await axios.get(endPoint).catch((err) => {
-      console.log(err);
-    });
-    const resApi = res?.data?.recipes;
-    console.log(resApi);
-    resApi.sort((a, b) => new Date(b.date) - new Date(a.date));
-    setDishList(resApi);
-  }
-  console.log(dishList);
+    fetchRecipe();
+  }, []);
 
   return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px]">
         <div className="my-[5%] mx-0">
-          <div className="flex md:flex-wrap lg:flex-col gap-x-4 md:gap-y-24 lg:gap-y-10 justify-center items-center pb-20">
+          <div className="flex md:flex-wrap lg:flex-col gap-x-4 md:gap-y-2 lg:gap-y-10 justify-center items-center pb-20">
             {dishList.map((val) => (
               <div
                 className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
@@ -76,13 +63,13 @@ const Home = () => {
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
                         {val.favorite ? (
-                          <HiOutlineStar
+                          <GiFullPizza
                             onClick={handlerFav}
                             className="cursor-pointer fill-red-700 text-red-700"
                             size={20}
                           />
                         ) : (
-                          <HiOutlineStar className="cursor-pointer" size={20} />
+                          <GiFullPizza className="cursor-pointer" size={20} />
                         )}
                       </button>
                       <button
