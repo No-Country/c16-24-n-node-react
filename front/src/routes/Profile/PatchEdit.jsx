@@ -293,26 +293,17 @@ const PatchEdit = () => {
           </label>
           {console.log(formData)}
           <CKEditor
-              editor={ClassicEditor}
-              data={formData?.process}
-              value={formData?.process}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                let name = "process";
-                if(formData !== "" )setFormData({
-                  ...formData,
-                   [name]: data,
-                }) 
-              }}
-              id="process"
-            />
-          {/* <textarea
+            editor={ClassicEditor}
+            data={formData.process}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setFormData((prevState) => ({
+                ...prevState,
+                process: data,
+              }));
+            }}
             id="process"
-            name="process"
-            value={formData.process}
-            onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
-          /> */}
+          />
         </div>
         <hr className="my-10" />
         <div className="mb-4">
