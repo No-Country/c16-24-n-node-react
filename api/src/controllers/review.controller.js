@@ -56,13 +56,12 @@ const getReviewsWithAverageRating = async (recipeId) => {
   const allReview = await Review.findAll(
     {
       where: {
-        RecipeId: recipeId,
+        recipeId: recipeId,
       },
+      include: [{ model: User, attributes: ["user_name"] }],
     },
-    {
-      include: [{ model: User, attributes: ["name"] }],
-    }
-  );
+    );
+    console.log("yes")
 
   // Calcular el promedio de calificaciones
   const averageRating = await Review.findOne({
@@ -81,7 +80,7 @@ const getReviewsWithAverageRating = async (recipeId) => {
 
   return {
     reviews: allReview,
-    averageRating: calculatedAverage,
+    averageRating: parseInt(calculatedAverage),
   };
 };
 
