@@ -76,6 +76,7 @@ const Detail = () => {
 
   // sessionStorage.setItem("Comments", comments);
 
+  console.log(comment)
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -142,7 +143,7 @@ const Detail = () => {
                   </h3>
                   <div
                     id="hashtags"
-                    className="text-l  font-semibold pl-2 pb-2"
+                    className="text-l font-semibold pl-2 pb-2"
                   >
                     {dish?.hashtags?.map((item, index) => (
                       <span className="pr-2" key={index}>

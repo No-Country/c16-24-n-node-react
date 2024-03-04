@@ -34,7 +34,7 @@ const updateReview = async (id, updatedAttributes, userId) => {
     throw Error("Reseña no encontrado");
   }
 
-  if (review.UserId !== userId) {
+  if (review.userId !== userId) {
     throw Error("La reseña sólo puede ser modificada por su autor")
   }
 
@@ -56,14 +56,11 @@ const getReviewsWithAverageRating = async (recipeId) => {
   const allReview = await Review.findAll(
     {
       where: {
-        RecipeId: recipeId,
+        recipeId: recipeId,
       },
+      include: [{ model: User, attributes: ["user_name"] }],
     },
-    {
-      include: [{ model: User, attributes: ["name"] }],
-    }
-  );
-
+    );
   // Calcular el promedio de calificaciones
   const averageRating = await Review.findOne({
     attributes: [
@@ -81,7 +78,7 @@ const getReviewsWithAverageRating = async (recipeId) => {
 
   return {
     reviews: allReview,
-    averageRating: calculatedAverage,
+    averageRating: parseInt(calculatedAverage),
   };
 };
 
@@ -99,11 +96,13 @@ const getReviewsByUser = async (userId) => {
   return allReview;
 };
 
-const deleteReview = async (recipeId) => {
-  await Review.destroy({ where: { Id: recipeId } });
+const deleteReview = async (reviewId) => {
+  const review = await Review.findOne({where:{Id:reviewId}, include: [{ model: Recipe, attributes: ["id"] }],});
+  const recipeId = review.Recipe.id;
+  await review.destroy();
 
   // Obtener las reviews restantes
-  const remainingReviews = await Review.findAll();
+  const remainingReviews = await getReviewsWithAverageRating(recipeId);
 
   return remainingReviews;
 };
