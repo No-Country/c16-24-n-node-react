@@ -6,24 +6,24 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate } from "react-router-dom";
-import { BiSolidSend } from "react-icons/bi";
 import { GiFullPizza } from "react-icons/gi";
+import Comments from "../../components/Comments";
 
 const Detail = () => {
   const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
   const [dish, setDish] = useState([]);
-  const [comment, setComment] = useState({
-    commentary: "",
-    idPost: "",
-    userID: "",
-    userName: "",
-    time: "",
-  });
-  const [comments, setComments] = useState([]);
+  // const [comment, setComment] = useState({
+  //   commentary: "",
+  //   idPost: "",
+  //   userID: "",
+  //   userName: "",
+  //   time: "",
+  // });
+  // const [comments, setComments] = useState([]);
   const currentData = new Date();
   let query = new URLSearchParams(window.location.search);
   let dishID = query.get("dishID");
-  const { commentary, idPost, userName, userID, time } = comment;
+  // const { commentary, idPost, userName, userID, time } = comment;
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -52,29 +52,29 @@ const Detail = () => {
     fetchRecipe();
   }, [dishID, favorites]);
 
-  const onClickHandler = (e) => {
-    e.preventDefault();
-    setComments((comments) => [...comments, comment]);
-    e.target.reset();
-  };
+  // const onClickHandler = (e) => {
+  //   e.preventDefault();
+  //   setComments((comments) => [...comments, comment]);
+  //   e.target.reset();
+  // };
 
-  const handleComment = (e) => {
-    const { name, value } = e.target;
-    const userName = sessionStorage.getItem("user");
-    const userID = sessionStorage.getItem("token");
-    const idPost = dishID;
-    const time = new Date();
-    setComment({
-      ...comment,
-      idPost,
-      userName,
-      userID,
-      time,
-      [name]: value,
-    });
-  };
+  // const handleComment = (e) => {
+  //   const { name, value } = e.target;
+  //   const userName = sessionStorage.getItem("user");
+  //   const userID = sessionStorage.getItem("token");
+  //   const idPost = dishID;
+  //   const time = new Date();
+  //   setComment({
+  //     ...comment,
+  //     idPost,
+  //     userName,
+  //     userID,
+  //     time,
+  //     [name]: value,
+  //   });
+  // };
 
-  sessionStorage.setItem("Comments", comments);
+  // sessionStorage.setItem("Comments", comments);
 
   return (
     <div className="flex justify-center">
@@ -193,52 +193,7 @@ const Detail = () => {
                       id="process"
                       className="text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     ></div>
-                    <h2 className="text-xl font-semibold">Comentarios</h2>
-                    <div className="flex flex-row gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
-                      <span className="flex w-content justify-between items-center gap-x-2 text-l">
-                        <FaRegUserCircle size={20} />
-                        <p  className="text-sm font-semibold mr-1"  id="userPost">
-                          {user}
-                        </p>
-                      </span>
-                      <span className="w-full">
-                        <form
-                          onSubmit={onClickHandler}
-                          className="flex justify-between items-center relative "
-                        >
-                          <input
-                            placeholder="what do you think?"
-                            className="focus:outline-none min-w-full hover:placeholder-gray-600"
-                            onChange={handleComment}
-                            name="commentary"
-                          />
-                          <button className="absolute right-[5px]" type="submit">
-                            <BiSolidSend className="ml-4" size={20} />{" "}
-                          </button>
-                        </form>
-                      </span>
-                    </div>
-                    {comments?.map((item, index) => (
-                      <div
-                        key={index}
-                        className="block m-auto gap-y-4 text-justify border w-[98%] border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
-                      >
-                        <div className="">
-                          <div className="flex justify-between items-center pl-2 pb-1">
-                            <span className="flex items-center gap-2 text-l">
-                              <FaRegUserCircle size={20} />
-                              <p id="userPost">{item?.userName}</p>
-                            </span>
-                            <p id="date" className="text-sm pr-5">
-                              {currentData?.toDateString("es-AR", item?.time)}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex justify-between items-center gap-y-4 text-justify border border-solid rounded-xl p-2 m-2 md:h-[full] lg:h-[full]">
-                          <p>{item.commentary}</p>
-                        </div>
-                      </div>
-                    ))}
+                    <Comments dishID={dishID} />
                   </div>
                 </div>
               </div>
