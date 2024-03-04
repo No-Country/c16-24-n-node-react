@@ -100,4 +100,16 @@ const unfollow = async (toUnfollowId, myUserId) => {
   }
 };
 
-module.exports = { searchUser, follow, unfollow };
+const isFollowing = async (toFollowId, myUserId) =>{
+  const existingFollow = await Follower.findOne({
+    where: {
+      followerId: myUserId,
+      userId: toFollowId,
+    },
+  });
+
+  return !!existingFollow;
+
+}
+
+module.exports = { searchUser, follow, unfollow, isFollowing };
