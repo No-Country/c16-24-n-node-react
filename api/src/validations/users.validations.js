@@ -64,7 +64,11 @@ const followUserValidation = checkSchema({
 });
 
 const unFollowValidation = checkSchema({
-  to_follownt_id:{...uUIDValidOptions, in:"body"}
+  userId:{...uUIDValidOptions, in:"params"}
+})
+
+const isFollowingValidation = checkSchema({
+  userId:{...uUIDValidOptions, in:"params"}
 })
 
 module.exports = {
@@ -72,5 +76,6 @@ module.exports = {
   getUserValidation,
   getUserRecipesValidation,
   followUserValidation,
-  unFollowValidation
+  unFollowValidation,
+  isFollowingValidation
 };

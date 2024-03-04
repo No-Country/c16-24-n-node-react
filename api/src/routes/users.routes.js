@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { searchUser, follow, unfollow } = require("../controllers/users.controller");
+const { searchUser, follow, unfollow, isFollowing } = require("../controllers/users.controller");
 const {
   getUserByEmail,
   getUserRecipes,
@@ -11,6 +11,7 @@ const {
   getUserRecipesValidation,
   followUserValidation,
   unFollowValidation,
+  isFollowingValidation,
 } = require("../validations/users.validations");
 const { fieldValidator, jwtValidator } = require("../middlewares");
 const { responseMessages } = require("../utils/validation-errors.values");
@@ -38,6 +39,25 @@ usersRoutes.get(
     try {
       const data = await getUserByUsernameOrThrow(req.params.userName);
       return res.status(200).json({ ok: true, data });
+    } catch (error) {
+      console.log(error);
+      if (error.status) {
+        return res.status(error.status).json({ ok: false, message: error.msg });
+      }
+      return res
+        .status(500)
+        .json({ ok: false, message: responseMessages.internalServerError });
+    }
+  }
+);
+
+usersRoutes.get(
+  "/following/:userId",
+  [jwtValidator, isFollowingValidation, fieldValidator],
+  async (req, res) => {
+    try {
+      const existFollow = await isFollowing(req.params.userId,req.user.id);
+      return res.status(200).json({ ok: existFollow, });
     } catch (error) {
       console.log(error);
       if (error.status) {
@@ -89,11 +109,11 @@ usersRoutes.post(
 );
 
 usersRoutes.delete(
-  "/unfollow",
+  "/unfollow/:userId",
   [jwtValidator, unFollowValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await unfollow(req.body.to_follownt_id, req.user.id);
+      const data = await unfollow(req.params.userId, req.user.id);
       return res.status(201).json({...data});
     } catch (error) {
       console.log(error);

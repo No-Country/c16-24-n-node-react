@@ -281,23 +281,16 @@ const unFollowUserPath = {
       },
     ],
     description:"UnFollow another user",
-    requestBody: {
-      required: true,
-      content: {
-        "application/json": {
-          schema: {
-            type: "object",
-            properties: {
-              to_follownt_id: {
-                type: "string",
-                description: "The user's to follow ID",
-                example: "UUID",
-              },
-            },
-          },
-        },
+    parameters: [
+      {
+        name: "userId",
+        in: "path",
+        required: true,
+        description: "The user's userId (UUID)",
+        type: "string",
+        example:"UUID"
       },
-    },
+    ],
     responses:{
       200: {
         description: "Update correct",
@@ -330,7 +323,8 @@ const usersPaths = {
   "/api/users/search": usersSearchPath,
   "/api/users/{userName}": usersByUNamePath,
   "/api/users/recipes/{userName}":usersRecipesPath,
-  "/api/users/follow":{...followUserPath, ...unFollowUserPath}
+  "/api/users/follow":followUserPath,
+  "/api/users/unfollow/{userId}":unFollowUserPath,
 };
 
 module.exports = usersPaths;
