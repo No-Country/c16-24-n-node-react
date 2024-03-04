@@ -1,24 +1,27 @@
 const { Review, Recipe, User } = require("../db");
 
 const postReview = async (recipeId, userId, description, rating) => {
-  if (!recipeId || !description || !rating || userId)
+  if (!recipeId || !description || !rating || !userId)
     throw Error("Faltan datos");
 
   const recipeExist = await Recipe.findOne({ where: { id: recipeId } });
+  if(!recipeExist) {
+    throw new Error('No se encuentra la receta');
+  }
 
-  const checkExistReview = await Review.findAll({
+  const checkExistReview = await Review.findOne({
     where: {
-      UserId: userId,
-      RecipeId: recipeExist.id,
+      userId: userId,
+      recipeId: recipeExist.id,
     },
   });
-  if (checkExistReview.length > 0) throw Error("Ya existe la Review");
+  if (checkExistReview) throw Error("Ya existe la Review");
 
   const newReview = await Review.create({
     description,
     rating,
-    RecipeId: recipeId,
-    UserId: userId,
+    recipeId: recipeId,
+    userId: userId,
   });
   return newReview;
 };
