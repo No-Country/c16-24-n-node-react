@@ -64,7 +64,7 @@ const followUserValidation = checkSchema({
 });
 
 const unFollowValidation = checkSchema({
-  to_follownt_id:{...uUIDValidOptions, in:"body"}
+  userId:{...uUIDValidOptions, in:"params"}
 })
 
 const isFollowingValidation = checkSchema({

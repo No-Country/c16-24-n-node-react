@@ -109,11 +109,11 @@ usersRoutes.post(
 );
 
 usersRoutes.delete(
-  "/unfollow",
+  "/unfollow/:userId",
   [jwtValidator, unFollowValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await unfollow(req.body.to_follownt_id, req.user.id);
+      const data = await unfollow(req.params.userId, req.user.id);
       return res.status(201).json({...data});
     } catch (error) {
       console.log(error);
