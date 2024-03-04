@@ -96,11 +96,13 @@ const getReviewsByUser = async (userId) => {
   return allReview;
 };
 
-const deleteReview = async (recipeId) => {
-  await Review.destroy({ where: { Id: recipeId } });
+const deleteReview = async (reviewId) => {
+  const review = await Review.findOne({where:{Id:reviewId}, include: [{ model: Recipe, attributes: ["id"] }],});
+  const recipeId = review.Recipe.id;
+  await review.destroy();
 
   // Obtener las reviews restantes
-  const remainingReviews = await Review.findAll();
+  const remainingReviews = await getReviewsWithAverageRating(recipeId);
 
   return remainingReviews;
 };

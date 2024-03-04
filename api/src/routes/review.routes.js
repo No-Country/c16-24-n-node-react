@@ -27,8 +27,8 @@ reviewsRoutes.post("/", [jwtValidator, emptyBodyValidator], async (req, res) => 
 
 reviewsRoutes.delete("/delete", [jwtValidator], async (req, res) => {
   try {
-    const { recipeId } = req.query;
-    const remainingReviews = await deleteReview(recipeId);
+    const { reviewId } = req.query;
+    const remainingReviews = await deleteReview(reviewId);
 
     res.status(200).json(remainingReviews);
   } catch (error) {
