@@ -12,18 +12,9 @@ import Comments from "../../components/Comments";
 const Detail = () => {
   const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
   const [dish, setDish] = useState([]);
-  // const [comment, setComment] = useState({
-  //   commentary: "",
-  //   idPost: "",
-  //   userID: "",
-  //   userName: "",
-  //   time: "",
-  // });
-  // const [comments, setComments] = useState([]);
   const currentData = new Date();
   let query = new URLSearchParams(window.location.search);
   let dishID = query.get("dishID");
-  // const { commentary, idPost, userName, userID, time } = comment;
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -52,31 +43,6 @@ const Detail = () => {
     fetchRecipe();
   }, [dishID, favorites]);
 
-  // const onClickHandler = (e) => {
-  //   e.preventDefault();
-  //   setComments((comments) => [...comments, comment]);
-  //   e.target.reset();
-  // };
-
-  // const handleComment = (e) => {
-  //   const { name, value } = e.target;
-  //   const userName = sessionStorage.getItem("user");
-  //   const userID = sessionStorage.getItem("token");
-  //   const idPost = dishID;
-  //   const time = new Date();
-  //   setComment({
-  //     ...comment,
-  //     idPost,
-  //     userName,
-  //     userID,
-  //     time,
-  //     [name]: value,
-  //   });
-  // };
-
-  // sessionStorage.setItem("Comments", comments);
-
-  console.log(comment)
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -141,10 +107,7 @@ const Detail = () => {
                   <h3 id="name" className="text-xl font-bold pb-2">
                     {dish?.name}
                   </h3>
-                  <div
-                    id="hashtags"
-                    className="text-l font-semibold pl-2 pb-2"
-                  >
+                  <div id="hashtags" className="text-l font-semibold pl-2 pb-2">
                     {dish?.hashtags?.map((item, index) => (
                       <span className="pr-2" key={index}>
                         #{item?.name}

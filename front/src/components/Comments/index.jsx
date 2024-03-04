@@ -12,31 +12,36 @@ const Comments = ({ dishID }) => {
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
 
+  const fetchComments = async () => {
+    try {
+      const response = await appApi.get(`/reviews?recipeId=${dishID}`);
+      if (response.data && response.data.reviews) {
+        setComments(response.data.reviews);
+      } else {
+        console.error(
+          "No se encontraron comentarios en la respuesta:",
+          response.data
+        );
+      }
+    } catch (error) {
+      console.error("Error al obtener comentarios:", error);
+    }
+  };
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(storedUser);
     }
+    fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await appApi.get(`/reviews?recipeId=${dishID}`);
-        if (response.data && response.data.reviews) {
-          setComments(response.data.reviews);
-        } else {
-          console.error(
-            "No se encontraron comentarios en la respuesta:",
-            response.data
-          );
-        }
-      } catch (error) {
-        console.error("Error al obtener comentarios:", error);
-      }
-    };
-    fetchComments();
-  }, [dishID]);
+  const handleEdit = (commentId, commentText, commentRating) => {
+    setEditCommentId(commentId);
+    setCurrentCommentText(commentText);
+    setRating(commentRating);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,17 +57,13 @@ const Comments = ({ dishID }) => {
           user_name: user,
         },
       };
-      setComments([...comments, newComment]);
+      setComments((prevComments) => [...prevComments, newComment]);
       setCommentText("");
+
+      fetchComments();
     } catch (error) {
       console.error("Error al enviar el comentario:", error);
     }
-  };
-
-  const handleEdit = (commentId, commentText, commentRating) => {
-    setEditCommentId(commentId);
-    setCurrentCommentText(commentText);
-    setRating(commentRating);
   };
 
   const handleUpdateComment = async (updatedComment) => {
@@ -71,11 +72,9 @@ const Comments = ({ dishID }) => {
         description: updatedComment.commentary,
         rating: updatedComment.rating,
       });
-      setComments(
-        comments.map((comment) =>
-          comment.Id === updatedComment.Id ? updatedComment : comment
-        )
-      );
+
+      fetchComments();
+
       setEditCommentId(null);
     } catch (error) {
       console.error("Error al actualizar el comentario:", error);
@@ -86,6 +85,8 @@ const Comments = ({ dishID }) => {
     try {
       await appApi.delete(`/reviews/delete?reviewId=${commentId}`);
       setComments(comments.filter((comment) => comment.Id !== commentId));
+
+      fetchComments();
     } catch (error) {
       console.error("Error al eliminar el comentario:", error);
     }
@@ -145,7 +146,9 @@ const Comments = ({ dishID }) => {
                 </span>
 
                 <button
-                  onClick={() => handleEdit(item.Id, item.description)}
+                  onClick={() =>
+                    handleEdit(item.Id, item.description, item.rating)
+                  }
                   className="text-sm text-blue-500"
                   type="button"
                 >
