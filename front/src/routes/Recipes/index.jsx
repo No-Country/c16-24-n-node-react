@@ -79,7 +79,7 @@ const Recipes = () => {
                       id="comentary"
                       className="border text-justify border-solid rounded-xl p-2 md:h-20 sm:h-full"
                     >
-                      {val.description.substring(0, 120)}...
+                      {val.description?.substring(0, 120)}...
                     </p>
                   </div>
                 </div>

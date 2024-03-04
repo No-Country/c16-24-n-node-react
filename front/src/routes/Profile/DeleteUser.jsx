@@ -59,16 +59,16 @@ const DeleteUser = () => {
       <h1 className="mb-4 text-start text-2xl">Delete User</h1>
       <div className="flex relative">
         <div className="flex items-center w-full gap-2">
-          <BiSolidUserMinus className="mt-2 text-indigo-500" size={30} />
+          <BiSolidUserMinus className="mt-2 text-gray-500" size={30} />
           <input
-            className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+            className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder=" Contraseña"
           />
           <label
-            className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[calc(50%-50px)] bg-white"
+            className="absolute top-[-10px] text-gray-500 font-bold px-2 left-[calc(50%-50px)] bg-white"
             htmlFor="User name:"
           >
             User name:
@@ -77,7 +77,7 @@ const DeleteUser = () => {
       </div>
       <div className="text-end">
         <button
-          className="w-3/6 bg-red-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="w-3/6 bg-red-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-red-700 focus:outline-none focus:ring focus:ring-gray-200 focus:ring-opacity-50"
           onClick={handleDeleteUser}
         >
           Delete

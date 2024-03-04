@@ -64,15 +64,15 @@ const UpdateUserName = () => {
         <div className="flex relative">
           <div className="flex items-center gap-x-2 w-full">
             <div className="flex items-center w-full gap-2">
-              <FaUserEdit className="mt-2 text-indigo-500" size={30} />
+              <FaUserEdit className="mt-2 text-gray-500" size={30} />
               <input
-                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
                 type="text"
                 value={userName}
                 onChange={handleChange}
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 left-[calc(50%-70px)] bg-white"
+                className="absolute top-[-10px] text-gray-500 font-bold px-2 left-[calc(50%-70px)] bg-white"
                 htmlFor=" NewUserName:"
               >
                  New User Name:
@@ -82,7 +82,7 @@ const UpdateUserName = () => {
         </div>
         <div className="text-end mt-2">
           <button
-            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="w-3/6 bg-gray-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-200 focus:ring-opacity-50"
             type="submit"
           >
             Update

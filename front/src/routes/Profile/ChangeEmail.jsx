@@ -78,7 +78,7 @@ const ChangeEmail = () => {
         <div className="sm:flex xs:block justify-between items-center gap-x-2">
           <div className="sm:flex relative sm:w-[50%] mb-4">
             <div className="flex items-center gap-2">
-              <MdAlternateEmail className="mt-2 text-indigo-500" size={30} />
+              <MdAlternateEmail className="mt-2 text-gray-500" size={30} />
               <input
                 type="email"
                 id="email"
@@ -86,10 +86,10 @@ const ChangeEmail = () => {
                 value={email}
                 onChange={handleChangeEmail}
                 required
-                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-45px)] bg-white"
+                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-45px)] bg-white"
                 htmlFor="email"
               >
                 New Email:
@@ -98,7 +98,7 @@ const ChangeEmail = () => {
           </div>
           <div className="sm:flex relative sm:w-[50%]">
             <div className="flex items-center gap-2">
-              <MdPassword className="mt-2 text-indigo-500" size={30} />
+              <MdPassword className="mt-2 text-gray-500" size={30} />
               <input
                 type="password"
                 id="password"
@@ -106,10 +106,10 @@ const ChangeEmail = () => {
                 value={password}
                 onChange={handleChangeEmail}
                 required
-                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-indigo-500 shadow-sm focus:border-indigo-300  focus:ring-indigo-200 focus:ring-opacity-50 h-10"
+                className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
               />
               <label
-                className="absolute top-[-10px] text-indigo-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-44px)] bg-white"
+                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[55px] xs:left-[calc(50%-44px)] bg-white"
                 htmlFor="password"
               >
                 Password:
@@ -119,7 +119,7 @@ const ChangeEmail = () => {
         </div>
         <div className="text-end">
           <button
-            className="w-3/6 bg-blue-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-blue-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="w-3/6 bg-gray-500 text-white mt-4 py-2 px-4 rounded-xl hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-200 focus:ring-opacity-50"
             type="submit"
           >
             Change Email
