@@ -34,7 +34,7 @@ const updateReview = async (id, updatedAttributes, userId) => {
     throw Error("Reseña no encontrado");
   }
 
-  if (review.UserId !== userId) {
+  if (review.userId !== userId) {
     throw Error("La reseña sólo puede ser modificada por su autor")
   }
 
@@ -61,8 +61,6 @@ const getReviewsWithAverageRating = async (recipeId) => {
       include: [{ model: User, attributes: ["user_name"] }],
     },
     );
-    console.log("yes")
-
   // Calcular el promedio de calificaciones
   const averageRating = await Review.findOne({
     attributes: [

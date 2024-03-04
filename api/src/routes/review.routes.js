@@ -56,12 +56,11 @@ reviewsRoutes.get("/", [jwtValidator], async (req, res) => {
   }
 });
 
-reviewsRoutes.patch("/:id", [jwtValidator], async (req, res) => {
+reviewsRoutes.patch("/:reviewId", [jwtValidator], async (req, res) => {
   try {
-    const { recipeId } = req.params;
     const updatedAttributes = req.body;
     const userId = req.user.id;
-    const updatedReview = await updateReview(recipeId, updatedAttributes, userId);
+    const updatedReview = await updateReview(req.params.reviewId, updatedAttributes, userId);
     res.status(200).json(updatedReview);
   } catch (error) {
     res.status(500).json({ error: error.message });
