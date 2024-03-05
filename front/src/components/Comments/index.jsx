@@ -11,12 +11,23 @@ const Comments = ({ dishID }) => {
   const [user, setUser] = useState("");
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
+  const [averageRating, setAverageRating] = useState(0);
 
   const fetchComments = async () => {
     try {
       const response = await appApi.get(`/reviews?recipeId=${dishID}`);
       if (response.data && response.data.reviews) {
         setComments(response.data.reviews);
+
+        const totalRating = response.data.reviews.reduce(
+          (acc, review) => acc + review.rating,
+          0
+        );
+        const avgRating =
+          response.data.reviews.length > 0
+            ? totalRating / response.data.reviews.length
+            : 0;
+        setAverageRating(avgRating.toFixed(1));
       } else {
         console.error(
           "No se encontraron comentarios en la respuesta:",
@@ -59,6 +70,7 @@ const Comments = ({ dishID }) => {
       };
       setComments((prevComments) => [...prevComments, newComment]);
       setCommentText("");
+      setRating(0);
 
       fetchComments();
     } catch (error) {
@@ -94,7 +106,9 @@ const Comments = ({ dishID }) => {
 
   return (
     <article>
-      <h2 className="text-xl font-semibold">Comentarios</h2>
+      <h2 className="text-xl font-semibold m-1">
+        Opinions - Assessment: {averageRating}{" "}
+      </h2>
       <div className="flex flex-row gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
         <span className="flex w-content justify-between items-center gap-x-2 text-l">
           <FaRegUserCircle size={20} />
@@ -108,12 +122,6 @@ const Comments = ({ dishID }) => {
             className="flex justify-between items-center relative"
           >
             <input
-              placeholder="¿Qué piensas?"
-              className="focus:outline-none min-w-full hover:placeholder-gray-600"
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-            />
-            <input
               type="number"
               min="1"
               max="5"
@@ -121,6 +129,12 @@ const Comments = ({ dishID }) => {
               className="focus:outline-none w-16 text-center hover:placeholder-gray-600"
               value={rating}
               onChange={(e) => setRating(parseInt(e.target.value))}
+            />
+            <input
+              placeholder="What do you think?"
+              className="focus:outline-none min-w-full hover:placeholder-gray-600 pl-2 p-1"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
             />
             <button className="absolute right-[5px]" type="submit">
               <BiSolidSend className="ml-4" size={20} />
@@ -130,7 +144,7 @@ const Comments = ({ dishID }) => {
       </div>
       {Array.isArray(comments) && comments.length === 0 ? (
         <div className="text-center mt-4 text-gray-500">
-          No hay comentarios aún.
+          There are no comments yet.
         </div>
       ) : (
         comments.map((item, index) => (

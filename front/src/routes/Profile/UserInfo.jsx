@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { SiGooglemaps } from "react-icons/si";
 import { MdEdit } from "react-icons/md";
 import { LuUser2 } from "react-icons/lu";
+import LoadingSpinner from "../../components/Spinner";
+import { LiaCookieBiteSolid, LiaCookieSolid } from "react-icons/lia";
 
 const UserInfoComponent = ({ userName }) => {
   const { logIn, user } = useAuthContext();
@@ -13,13 +15,14 @@ const UserInfoComponent = ({ userName }) => {
   const [error, setError] = useState("");
 
   const fetchUserData = async () => {
-    const apiUri = !!userName ? `/users/${userName}` : "/profile";
     try {
-      const { data: resData } = await appApi.get(apiUri);
-      const profileData = resData?.data || resData?.user;
-      setProfileData(profileData);
+      const { data: resData } = await appApi.get(`/users/${userName}`);
+      setProfileData(resData?.data);
     } catch (error) {
-      setError("The link you selected may not work or the page may have been removed.");
+      console.log(error)
+      setError(
+        "The link you selected may not work or the page may have been removed."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -51,11 +54,9 @@ const UserInfoComponent = ({ userName }) => {
               {/* info */}
               <div className="flex flex-col justify-center">
                 <div className="flex mx-3 my-1 md:m-4 items-center md:gap-4 font-bold sm:text-xl max-md:flex-col">
-                  <p className="text-blue-500">
-                    {userName ? `@${profileData.user_name}` : user}
-                  </p>
+                  <p className="text-blue-500">{`@${profileData.user_name}`}</p>
                   <p className="max-md:hidden">-</p>
-                  <p className="text-nowrap text-clip overflow-hidden">
+                  <p className="text-clip overflow-hidden text-end">
                     {`${profileData?.first_name || ""} ${
                       profileData?.last_name || ""
                     }`.toUpperCase()}
@@ -70,12 +71,12 @@ const UserInfoComponent = ({ userName }) => {
               </div>
               {/* edit */}
               <div>
-                {logIn && !userName && (
+                {logIn && `@${userName}` === user && (
                   <Link
                     to="/userprofile"
                     title="Edit profile"
                     type="button"
-                    className="max-sm:absolute right-0 top-0 p-1 sm:p-3 rounded-full hover:bg-slate-300 focus:outline-none"
+                    className="max-sm:absolute right-0 -top-3 p-1 sm:p-3 rounded-full hover:bg-slate-300 focus:outline-none"
                   >
                     <MdEdit />
                   </Link>
@@ -84,7 +85,12 @@ const UserInfoComponent = ({ userName }) => {
             </div>
             {/* descripcion */}
             <div>
-              <p className=" bg-slate-200 m-4 rounded-2xl px-4 py-2 overflow-y-auto">
+              <FollowsUserComponent
+                profileUName={profileData?.user_name}
+                profileUserId={profileData?.id}
+                recipesCount={profileData.recipesCount}
+              />
+              <p className="max-sm:text-sm bg-slate-200 m-2 rounded-2xl px-4 py-2 overflow-y-auto">
                 {profileData?.description ? profileData?.description : ""}
               </p>
             </div>
@@ -108,6 +114,94 @@ const ProfileImageComponent = ({ profileImage }) => {
         <LuUser2 className="text-slate-300 w-[30vw] max-w-44 rounded-full h-auto border-2 m-2 min-w-[77px]" />
       )}
     </>
+  );
+};
+
+const FollowsUserComponent = ({
+  profileUName,
+  profileUserId,
+  recipesCount,
+}) => {
+  const { user, logIn } = useAuthContext();
+  const isOtherUser = `@${profileUName}` != user && logIn;
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followInfo, setFollowInfo] = useState({
+    seguidores: "-",
+    seguidos: "-",
+  });
+
+  const getFollowInfo = async () => {
+    try {
+      const followInfoResponse = await appApi.get(
+        `/users/follows/${profileUserId}`
+      );
+      setFollowInfo(followInfoResponse.data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getFollowInfo();
+  }, [isFollowing]);
+
+  return (
+    <div className={`grid grid-cols-2 ${isOtherUser ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-x-10 gap-y-2 w-full px-5 justify-center items-center max-sm:text-sm`}>
+      { isOtherUser && (
+        <FollowBtnComponent
+          toFollowId={profileUserId}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+        />
+      )}
+      <span className="cursor-default text-center">{`${recipesCount} recipes`}</span>
+      <span className="cursor-pointer text-center">{`${followInfo.seguidores} follower(s)`}</span>
+      <span className="cursor-pointer text-center">{`${followInfo.seguidos} follow(s)`}</span>
+    </div>
+  );
+};
+
+const FollowBtnComponent = ({ toFollowId, isFollowing, setIsFollowing }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleIsFollow = async () => {
+    try {
+      const resp = await appApi.get(`/users/following/${toFollowId}`);
+      setIsFollowing(resp.data?.ok);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleIsFollow();
+  }, []);
+
+  const handleActions = async () => {
+    try {
+      setIsLoading(true);
+      isFollowing
+        ? await appApi.delete(`/users/unfollow/${toFollowId}`)
+        : await appApi.post("/users/follow", { to_follow_id: toFollowId });
+      setIsFollowing((val) => !val);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <button
+      className="px-2 py-2 rounded-md bg-slate-500 text-slate-100 font-bold flex justify-center"
+      disabled={isLoading}
+      onClick={handleActions}
+    >
+      {
+        isLoading ? <LoadingSpinner className={"w-4 h-4"}/> :
+        <span className="flex items-center">
+          {isFollowing ? <><LiaCookieBiteSolid size={20}/> Unfollow</>: <><LiaCookieSolid size={20}/> Follow</>}
+        </span>
+      }
+    </button>
   );
 };
 

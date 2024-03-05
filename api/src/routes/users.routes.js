@@ -1,5 +1,11 @@
 const { Router } = require("express");
-const { searchUser, follow, unfollow, isFollowing } = require("../controllers/users.controller");
+const {
+  searchUser,
+  follow,
+  unfollow,
+  isFollowing,
+  getUserFollowersAndFollowings,
+} = require("../controllers/users.controller");
 const {
   getUserByEmail,
   getUserRecipes,
@@ -56,8 +62,8 @@ usersRoutes.get(
   [jwtValidator, isFollowingValidation, fieldValidator],
   async (req, res) => {
     try {
-      const existFollow = await isFollowing(req.params.userId,req.user.id);
-      return res.status(200).json({ ok: existFollow, });
+      const existFollow = await isFollowing(req.params.userId, req.user.id);
+      return res.status(200).json({ ok: existFollow });
     } catch (error) {
       console.log(error);
       if (error.status) {
@@ -75,7 +81,7 @@ usersRoutes.get(
   [getUserRecipesValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await getUserRecipes(null, req.params.userName);
+      const data = await getUserRecipes(null, req.params.userName, req.query.page, req.query.perPage);
       return res.status(200).json({ ok: true, data });
     } catch (error) {
       console.log(error);
@@ -95,7 +101,7 @@ usersRoutes.post(
   async (req, res) => {
     try {
       const data = await follow(req.body.to_follow_id, req.user.id);
-      return res.status(201).json({...data});
+      return res.status(201).json({ ...data });
     } catch (error) {
       console.log(error);
       if (error.status) {
@@ -114,7 +120,7 @@ usersRoutes.delete(
   async (req, res) => {
     try {
       const data = await unfollow(req.params.userId, req.user.id);
-      return res.status(201).json({...data});
+      return res.status(201).json({ ...data });
     } catch (error) {
       console.log(error);
       if (error.status) {
@@ -125,6 +131,21 @@ usersRoutes.delete(
         .json({ ok: false, message: responseMessages.internalServerError });
     }
   }
-)
+);
+
+usersRoutes.get("/follows/:userId", async (req, res) => {
+  try {
+    const data = await getUserFollowersAndFollowings(req.params.userId);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+    if (error.status) {
+      return res.status(error.status).json({ ok: false, message: error.msg });
+    }
+    return res
+      .status(500)
+      .json({ ok: false, message: responseMessages.internalServerError });
+  }
+});
 
 module.exports = usersRoutes;

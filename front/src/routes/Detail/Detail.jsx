@@ -86,14 +86,12 @@ const Detail = () => {
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
-                    <span className="flex justify-between items-center gap-2 text-l">
+                    <Link className="flex justify-between items-center gap-2 text-l" to={`${dish?.User?.user_name}`}>
                       <FaRegUserCircle size={20} />
-                      <Link to={`/${dish?.User?.user_name}`}>
-                        <p className="text-sm font-semibold" id="UserPost">
-                          @{dish?.User?.user_name}
-                        </p>
-                      </Link>
-                    </span>
+                      <p className="text-sm font-semibold" id="UserPost">
+                        @{dish?.User?.user_name}
+                      </p>
+                    </Link>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData?.toDateString("es-AR", dish?.createdAt)}
                     </p>

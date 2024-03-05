@@ -11,7 +11,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [dishList, setDishList] = useState([]);
   const [dishAux, setDishAux] = useState([]);
-  const { addOrRemoveFromFavs, addOrRemoveFromBookmark, favorites, bookMark } = useAuthContext();
+  const { addOrRemoveFromFavs, addOrRemoveFromBookmark, favorites, bookMark } =
+    useAuthContext();
 
   const currentData = new Date();
 
@@ -29,25 +30,24 @@ const Home = () => {
             return { ...data, favorites: false };
           }
         });
-     
+
         setDishAux(newDataApi);
-        
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
-    
+
     fetchRecipe();
   }, [favorites]);
-  
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const books = bookMark?.map((bookMark) => bookMark.id);
-        
+
         const newDataApi = dishAux.map((data) => {
           const newArrayInBook = books?.find((book) => book === data.id);
-          
+
           if (newArrayInBook) {
             return { ...data, bookMark: true };
           } else {
@@ -76,14 +76,15 @@ const Home = () => {
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
-                    <span className="flex justify-between items-center gap-2 text-l">
+                    <Link
+                      className="flex justify-between items-center gap-2 text-l"
+                      to={`${val.User.user_name}`}
+                    >
                       <FaRegUserCircle size={20} />
-                      <Link to={`/${val?.User?.user_name}`}>
-                        <p className="text-sm font-semibold" id="userPost">
-                          @{val?.User?.user_name}
-                        </p>
-                      </Link>
-                    </span>
+                      <p className="text-sm font-semibold" id="userPost">
+                        @{val?.User?.user_name}
+                      </p>
+                    </Link>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData.toDateString("es-AR", val?.createdAt)}
                     </p>
@@ -116,7 +117,7 @@ const Home = () => {
                         data-bookmark-id={val?.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
-                         {val.bookMark ? (
+                        {val.bookMark ? (
                           <HiOutlineBookmark
                             className={`cursor-pointer  fill-red-700 text-red-700 `}
                             size={20}

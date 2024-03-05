@@ -4,7 +4,7 @@ const { compareHash, passwordHash } = require("../utils/bcrypt.helper");
 const { deleteCloudinaryImage } = require("../utils/cloudinary.helper");
 const { responseMessages } = require("../utils/validation-errors.values");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
-const { Op } = require("sequelize");
+const { col, fn } = require("sequelize");
 
 const createUser = async (newUserData) => {
   try {
@@ -42,6 +42,14 @@ const getUserByUsernameOrThrow = async (userName) => {
   try {
     const user = await User.findOne({
       where: { user_name: userName },
+      attributes: [
+        "id",
+        "user_name",
+        "email",
+        [fn("COUNT", col("Recipes.UserId")), "recipeCount"],
+      ],
+      subQuery: false,
+      group: ["User.id", "Profile.id"],
       include: [
         {
           model: Profile,
@@ -53,16 +61,27 @@ const getUserByUsernameOrThrow = async (userName) => {
             "image",
           ],
         },
+        {
+          model: Recipe,
+          as: "Recipes",
+          where: { hidden: false },
+          attributes: [],
+          required:false,
+        },
       ],
-      attributes: ["id", "user_name", "email"],
     });
+    if(!user){
+      throw { status: 400, msg: responseMessages.userNotRegistered };
+    }
     return {
       id: user.id,
       user_name: user.user_name,
+      recipesCount: user.dataValues.recipeCount,
       ...user.Profile.dataValues,
     };
   } catch (error) {
-    throw { status: 400, msg: responseMessages.userNotRegistered };
+    console.log(error);
+    throw error;
   }
 };
 

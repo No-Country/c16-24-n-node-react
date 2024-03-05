@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, fn, col } = require("sequelize");
 const { User, Profile, Follower } = require("../db");
 const { getCloudinaryResizedImage } = require("../utils/cloudinary.helper");
 const { responseMessages } = require("../utils/validation-errors.values");
@@ -26,7 +26,6 @@ const searchUser = async (searchTerm, page = 1, perPage = 5) => {
       return {
         id: user.id,
         user_name: user.user_name,
-        email: user.email,
         profile: {
           first_name: user.Profile.first_name,
           last_name: user.Profile.last_name,
@@ -73,7 +72,7 @@ const follow = async (toFollowId, myUserId) => {
       userId: toFollowId,
     });
 
-    return { ok:true, message: responseMessages.followAdded };
+    return { ok: true, message: responseMessages.followAdded };
   } catch (error) {
     throw error;
   }
@@ -100,7 +99,7 @@ const unfollow = async (toUnfollowId, myUserId) => {
   }
 };
 
-const isFollowing = async (toFollowId, myUserId) =>{
+const isFollowing = async (toFollowId, myUserId) => {
   const existingFollow = await Follower.findOne({
     where: {
       followerId: myUserId,
@@ -109,7 +108,29 @@ const isFollowing = async (toFollowId, myUserId) =>{
   });
 
   return !!existingFollow;
+};
 
-}
+const getUserFollowersAndFollowings = async (userId) => {
+  try {
+    const follows = await Follower.findAndCountAll({
+      where: {
+        followerId: userId,
+      },
+    });
 
-module.exports = { searchUser, follow, unfollow, isFollowing };
+    const followers = await Follower.findAndCountAll({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return {
+      seguidores: followers.count,
+      seguidos: follows.count,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { searchUser, follow, unfollow, isFollowing, getUserFollowersAndFollowings };
