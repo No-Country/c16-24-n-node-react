@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import appApi from "../../api/appApi";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthProvider";
 
 const PersonalRecipes = ({ userName }) => {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { logIn } = useAuthContext();
 
   useEffect(() => {
     fetchPersonalRecipes();
+
   }, []);
 
   const fetchPersonalRecipes = async () => {
@@ -29,6 +33,7 @@ const PersonalRecipes = ({ userName }) => {
         <span className="loader" />
       ) : (
         <>
+          {!logIn && <Navigate to="/login" />}
           {myRecipes.length === 0 ? (
             <h3 className="">
               {error ? error : "Nothing to see yet..."}

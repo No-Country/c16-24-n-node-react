@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import Select from "react-select";
-import countriesData from "./country.json";
-import Swal from "sweetalert2";
 import { useAuthContext } from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
-import UpdateUserName from "./ChangeUser";
-import ChangePassword from "./ChangePassword";
-import ChangeEmail from "./ChangeEmail";
-import PhotoUpdater from "./ChangeImage";
-import appApi from "../../api/appApi";
-import DeleteUser from "./DeleteUser";
+import { useNavigate, Navigate } from "react-router-dom";
 import { TbFileDescription } from "react-icons/tb";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { BiRename } from "react-icons/bi";
 import { FaMobileAlt } from "react-icons/fa";
+import countriesData from "./country.json";
+import UpdateUserName from "./ChangeUser";
+import ChangePassword from "./ChangePassword";
+import ChangeEmail from "./ChangeEmail";
+import PhotoUpdater from "./ChangeImage";
+import DeleteUser from "./DeleteUser";
+import appApi from "../../api/appApi";
+import Select from "react-select";
+import Swal from "sweetalert2";
 
 const UserProfile = () => {
   const [editEnabled, setEditEnabled] = useState(false);
@@ -179,6 +179,8 @@ const UserProfile = () => {
   }
 
   return (
+   <>
+    {!logIn && <Navigate to="/login" />}
     <article>
       <section className="flex flex-row-reverse justify-center sm:gap-x-20 xs:gap-x-5 items-center">
         <h2 className="md:text-5xl sm:text-4xl xs:text-3xl">Edit profile</h2>
@@ -361,6 +363,7 @@ const UserProfile = () => {
       <DeleteUser />
       <hr className="my-5" />
     </article>
+   </>
   );
 };
 
