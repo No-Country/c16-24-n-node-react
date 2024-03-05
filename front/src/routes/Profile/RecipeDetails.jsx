@@ -9,6 +9,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
+import Comments from "../../components/Comments";
 
 const RecipeDetails = () => {
   const { addOrRemoveFromFavs, favorites } = useAuthContext();
@@ -19,7 +20,6 @@ const RecipeDetails = () => {
 
   useEffect(() => {
     const fetchRecipe = async () => {
-
       try {
         const res = await appApi.get(`/recipes/${recipeId}`);
         const resApi = res?.data?.recipe;
@@ -71,7 +71,7 @@ const RecipeDetails = () => {
 
   return (
     <>
-     <main className="flex justify-center item-center px-4 mt-5">
+      <main className="flex justify-center item-center px-4 mt-5">
         <section className="max-w-[1200px] md:w-full">
           <div className="my-[5%] mx-0">
             <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-20">
@@ -79,7 +79,7 @@ const RecipeDetails = () => {
                 className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
                 key={recipe?.id}
               >
-             <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
+                <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
                     <span className="flex justify-between items-center gap-2 text-l">
                       <FaRegUserCircle size={20} />
@@ -96,7 +96,7 @@ const RecipeDetails = () => {
                     src={recipe?.primaryimage}
                     alt=""
                   />
-                   <div className="flex justify-between items-center py-3">
+                  <div className="flex justify-between items-center py-3">
                     <div className="flex flex-row">
                       <button
                         onClick={addOrRemoveFromFavs}
@@ -131,10 +131,7 @@ const RecipeDetails = () => {
                   <h3 id="name" className="text-xl font-bold pb-2">
                     {recipe?.name}
                   </h3>
-                  <div
-                    id="hashtags"
-                    className="text-l font-semibold pl-2 pb-2"
-                  >
+                  <div id="hashtags" className="text-l font-semibold pl-2 pb-2">
                     {recipe?.hashtags?.map((item, index) => (
                       <span className="pr-2" key={index}>
                         #{item?.name}
@@ -184,48 +181,7 @@ const RecipeDetails = () => {
                       id="process"
                       className="text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
                     ></div>
-                    {/* <h2 className="text-xl font-semibold">Comentarios</h2>
-                  <div className="flex gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
-                    <span className="flex w-content justify-between items-center gap-2 text-l">
-                      <FaRegUserCircle size={20} />
-                      <p id="userPost" className="pr-6">{user}</p>
-                    </span>
-                    <span>
-                      <form onSubmit={onClickHandler} className="flex justify-between items-center max-w-[1000px] w-[100%]">
-                        <input
-                          className="border-b  focus:outline-none solid w-[1000px] hover:border-b-2  "
-                          onChange={handleComment}
-                          name="commentary"
-                        />
-                        <button type="submit" ><BiSolidSend className="ml-4" size={20} /> </button>
-                      </form>
-                    </span>
-                  </div> */}
-
-                    {/* {comments?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="block m-auto gap-y-4 text-justify border w-[98%] border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
-                    >
-                      <div className="">
-                        <div className="flex justify-between items-center pl-2 pb-1">
-                          <span className="flex items-center gap-2 text-l">
-                            <FaRegUserCircle size={20} />
-                            <p id="userPost">{item?.userName}</p>
-                          </span>
-                          <p id="date" className="text-sm pr-5">
-                            {currentData?.toDateString(
-                              "es-AR",
-                              item?.time
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center gap-y-4 text-justify border border-solid rounded-xl p-2 m-2 md:h-[full] lg:h-[full]">
-                        <p>{item.commentary}</p>
-                      </div>
-                    </div>
-                  ))} */}
+                    <Comments dishID={recipeId} />
                   </div>
                 </div>
               </div>
