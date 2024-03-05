@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { MdDelete } from "react-icons/md";
 import { GrAdd } from "react-icons/gr";
 import logo2 from "./logo2.png";
-
+import { SlClose } from "react-icons/sl";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -211,7 +211,8 @@ const PatchEdit = () => {
     }
   };
 
-  const removePreview = () => {
+  const removePreview = (e) => {
+    e.preventDefault();
     setSelectedFile(null);
     setPreviewImage(null);
   };
@@ -223,69 +224,148 @@ const PatchEdit = () => {
         Edit Recipe
       </h2>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-2 text-xl">
-            Recipe Name:
+      <div className="relative flex flex-col items-center justify-center w-full">
+        <p className="text-center text-gray-500 font-bold px-2" >current image</p>
+          <img
+            src={imageUrl}
+            alt="Preview"
+            className="w-full xs:h-[260px] mr-2 mx-auto object-cover border-2 rounded-lg border-green-600 mb-8"
+          />
+          <label
+            htmlFor="dropzone-file"
+            className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            {imageUrl && (
+              <div className="flex flex-col items-center justify-center p-2 ">
+                <svg
+                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Click to upload</span> or drag
+                  and drop
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  SVG, PNG, JPG or GIF (MAX. 1MB)
+                </p>
+              </div>
+            )}
+            {previewImage && (
+              <div className="absolute w-full xs:h-[260px]">
+                 <p className="absolute top-[-30px] text-gray-500 font-bold px-2 left-[calc(50%-52px)] bg-white">Image preview</p>
+                <img
+                  src={previewImage}
+                  alt="Preview"
+                  className="w-full xs:h-[260px] mr-2 mx-auto object-cover border-2 rounded-lg border-green-600"
+                />
+                <button
+                  className="absolute top-[-20px] right-[-15px] bg-red-500   text-white  rounded-[50%]"
+                  onClick={removePreview}
+                >
+                  <SlClose size={30} />
+                </button>
+              </div>
+            )}
+            <input
+              id="dropzone-file"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden  my-7 p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
+            />
           </label>
+        </div>
+        <hr className="my-10" />
+        <div className="relative mb-4">
           <input
             type="text"
             id="name"
             name="name"
-            value={formData?.name}
+            value={formData.name}
             onChange={handleInputChange}
-            className="p-2 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9 "
+            className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
           />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block mb-2 text-xl">
-            Description:
+          <label
+            className="absolute top-[-10px] text-gray-500 font-bold px-2 left-[calc(50%-49px)] bg-white"
+            htmlFor="RecipeName"
+          >
+            Recipe Name:
           </label>
+        </div>
+        <div className="relative mb-4">
           <textarea
+            rows={3}
             id="description"
             name="description"
             value={formData?.description}
             onChange={handleInputChange}
-            className="border border-gray-300 px-3 py-1 w-full rounded focus:h-32 transition-all duration-300"
+            className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50 h-full resize-none "
           />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="portion" className="block mb-2 text-xl">
-            Portion:
+          <label
+            className="absolute top-[-10px] text-gray-500 font-bold px-2 left-[calc(50%-52px)] bg-white"
+            htmlFor="Description"
+          >
+            Description:
           </label>
-          <input
-            type="number"
-            id="portion"
-            name="portion"
-            value={formData.portion}
-            onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-          />
         </div>
-        <div className="mb-4">
-          <label htmlFor="preparation_time" className="block mb-2 text-xl">
-            Preparation Time (minutes):
-          </label>
-          <input
-            type="number"
-            id="preparation_time"
-            name="preparation_time"
-            value={formData.preparation_time}
-            onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="difficulty" className="block mb-2 text-xl">
-            Difficulty:
-          </label>
-          <input
-            type="number"
-            id="difficulty"
-            name="difficulty"
-            value={formData?.difficulty}
-            onChange={handleInputChange}
-            className="p-2 mt-1 block w-1/4 rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-          />
+        <div className="flex justify-between items-center w-full gap-x-2">
+          <div className="relative w-[33%] mb-4">
+            <input
+              type="number"
+              id="portion"
+              name="portion"
+              value={formData.portion}
+              onChange={handleInputChange}
+              className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
+            />
+            <label
+              className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[25%] xs:left-[9%] bg-white"
+              htmlFor="Portion"
+            >
+              Portion:
+            </label>
+          </div>
+          <div className="relative w-[33%] mb-4">
+            <input
+              type="number"
+              id="preparation_time"
+              name="preparation_time"
+              value={formData.preparation_time}
+              onChange={handleInputChange}
+              className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
+            />
+            <label
+              className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[30%] xs:left-[18%] bg-white"
+              htmlFor="Time"
+            >
+              Time:
+            </label>
+          </div>
+
+          <div className="relative mb-4">
+            <input
+              type="number"
+              id="difficulty"
+              name="difficulty"
+              value={formData.difficulty}
+              onChange={handleInputChange}
+              className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
+            />
+            <label
+              className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[25%] xs:left-[23%] bg-white"
+              htmlFor=" Difficulty"
+            >
+              Difficulty:
+            </label>
+          </div>
         </div>
         <div className="mb-4">
           <label htmlFor="process" className="block mb-2 text-xl">
@@ -310,133 +390,131 @@ const PatchEdit = () => {
           <label htmlFor="ingredients" className="block mb-2 text-xl">
             Ingredientes:
           </label>
-          {formData.ingredients.map((ingredient, index) => (
-            <div key={index} className="mb-2 flex items-center">
-              <input
-                type="text"
-                value={ingredient.name}
-                placeholder="New ingredients"
-                onChange={(e) => handleIngredientChange(index, e)}
-                className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-              />
+          <div className="mb-4">
+            {formData.ingredients.map((ingredient, index) => (
+              <div
+                key={index}
+                className=" relative flex justify-between items-center mb-3"
+              >
+                <input
+                  type="text"
+                  value={ingredient.name}
+                  placeholder="New ingredients"
+                  onChange={(e) => handleIngredientChange(index, e)}
+                  className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleRemoveIngredient(index)}
+                  className="absolute right-5"
+                >
+                  <MdDelete
+                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                    size={25}
+                  />
+                </button>
+              </div>
+            ))}
+            <div className="flex justify-end items-center">
               <button
                 type="button"
-                onClick={() => handleRemoveIngredient(index)}
-                className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                onClick={handleAddIngredient}
+                className=" p-3 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
               >
-                <MdDelete />
+                <GrAdd />
               </button>
             </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddIngredient}
-            className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            <GrAdd />
-          </button>
+          </div>
         </div>
-
         <div className="mb-4">
-          <label htmlFor="categories" className="block mb-2">
-            Categories:
-          </label>
           {formData.categories.map((category, index) => (
-            <div key={index} className="mb-2 flex items-center">
+            <div
+              key={index}
+              className=" relative flex justify-between items-center mb-3"
+            >
               <input
                 type="text"
                 value={category.name}
                 placeholder="New category"
                 onChange={(e) => handleCategoryChange(index, e)}
-                className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
               />
+              <label
+                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
+                htmlFor="Categories"
+              >
+                Categories:
+              </label>
               <button
                 type="button"
                 onClick={() => handleRemoveCategory(index)}
-                className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                className="absolute right-5"
               >
-                <MdDelete />
+                <MdDelete
+                  className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                  size={25}
+                />
               </button>
             </div>
           ))}
-          <button
-            type="button"
-            onClick={handleAddCategory}
-            className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            <GrAdd />
-          </button>
+          <div className="flex justify-end items-center">
+            <button
+              type="button"
+              onClick={handleAddCategory}
+              className=" p-3 m-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            >
+              <GrAdd />
+            </button>
+          </div>
         </div>
         <div className="mb-4">
           <label htmlFor="hashtags" className="block mb-2">
             Hashtags:
           </label>
           {formData.hashtags.map((hashtag, index) => (
-            <div key={index} className="mb-2 flex items-center">
+            <div
+              key={index}
+              className=" relative flex justify-between items-center mb-3"
+            >
               <input
                 type="text"
                 value={hashtag.name}
                 placeholder="New hashtag"
                 onChange={(e) => handleHashtagChange(index, e)}
-                className="mr-2 px-3 w-3/4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
               />
+              <label
+                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
+                htmlFor="Hashtags"
+              >
+                Hashtags:
+              </label>
               <button
                 type="button"
                 onClick={() => handleRemoveHashtag(index)}
-                className="px-3 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                className="absolute right-5"
               >
-                <MdDelete />
+                <MdDelete
+                  className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                  size={25}
+                />
               </button>
             </div>
           ))}
-          <button
-            type="button"
-            onClick={handleAddHashtag}
-            className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-          >
-            <GrAdd />
-          </button>
+          <div className="flex justify-end items-center">
+            <button
+              type="button"
+              onClick={handleAddHashtag}
+              className="px-3 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+            >
+              <GrAdd />
+            </button>
+          </div>
         </div>
-        <hr className="my-10" />
-        <div className="mb-4">
-          <label htmlFor="image" className="block mb-4 text-xl ">
-            Image:
-          </label>
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Recipe"
-              className="mb-2 w-64 h-auto mx-auto border-2 rounded-lg"
-            />
-          )}
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="mt-5 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 h-9"
-          />
-          {previewImage && (
-            <div className="text-center">
-              <img
-                src={previewImage}
-                alt="Preview"
-                className="mt-4 mb-2 w-64 h-auto mx-auto border-2 rounded-lg border-green-600"
-              />
-              <button
-                className="bg-red-500 text-white px-3 py-2 rounded-md m-2"
-                onClick={removePreview}
-              >
-                <MdDelete />
-              </button>
-            </div>
-          )}
-        </div>
-        <hr className="my-10" />
+        <hr className="mt-4 mb-2" />
         <button
           type="submit"
-          className="w-2/5 bg-green-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="w-2/5 bg-green-500 text-white my-4 py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         >
           Upload
         </button>
