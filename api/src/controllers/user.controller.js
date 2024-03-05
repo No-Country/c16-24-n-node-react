@@ -66,6 +66,7 @@ const getUserByUsernameOrThrow = async (userName) => {
           as: "Recipes",
           where: { hidden: false },
           attributes: [],
+          required:false,
         },
       ],
     });
