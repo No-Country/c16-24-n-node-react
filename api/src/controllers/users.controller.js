@@ -112,36 +112,21 @@ const isFollowing = async (toFollowId, myUserId) => {
 
 const getUserFollowersAndFollowings = async (userId) => {
   try {
-    const user = await User.findByPk(userId, {
-      attributes:[
-        [fn("COUNT", col("Following.id")), "followingCount"],
-        [fn("COUNT", col("Followers.id")), "followersCount"],
-      ],
-      group: ["User.id"],
-      include: [
-        {
-          model: User,
-          as: "Followers",
-          through:{attributes:[]},
-          attributes: [],
-        },
-        {
-          model: User,
-          as: "Following",
-          through:{attributes:[]},
-          attributes: [],
-        },
-      ],
+    const follows = await Follower.findAndCountAll({
+      where: {
+        followerId: userId,
+      },
     });
 
-    if (!user) {
-      throw ({ ok:false, msg: "Usuario no encontrado" });
-    }
-    console.log(user)
+    const followers = await Follower.findAndCountAll({
+      where: {
+        userId: userId,
+      },
+    });
 
     return {
-      seguidores: user.dataValues.followersCount,
-      seguidos: user.dataValues.followingCount,
+      seguidores: followers.count,
+      seguidos: follows.count,
     };
   } catch (error) {
     throw error;
