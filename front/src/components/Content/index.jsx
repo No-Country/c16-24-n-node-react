@@ -38,7 +38,7 @@ const Content = () => {
         <Route path="/recipes/:recipeId" element={<PatchEdit />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/:userName" element={<UsersProfilePage />} />
-        {/* <Route path="*" element={<Navigate to="/" />} /> */}
+        <Route path="*" element={<Navigate to="/" />} /> 
       </Routes>
     </div>
   );
