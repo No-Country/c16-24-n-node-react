@@ -81,7 +81,7 @@ usersRoutes.get(
   [getUserRecipesValidation, fieldValidator],
   async (req, res) => {
     try {
-      const data = await getUserRecipes(null, req.params.userName);
+      const data = await getUserRecipes(null, req.params.userName, query.page, query.perPage);
       return res.status(200).json({ ok: true, data });
     } catch (error) {
       console.log(error);
