@@ -40,12 +40,12 @@ const Home = () => {
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
-                    <span className="flex justify-between items-center gap-2 text-l">
+                    <Link className="flex justify-between items-center gap-2 text-l" to={`${val.User.user_name}`}>
                       <FaRegUserCircle size={20} />
                       <p className="text-sm font-semibold" id="userPost">
                         @{val.User.user_name}
                       </p>
-                    </span>
+                    </Link>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData.toDateString("es-AR", val.createdAt)}
                     </p>

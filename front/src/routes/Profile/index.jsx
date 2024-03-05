@@ -4,7 +4,7 @@ import UserInfoComponent from "./UserInfo";
 import { useAuthContext } from "../../context/AuthProvider";
 
 const Profile = () => {
-  const { logIn } = useAuthContext();
+  const { logIn, user } = useAuthContext();
 
   return (
     <>
@@ -12,7 +12,7 @@ const Profile = () => {
         <Navigate to={"/login"} />
       ) : (
         <article className="mt-4 flex flex-col items-center">
-          <UserInfoComponent />
+          <UserInfoComponent userName={user.substring(1)} />
           <hr className="my-3" />
           <PersonalRecipes />
           <hr className="my-10" />

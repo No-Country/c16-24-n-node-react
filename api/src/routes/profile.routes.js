@@ -11,7 +11,6 @@ const {
   jwtValidator,
   emptyBodyValidator,
   fieldValidator,
-  imageValidator,
 } = require("../middlewares");
 
 const profileRoutes = Router();

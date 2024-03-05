@@ -32,7 +32,7 @@ const PersonalRecipes = ({ userName }) => {
           {myRecipes.length === 0 ? (
             <h3 className="">
               {error ? error : "Nothing to see yet..."}
-              {!userName && (
+              {(!userName && !error) && (
                 <Link to="/posts" className="text-blue-900 underline">
                   Upload a recipe
                 </Link>

@@ -5,7 +5,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { GiFullPizza } from "react-icons/gi";
 import Comments from "../../components/Comments";
 
@@ -59,9 +59,9 @@ const Detail = () => {
                   <h3 className="flex justify-between items-center pl-2 pb-1">
                     <span className="flex justify-between items-center gap-2 text-l">
                       <FaRegUserCircle size={20} />
-                      <p className="text-sm font-semibold" id="UserPost">
+                      <Link className="text-sm font-semibold" id="UserPost" to={`/${dish?.User?.user_name}`}>
                         @{dish?.User?.user_name}
-                      </p>
+                      </Link>
                     </span>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData?.toDateString("es-AR", dish?.createdAt)}
