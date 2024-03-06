@@ -4,6 +4,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
 import { GiFullPizza } from "react-icons/gi";
+import { CiPizza } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthProvider";
 import { TbSearch } from "react-icons/tb";
 import { Navigate } from "react-router-dom";
@@ -11,28 +12,57 @@ import { Link } from "react-router-dom";
 import appApi from "../../api/appApi";
 
 const Seach = () => {
-  const { addOrRemoveFromFavs, favorites, logIn } = useAuthContext();
+  const {
+    addOrRemoveFromFavs,
+    addOrRemoveFromBookmark,
+    favorites,
+    logIn,
+    bookMark,
+  } = useAuthContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [dishList, setDishList] = useState([]);
+  const [dishAux, setDishAux] = useState([]);
   const currentData = new Date();
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const res = await appApi.get("/recipes");
-        // let resAux = []
         const resApi = res?.data?.recipes;
-        console.log(resApi);
         const favs = favorites.map((fav) => fav.id);
+
         const newDataApi = resApi.map((data) => {
           const newArray = favs.find((fav) => fav === data.id);
-
           if (newArray) {
             return { ...data, favorites: true };
           } else {
             return { ...data, favorites: false };
           }
         });
+        setDishAux(newDataApi);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    };
+
+    fetchRecipe();
+  }, [favorites]);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const books = bookMark?.map((bookMark) => bookMark.id);
+
+        const newDataApi = dishAux.map((data) => {
+          const newArrayInBook = books.find((book) => book == data.id);
+
+          if (newArrayInBook) {
+            return { ...data, bookMark: true };
+          } else {
+            return { ...data, bookMark: false };
+          }
+        });
+        newDataApi.sort((a, b) => new Date(b.date) - new Date(a.date));
         setDishList(newDataApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
@@ -40,7 +70,7 @@ const Seach = () => {
     };
 
     fetchRecipe();
-  }, [setDishList, favorites]);
+  }, [bookMark, dishAux, setDishList]);
 
   return (
     <>
@@ -81,12 +111,14 @@ const Seach = () => {
                         <h3 className="flex justify-between items-center pl-2 pb-1">
                           <span className="flex justify-between items-center gap-2 text-l">
                             <FaRegUserCircle size={20} />
-                            <p
-                              className="text-sm font-semibold text-blue-600"
-                              id="userPost"
-                            >
-                              {val?.User?.user_name}
-                            </p>
+                            <Link to={`/${val.User.user_name}`}>
+                              <p
+                                className="text-sm font-semibold"
+                                id="userPost"
+                              >
+                                @{val.User.user_name}
+                              </p>
+                            </Link>
                           </span>
                           <p id="date" className="text-sm md:pr-5 sm:pr-0">
                             {currentData?.toDateString("es-AR", val?.createdAt)}
@@ -107,7 +139,7 @@ const Seach = () => {
                               className="flex seft-start item-center gap-x-2 pl-2"
                             >
                               {val.favorites ? (
-                                <GiFullPizza
+                                <CiPizza
                                   className="cursor-pointer fill-rose-700 text-rose-700"
                                   size={20}
                                 />
@@ -119,13 +151,21 @@ const Seach = () => {
                               )}
                             </button>
                             <button
+                              onClick={addOrRemoveFromBookmark}
                               data-bookmark-id={val.id}
                               className="flex seft-start item-center gap-x-2 pl-2"
                             >
-                              <HiOutlineBookmark
-                                className={`cursor-pointer `}
-                                size={20}
-                              />
+                              {val.bookMark ? (
+                                <HiOutlineBookmark
+                                  className={`cursor-pointer  fill-red-700 text-red-700 `}
+                                  size={20}
+                                />
+                              ) : (
+                                <HiOutlineBookmark
+                                  className={`cursor-pointer `}
+                                  size={20}
+                                />
+                              )}
                             </button>
                           </div>
                           <div>

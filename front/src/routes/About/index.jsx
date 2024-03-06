@@ -2,7 +2,7 @@ import aboutImg from "../../assets/about.jpg";
 
 function About() {
   return (
-    <main className="flex flex-row justify-center px-4 mt-5">
+    <main className="flex flex-row justify-center px-4 mt-2 pb-10 ">
       <section className="max-w-[1000px]">
         <h2 className="text-[45px] mb-4 bold">About Chetifabene</h2>
         <img src={aboutImg} />
@@ -29,12 +29,3 @@ function About() {
 }
 
 export default About;
-
-// useEffect(() => {
-//   addEventListener("DOMContentLoaded", () => {
-//     if(!logIn){
-//       navigate('/login')
-//     }
-//   });
-//    logIn
-// }, [logIn, navigate]);

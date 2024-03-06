@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { MdDeleteSweep } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import { GiFullPizza } from "react-icons/gi";
+import { CiPizza } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
@@ -12,12 +13,12 @@ import { useAuthContext } from "../../context/AuthProvider";
 import Comments from "../../components/Comments";
 
 const RecipeDetails = () => {
-  const { addOrRemoveFromFavs, favorites } = useAuthContext();
+  const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState(null);
   let navigate = useNavigate();
   const currentData = new Date();
-
+  console.log(user);
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
@@ -73,8 +74,8 @@ const RecipeDetails = () => {
     <>
       <main className="flex justify-center item-center px-4 mt-5">
         <section className="max-w-[1200px] md:w-full">
-          <div className="my-[5%] mx-0">
-            <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-20">
+          <div className="mt-[5%] mx-0">
+            <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-1">
               <div
                 className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
                 key={recipe?.id}
@@ -104,7 +105,7 @@ const RecipeDetails = () => {
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
                         {recipe?.favorite ? (
-                          <GiFullPizza
+                          <CiPizza
                             className="cursor-pointer fill-rose-700 text-rose-700"
                             size={20}
                           />
@@ -189,24 +190,30 @@ const RecipeDetails = () => {
           </div>
         </section>
       </main>
-      <hr className="my-7" />
-      <div className="flex justify-evenly">
-        <Link
-          to={`/recipes/${recipeId}`}
-          className="text-white bg-green-400 px-4 py-2 rounded-lg hover:bg-green-600 flex items-center gap-2"
-        >
-          <MdModeEditOutline />
-          Edit
-        </Link>
-        <button
-          onClick={handleDelete}
-          className="text-white bg-red-400  px-4 py-2 rounded-lg hover:bg-red-600 flex items-center gap-2"
-        >
-          <MdDeleteSweep />
-          Delete
-        </button>
-      </div>
-      <hr className="my-10" />
+      <hr className="my-4" />
+      {user === "@" + recipe?.User?.user_name ? (
+        <>
+          <div className="flex justify-evenly pt-5">
+            <Link
+              to={`/recipes/${recipeId}`}
+              className="text-white bg-green-400 px-4 py-2 rounded-lg hover:bg-green-600 flex items-center gap-2"
+            >
+              <MdModeEditOutline />
+              Edit
+            </Link>
+            <button
+              onClick={handleDelete}
+              className="text-white bg-red-400  px-4 py-2 rounded-lg hover:bg-red-600 flex items-center gap-2"
+            >
+              <MdDeleteSweep />
+              Delete
+            </button>
+          </div>
+          <hr className="my-10" />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

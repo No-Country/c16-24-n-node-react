@@ -7,11 +7,19 @@ import { HiOutlineBookmark } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Link, Navigate } from "react-router-dom";
 import { GiFullPizza } from "react-icons/gi";
+import { CiPizza } from "react-icons/ci";
 import Comments from "../../components/Comments";
 
 const Detail = () => {
-  const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
+  const {
+    addOrRemoveFromFavs,
+    addOrRemoveFromBookmark,
+    favorites,
+    user,
+    bookMark,
+  } = useAuthContext();
   const [dish, setDish] = useState([]);
+  const [dishAux, setDishAux] = useState([]);
   const currentData = new Date();
   let query = new URLSearchParams(window.location.search);
   let dishID = query.get("dishID");
@@ -24,17 +32,15 @@ const Detail = () => {
         const favs = favorites.map((fav) => fav.id);
 
         const newDataApi = () => {
-          const data = resApi.id;
-          const newArray = favs.find((fav) => fav == data);
+          const newArrayInFav = favs.find((fav) => fav == dishID);
 
-          if (newArray) {
+          if (newArrayInFav) {
             return { ...resApi, favorite: true };
           } else {
             return { ...resApi, favorite: false };
           }
         };
-
-        setDish(newDataApi);
+        setDishAux(newDataApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -43,10 +49,33 @@ const Detail = () => {
     fetchRecipe();
   }, [dishID, favorites]);
 
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const books = bookMark?.map((bookMark) => bookMark.id);
+
+        const newDataApi = () => {
+          const newArrayInBook = books?.find((book) => book === dishID);
+
+          if (newArrayInBook) {
+            return { ...dishAux, bookMark: true };
+          } else {
+            return { ...dishAux, bookMark: false };
+          }
+        };
+        setDish(newDataApi);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    };
+
+    fetchRecipe();
+  }, [bookMark, dishID, dishAux]);
+
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
-      {!user && <Navigate to="/" />}
+      {!user && <Navigate to="/login" />}
       <main className="flex justify-center item-center px-4 mt-5">
         <section className="max-w-[1200px] md:w-full">
           <div className="my-[5%] mx-0">
@@ -57,12 +86,12 @@ const Detail = () => {
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
-                    <span className="flex justify-between items-center gap-2 text-l">
+                    <Link className="flex justify-between items-center gap-2 text-l" to={`${dish?.User?.user_name}`}>
                       <FaRegUserCircle size={20} />
-                      <Link className="text-sm font-semibold" id="UserPost" to={`/${dish?.User?.user_name}`}>
+                      <p className="text-sm font-semibold" id="UserPost">
                         @{dish?.User?.user_name}
-                      </Link>
-                    </span>
+                      </p>
+                    </Link>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
                       {currentData?.toDateString("es-AR", dish?.createdAt)}
                     </p>
@@ -80,7 +109,7 @@ const Detail = () => {
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
                         {dish?.favorite ? (
-                          <GiFullPizza
+                          <CiPizza
                             className="cursor-pointer fill-rose-700 text-rose-700"
                             size={20}
                           />
@@ -89,13 +118,21 @@ const Detail = () => {
                         )}
                       </button>
                       <button
-                        data-bookmark-id={dish?.id}
+                        onClick={addOrRemoveFromBookmark}
+                        data-bookmark-id={dish.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
-                        <HiOutlineBookmark
-                          className={`cursor-pointer `}
-                          size={20}
-                        />
+                        {dish?.bookMark ? (
+                          <HiOutlineBookmark
+                            className={`cursor-pointer  fill-red-700 text-red-700 `}
+                            size={20}
+                          />
+                        ) : (
+                          <HiOutlineBookmark
+                            className={`cursor-pointer `}
+                            size={20}
+                          />
+                        )}
                       </button>
                     </div>
                     <div>

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from '../../assets/logo.png';
 import c_logo from '../../assets/c_logo.png';
-import minlogo from '../../assets/minlogo.png';
 import SidebarItem from "./SidebarItem";
 import Dropdown from "./DropDown";
 
