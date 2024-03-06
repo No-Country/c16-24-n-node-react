@@ -16,6 +16,7 @@ import Terms from "../../routes/Terms";
 import Registro from "../../routes/Register/Registro";
 import Detail from "../../routes/Detail/Detail";
 import UsersProfilePage from "../../routes/Users";
+import Powered from "../../routes/Powered";
 
 const Content = () => {
   return (
@@ -38,6 +39,7 @@ const Content = () => {
         <Route path="/recipes/:recipeId" element={<PatchEdit />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/:userName" element={<UsersProfilePage />} />
+        <Route path="/powered" element={<Powered />} />
         {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
     </div>
