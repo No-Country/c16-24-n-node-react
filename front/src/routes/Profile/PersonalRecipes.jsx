@@ -1,25 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import appApi from "../../api/appApi";
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthProvider";
+
+const buildApiUri = (userName, page, perPage = 9) => {
+  if (userName) {
+    return `/users/recipes/${userName}?page=${page}&perPage=${perPage}`;
+  } else {
+    return `/user/recipes?page=${page}&perPage=${perPage}`;
+  }
+};
 
 const PersonalRecipes = ({ userName }) => {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { logIn } = useAuthContext();
+  const { loaderRef, page, setPage, hasMore, setHasMore,  } = useInfiniteScroll(
+    (newPage) => setPage(newPage + 1)
+  );
 
   useEffect(() => {
-    fetchPersonalRecipes();
-
-  }, []);
+    if (hasMore) {
+      fetchPersonalRecipes();
+    }
+  }, [page, hasMore]);
 
   const fetchPersonalRecipes = async () => {
-    const apiUri = !!userName ? `/users/recipes/${userName}` : "/user/recipes";
+    const apiUri = buildApiUri(userName, page);
+    setLoading(true);
     try {
       const { data } = await appApi.get(apiUri);
-      setMyRecipes(data.data);
+      if(page === 1){
+        setMyRecipes(data.data);
+      } else {
+        setMyRecipes((prevRec) => [...prevRec, ...data.data]);
+      }
+      if (data.data.length === 0 || data.data.length < 9) {
+        setHasMore(false);
+        return;
+      }
     } catch (error) {
       setError("An error ocurred loading, please try again.");
     } finally {
@@ -29,26 +47,35 @@ const PersonalRecipes = ({ userName }) => {
 
   return (
     <>
-      {loading ? (
+      {loading && page === 1 ? (
         <span className="loader" />
       ) : (
         <>
-          {!logIn && <Navigate to="/login" />}
           {myRecipes.length === 0 ? (
             <h3 className="">
               {error ? error : "Nothing to see yet..."}
-              {(!userName && !error) && (
+              {!userName && error && (
                 <Link to="/posts" className="text-blue-900 underline">
                   Upload a recipe
                 </Link>
               )}
             </h3>
           ) : (
-            <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-fit">
-              {myRecipes.map((recipe) => (
-                <RecipeCardComponent recipe={recipe} key={recipe.id} />
-              ))}
-            </section>
+            <div className="flex flex-col">
+              <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-fit">
+                {myRecipes.map((recipe) => (
+                  <RecipeCardComponent recipe={recipe} key={recipe.id} />
+                ))}
+              </section>
+              {hasMore && (
+                <>
+                  <div className="mt-12 mb-16 w-full flex justify-center">
+                    <span className="loader justify-center"></span>
+                  </div>
+                  {!loading && <div ref={loaderRef}></div>}
+                </>
+              )}
+            </div>
           )}
         </>
       )}
@@ -73,6 +100,40 @@ const RecipeCardComponent = ({ recipe }) => {
       </p>
     </Link>
   );
+};
+
+const useInfiniteScroll = (callback) => {
+  const loaderRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && loaderRef.current) {
+          if (hasMore) {
+            console.log(page);
+            callback(page);
+          }
+        }
+      },
+      {
+        threshold: 0.9,
+      }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [callback]);
+
+  return { loaderRef, page, hasMore, setHasMore, setPage };
 };
 
 export default PersonalRecipes;
