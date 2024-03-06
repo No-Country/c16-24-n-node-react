@@ -71,7 +71,7 @@ const Detail = () => {
 
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
-
+console.log(dish)
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -86,7 +86,7 @@ const Detail = () => {
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
                   <h3 className="flex justify-between items-center pl-2 pb-1">
-                    <Link className="flex justify-between items-center gap-2 text-l" to={`${dish?.User?.user_name}`}>
+                    <Link className="flex justify-between items-center gap-2 text-l"   to={`/${dish?.User?.user_name}`}>
                       <FaRegUserCircle size={20} />
                       <p className="text-sm font-semibold" id="UserPost">
                         @{dish?.User?.user_name}
@@ -194,7 +194,7 @@ const Detail = () => {
                       id="process"
                       className="text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     ></div>
-                    <Comments dishID={dishID} />
+                    <Comments dishID={dishID} userDetail={dish?.User?.user_name}/>
                   </div>
                 </div>
               </div>
