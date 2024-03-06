@@ -180,6 +180,16 @@ const Post = () => {
       return;
     }
 
+    const difficultyValue = parseInt(formData.difficulty);
+    if (isNaN(difficultyValue) || difficultyValue < 1 || difficultyValue > 5) {
+      Swal.fire({
+        icon: "warning",
+        title: "Invalid Difficulty",
+        text: "Difficulty should be between 1 and 5.",
+      });
+      return;
+    }
+
     if (!formData.process || formData.process.trim() === "") {
       Swal.fire({
         icon: "warning",
@@ -478,7 +488,7 @@ const Post = () => {
                 className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[30%] xs:left-[18%] bg-white"
                 htmlFor="Time"
               >
-                Time:
+                Minutes:
               </label>
             </div>
 
@@ -487,6 +497,7 @@ const Post = () => {
                 type="number"
                 id="difficulty"
                 name="difficulty"
+                max="5"
                 value={formData.difficulty}
                 onChange={handleInputChange}
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
@@ -495,7 +506,7 @@ const Post = () => {
                 className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[25%] xs:left-[23%] bg-white"
                 htmlFor=" Difficulty"
               >
-                Difficulty:
+                Difficulty: 1-5
               </label>
             </div>
           </div>
