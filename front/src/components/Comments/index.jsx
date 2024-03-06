@@ -5,6 +5,7 @@ import appApi from "../../api/appApi";
 
 // eslint-disable-next-line react/prop-types
 const Comments = ({ dishID }) => {
+  // const { user } = useAuthContext();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [currentCommentText, setCurrentCommentText] = useState("");
@@ -12,6 +13,8 @@ const Comments = ({ dishID }) => {
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
+
+  // console.log(user)
 
   const fetchComments = async () => {
     try {
@@ -42,7 +45,7 @@ const Comments = ({ dishID }) => {
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
-      setUser(storedUser);
+      setUser(storedUser.slice(1));
     }
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,7 +116,7 @@ const Comments = ({ dishID }) => {
         <span className="flex w-content justify-between items-center gap-x-2 text-l">
           <FaRegUserCircle size={20} />
           <p className="text-sm font-semibold mr-1" id="userPost">
-            {user}
+            @{user}
           </p>
         </span>
         <span className="w-full">
@@ -156,25 +159,29 @@ const Comments = ({ dishID }) => {
               <div className="flex justify-between items-center pl-2 pb-1">
                 <span className="flex items-center gap-2 text-l">
                   <FaRegUserCircle size={20} />
-                  <p id="userPost">{item.User.user_name}</p>
+                  <p id="userPost">@{item.User.user_name}</p>
                 </span>
+                {item.User.user_name === user&&
+                <>
+                  <button
+                    onClick={() =>
+                      handleEdit(item.Id, item.description, item.rating)
+                    }
+                    className="text-sm text-blue-500"
+                    type="button"
+                  >
+                    <BiEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(item.Id)}
+                    className="text-sm text-red-500"
+                    type="button"
+                  >
+                    <BiTrash />
+                  </button>
+                </>
+                }
 
-                <button
-                  onClick={() =>
-                    handleEdit(item.Id, item.description, item.rating)
-                  }
-                  className="text-sm text-blue-500"
-                  type="button"
-                >
-                  <BiEdit />
-                </button>
-                <button
-                  onClick={() => handleDelete(item.Id)}
-                  className="text-sm text-red-500"
-                  type="button"
-                >
-                  <BiTrash />
-                </button>
                 <p id="date" className="text-sm pr-5">
                   {new Date(item.createdAt).toLocaleDateString("es-AR")}
                 </p>

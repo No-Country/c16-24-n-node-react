@@ -78,7 +78,7 @@ const Home = () => {
                   <h3 className="flex justify-between items-center pl-2 pb-1">
                     <Link
                       className="flex justify-between items-center gap-2 text-l"
-                      to={`${val.User.user_name}`}
+                      to={`/${val.User.user_name}`}
                     >
                       <FaRegUserCircle size={20} />
                       <p className="text-sm font-semibold" id="userPost">
