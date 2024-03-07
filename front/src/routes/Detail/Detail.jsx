@@ -53,7 +53,7 @@ const Detail = () => {
     const fetchRecipe = async () => {
       try {
         const books = bookMark?.map((bookMark) => bookMark.id);
-
+   
         const newDataApi = () => {
           const newArrayInBook = books?.find((book) => book === dishID);
 
@@ -71,6 +71,7 @@ const Detail = () => {
 
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
+
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -99,6 +100,7 @@ const Detail = () => {
                     </p>
                   </h3>
                   <img
+                    id="img"
                     className="pt-2 md:w-[500px] md:max-h-[230px] lg:w-full lg:max-h-[400px] object-cover rounded-xl"
                     src={dish?.primaryimage}
                     alt=""
@@ -118,9 +120,7 @@ const Detail = () => {
                         ) : (
                           <GiFullPizza className="cursor-pointer" size={20} />
                         )}
-                      </button>
-
-                      <a href="#comments">
+                      </button>                     
                         <button
                           onClick={addOrRemoveFromBookmark}
                           data-bookmark-id={dish.id}
@@ -137,14 +137,10 @@ const Detail = () => {
                               size={20}
                             />
                           )}
-                        </button>
-                      </a>
+                        </button>        
                     </div>
                     <div>
                       <a href="#comments">
-                        <button className="flex justify-center item-center pr-2">
-                          <TfiCommentAlt className="cursor-pointer" size={20} />
-                        </button>
                         <button className="flex justify-center item-center pr-2">
                           <TfiCommentAlt className="cursor-pointer" size={20} />
                         </button>

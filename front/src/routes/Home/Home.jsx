@@ -35,7 +35,7 @@ const Home = () => {
           }
         });
 
-        setDishAux(user? newDataApi : resApi);
+        setDishAux(newDataApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -59,7 +59,7 @@ const Home = () => {
           }
         });
         newDataApi.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setDishList(user? newDataApi : dishAux );
+        setDishList(newDataApi );
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
