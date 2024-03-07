@@ -7,7 +7,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const Recipes = () => {
+const BookMark = () => {
   const {
     addOrRemoveFromFavs,
     favorites,
@@ -20,13 +20,13 @@ const Recipes = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const books = bookMark.map((book) => book.id);
-        const newDataApi = favorites.map((data) => {
-          const newArray = books.find((book) => book === data.id);
+        const favs = favorites.map((book) => book.id);
+        const newDataApi = bookMark.map((data) => {
+          const newArray = favs.find((fav) => fav === data.id);
           if (newArray) {
-            return { ...data, bookMark: true };
+            return { ...data, favorites: true };
           } else {
-            return { ...data, bookMark: false };
+            return { ...data, favorites: false };
           }
         });
 
@@ -37,12 +37,12 @@ const Recipes = () => {
     };
     fetchRecipe();
   }, [bookMark, favorites]);
-
+  console.log(dishList);
   return (
     <>
       {!logIn && <Navigate to="/login" />}
       <main className="flex justify-center items-center px-4 mt-5">
-        <section className="lg:w-[1200px] h-full">
+        <section className="lg:w-[1200px]">
           {dishList.length ? (
             <div className="my-[5%] mx-0">
               <div className="flex flex-wrap md:gap-4 md:gap-y-24 justify-center items-center pb-20">
@@ -76,10 +76,10 @@ const Recipes = () => {
                         <div className="flex flex-row">
                           <button
                             onClick={addOrRemoveFromFavs}
-                            data-dish-id={val.id}
+                            data-dish-id={val?.id}
                             className="flex seft-start item-center gap-x-2 pl-2"
                           >
-                            {!val.fav ? (
+                            {val.favorites ? (
                               <CiPizza
                                 className="cursor-pointer fill-red-700 text-red-700"
                                 size={20}
@@ -96,7 +96,7 @@ const Recipes = () => {
                             data-bookmark-id={val?.id}
                             className="flex seft-start item-center gap-x-2 pl-2"
                           >
-                            {val.bookMark ? (
+                            {!val.bookMark ? (
                               <HiOutlineBookmark
                                 className={`cursor-pointer  fill-red-700 text-red-700 `}
                                 size={20}
@@ -145,4 +145,4 @@ const Recipes = () => {
   );
 };
 
-export default Recipes;
+export default BookMark;
