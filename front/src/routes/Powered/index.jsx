@@ -36,8 +36,8 @@ function Powered() {
     {
       name: "Jorge Trujillo",
       stack: "Back End Developer",
-      linkedin: "https://www.linkedin.com/in/jorge-trujillo-91a00a163/",
-      github: "https://github.com/sphinxid",
+      linkedin: "www.linkedin.com/in/jorge-trujillo-ch",
+      github: "https://github.com/xiriuxb",
       web: "https://xiriuxb.github.io/",
     },
     {
