@@ -7,7 +7,8 @@ import { useForm } from "../../hooks/useForm";
 import { useAuthContext } from "../../context/AuthProvider";
 import appApi from "../../api/appApi";
 import GoogleButton from "../../components/GoogleButton";
-import LoadingSpinner from "../../components/Spinner";
+import { MdOutlineVisibilityOff } from "react-icons/md";
+import { MdOutlineVisibility } from "react-icons/md";
 
 const EMAIL_REGEX = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 
@@ -34,6 +35,7 @@ export default function Registro() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loadingAuth, setLoadingAuth] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { setLogIn, setAuth } = useAuthContext();
   const { email, onInputChange, errors, validForm, setFormErrors, formState } =
     useForm(registerFormFields, formValidations);
@@ -67,13 +69,17 @@ export default function Registro() {
     }
   }
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <article className="grid place-content-center h-[90vh]">
       <div className=" h-[100%] dark">
         {loadingAuth ? (
-            <span className="loader" />
-          // <LoadingSpinner className="w-32 h-32" />
+          <span className="loader" />
         ) : (
+          // <LoadingSpinner className="w-32 h-32" />
           <div className="px-7 py-7 sm:px-10 max-w-md text-slate-800 rounded-2xl form-box">
             <div className="flex flex-col items-center">
               <img src={logo} className="h-[5rem]" alt="chetifabene" />
@@ -104,14 +110,27 @@ export default function Registro() {
                 value={formState["email"]}
                 error={errors.email}
               />
-              <InputComponent
-                name={"password"}
-                onInputChange={onInputChange}
-                placeholder={"Password"}
-                type={"password"}
-                value={formState["password"]}
-                error={errors.password}
-              />
+              <div className="relative">
+                <InputComponent
+                  name={"password"}
+                  onInputChange={onInputChange}
+                  placeholder={"Password"}
+                  type={showPassword ? "text" : "password"}
+                  value={formState["password"]}
+                  error={errors.password}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-4 right-3"
+                >
+                  {showPassword ? (
+                    <MdOutlineVisibilityOff />
+                  ) : (
+                    <MdOutlineVisibility />
+                  )}
+                </button>
+              </div>
               <button
                 className="btn_shadow bg-gradient-to-r disabled:shadow-none disabled:hover:shadow-none disabled:hover:cursor-not-allowed disabled:opacity-40 from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:to-blue-600 transition ease-in-out duration-300"
                 type="submit"
