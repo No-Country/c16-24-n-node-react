@@ -20,15 +20,18 @@ const Home = () => {
   } = useAuthContext();
   const currentData = new Date();
 
+  const checkIsFav = (idtoCheck) => {
+    return favorites.find((fav) => fav.id == idtoCheck);
+  };
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const res = await appApi.get(`/recipes/`);
         const resApi = res?.data?.recipes;
-        const favs = favorites.map((fav) => fav.id);
         const newDataApi = resApi.map((data) => {
-          const newArray = favs.find((fav) => fav === data.id);
-          if (newArray) {
+          const isInFav = checkIsFav(data.id);
+          if (isInFav) {
             return { ...data, favorites: true };
           } else {
             return { ...data, favorites: false };
@@ -40,9 +43,21 @@ const Home = () => {
         console.error("Error fetching recipe:", error);
       }
     };
-
     fetchRecipe();
-  }, [user, favorites]);
+  }, []);
+
+  useEffect(()=>{
+    const newDataApi = dishAux.map((data) => {
+      const isInFav = checkIsFav(data.id);
+      if (isInFav) {
+        return { ...data, favorites: true };
+      } else {
+        return { ...data, favorites: false };
+      }
+    });
+
+    setDishAux(newDataApi);
+  },[favorites])
 
   useEffect(() => {
     const fetchRecipe = async () => {

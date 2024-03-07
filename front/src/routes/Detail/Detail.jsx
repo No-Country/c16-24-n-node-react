@@ -20,34 +20,39 @@ const Detail = () => {
   } = useAuthContext();
   const [dish, setDish] = useState([]);
   const [dishAux, setDishAux] = useState([]);
+  const query = new URLSearchParams(window.location.search);
+  const dishID = query.get("dishID");
   const currentData = new Date();
-  let query = new URLSearchParams(window.location.search);
-  let dishID = query.get("dishID");
+
+  const checkIsFav = () => {
+    return favorites.find((fav) => fav.id == dishID);
+  };
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
         const res = await appApi.get(`/recipes/${dishID}`);
         const resApi = res?.data?.recipe;
-        const favs = favorites.map((fav) => fav.id);
-     
-        const newDataApi = () => {
-          const newArrayInFav = favs.find((fav) => fav == dishID);
-
-          if (newArrayInFav) {
-            return { ...resApi, favorite: true };
-          } else {
-            return { ...resApi, favorite: false };
-          }
-        };
-        setDishAux(newDataApi);
+        if (checkIsFav()) {
+          setDishAux({ ...resApi, favorite: true });
+        } else {
+          setDishAux({ ...resApi, favorite: false });
+        }
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
 
     fetchRecipe();
-  }, [dishID, favorites]);
+  }, []);
+
+  useEffect(() => {
+    if (checkIsFav()) {
+      setDishAux((prev) => ({ ...prev, favorite: true }));
+    } else {
+      setDishAux((prev) => ({ ...prev, favorite: false }));
+    }
+  }, [favorites]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -79,9 +84,9 @@ const Detail = () => {
       <main className="flex justify-center item-center px-4 mt-5">
         <section className="max-w-[1200px] md:w-full">
           <div className="my-[5%] mx-0">
-            <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-20">
+            <div className="flex flex-col lg:gap-x-4  md:gap-x-0 sm:mb-5 justify-center items-center pb-20">
               <div
-                className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
+                className="md:max-w-[550px] md:w-[550px lg:max-w-full lg:w-full lg:h-full gap-4"
                 key={dish?.id}
               >
                 <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
@@ -91,7 +96,7 @@ const Detail = () => {
                       to={`/${dish?.User?.user_name}`}
                     >
                       <FaRegUserCircle size={20} />
-                      <p className="text-sm font-semibold" id="UserPost">
+                      <p className="text-sm font-semibold" id="userPost">
                         @{dish?.User?.user_name}
                       </p>
                     </Link>
@@ -211,14 +216,12 @@ const Detail = () => {
                       id="process"
                       className="text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                     ></div>
-                    <Comments
-                      dishID={dishID}
-                      id="comments"
-                      userDetail={dish?.User?.user_name}
-                    />
                   </div>
                 </div>
               </div>
+              {!!dish && (
+                <Comments dishID={dishID} userDetail={dish?.User?.user_name} />
+              )}
             </div>
           </div>
         </section>
