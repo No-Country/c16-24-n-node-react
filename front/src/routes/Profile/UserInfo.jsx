@@ -117,7 +117,7 @@ const ProfileImageComponent = ({ profileImage }) => {
   );
 };
 
-const FollowsUserComponent = ({
+export const FollowsUserComponent = ({
   profileUName,
   profileUserId,
   recipesCount,
@@ -152,7 +152,7 @@ const FollowsUserComponent = ({
           setIsFollowing={setIsFollowing}
         />
       )}
-      <span className="cursor-default text-center">{`${recipesCount} recipes`}</span>
+      {recipesCount && <span className="cursor-default text-center">{`${recipesCount} recipes`}</span>}
       <span className="cursor-pointer text-center">{`${followInfo.seguidores} follower(s)`}</span>
       <span className="cursor-pointer text-center">{`${followInfo.seguidos} follow(s)`}</span>
     </div>

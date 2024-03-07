@@ -10,6 +10,7 @@ import { TbSearch } from "react-icons/tb";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import appApi from "../../api/appApi";
+import SearchUsersComponent from "./UserSearch";
 
 const Seach = () => {
   const {
@@ -91,7 +92,7 @@ const Seach = () => {
     <>
       {!logIn && <Navigate to="/login" />}
       <main className="flex justify-center px-4 mt-5">
-        <section className="lg:w-[1200px]">
+        <section className="max-w-[1200px] lg:w-[1200px] flex-1">
           <div className="mb-[5%] mt-[3%] mx-0">
             <div className="flex justify-center items-center pb-12 ">
               <TbSearch size={35} className="ml-2  text-gray-800" />
@@ -105,6 +106,7 @@ const Seach = () => {
                 }}
               />
             </div>
+            <SearchUsersComponent userTerm={searchTerm} />
             <div className="flex flex-wrap md:gap-4 md:gap-y-24 justify-center items-center pb-20">
               {dishList
                 .filter((val) => {
