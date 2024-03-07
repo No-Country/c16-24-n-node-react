@@ -38,7 +38,7 @@ function Powered() {
       stack: "Back End Developer",
       linkedin: "https://www.linkedin.com/in/jorge-trujillo-91a00a163/",
       github: "https://github.com/sphinxid",
-      // web: "https://",
+      web: "https://xiriuxb.github.io/",
     },
     {
       name: "Anibal Elbaum",
