@@ -4,7 +4,7 @@ import Content from "./components/Content";
 
 function App() {
   return (
-    <div className="flex fixed w-full h-full pr-5">
+    <div className="flex fixed w-full h-full pr-2">
       <Sidebar className="sidebar" />
       <div className="block w-full">
         <Header className="header" />
