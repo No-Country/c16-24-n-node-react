@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BiSolidSend, BiEdit, BiTrash } from "react-icons/bi";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaStar } from "react-icons/fa";
 import appApi from "../../api/appApi";
+import { useAuthContext } from "../../context/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 const Comments = ({ dishID }) => {
@@ -9,10 +10,11 @@ const Comments = ({ dishID }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [currentCommentText, setCurrentCommentText] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(sessionStorage.getItem("user").slice(1));
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
+  const updateBtnRef = useRef(null);
 
   // console.log(user)
 
@@ -43,10 +45,6 @@ const Comments = ({ dishID }) => {
   };
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(storedUser.slice(1));
-    }
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -55,6 +53,12 @@ const Comments = ({ dishID }) => {
     setEditCommentId(commentId);
     setCurrentCommentText(commentText);
     setRating(commentRating);
+  };
+
+  const handleCancelEdit = () => {
+    setEditCommentId(null);
+    setCurrentCommentText("");
+    setRating("");
   };
 
   const handleSubmit = async (e) => {
@@ -81,6 +85,12 @@ const Comments = ({ dishID }) => {
     }
   };
 
+  const handleUpdateAway = () => {
+    if (updateBtnRef.current) {
+      updateBtnRef.current.click();
+    }
+  };
+
   const handleUpdateComment = async (updatedComment) => {
     try {
       await appApi.patch(`/reviews/${updatedComment.Id}`, {
@@ -90,7 +100,7 @@ const Comments = ({ dishID }) => {
 
       fetchComments();
 
-      setEditCommentId(null);
+      handleCancelEdit();
     } catch (error) {
       console.error("Error al actualizar el comentario:", error);
     }
@@ -110,41 +120,49 @@ const Comments = ({ dishID }) => {
   return (
     <article>
       <h2 className="text-xl font-semibold m-1">
-        Opinions - Assessment: {averageRating}{" "}
+        <p>{`Reviews: (${comments.length})`}</p>
+        <RatingComponent ratingValue={averageRating} />
       </h2>
-      <div className="flex flex-row gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
-        <span className="flex w-content justify-between items-center gap-x-2 text-l">
-          <FaRegUserCircle size={20} />
-          <p className="text-sm font-semibold mr-1" id="userPost">
-            @{user}
-          </p>
-        </span>
-        <span className="w-full">
-          <form
-            onSubmit={handleSubmit}
-            className="flex justify-between items-center relative"
-          >
-            <input
-              type="number"
-              min="1"
-              max="5"
-              placeholder="Rating (1-5)"
-              className="focus:outline-none w-16 text-center hover:placeholder-gray-600"
-              value={rating}
-              onChange={(e) => setRating(parseInt(e.target.value))}
-            />
-            <input
-              placeholder="What do you think?"
-              className="focus:outline-none min-w-full hover:placeholder-gray-600 pl-2 p-1"
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-            />
-            <button className="absolute right-[5px]" type="submit">
-              <BiSolidSend className="ml-4" size={20} />
-            </button>
-          </form>
-        </span>
-      </div>
+      {!comments.find((rev) => rev.User.user_name == user) && (
+        <div className="flex flex-col gap-y-4 text-justify border border-solid rounded-xl p-2 md:h-[full] lg:h-[full]">
+          <span className="flex w-content justify-start items-center gap-x-2 text-l">
+            <FaRegUserCircle size={20} />
+            <p className="text-sm font-semibold mr-1" id="userPost">
+              @{user}
+            </p>
+          </span>
+          <span className="w-full">
+            <form
+              onSubmit={handleSubmit}
+              className="flex justify-between items-center relative"
+            >
+              <input
+                type="hidden"
+                required
+                min="1"
+                max="5"
+                placeholder="Rating (1-5)"
+                className="focus:outline-none w-16 text-center hover:placeholder-gray-600"
+                value={rating}
+              />
+              <input
+                placeholder="What do you think?"
+                required
+                className="flex-1 focus:outline-none border-b hover:placeholder-gray-600 pl-2 p-1"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+              />
+              <RatingSelector
+                defaultValue={0}
+                onChange={(val) => setRating(val)}
+              />
+              <button className="pl-2" type="submit">
+                <BiSolidSend size={20} />
+              </button>
+            </form>
+          </span>
+        </div>
+      )}
       {Array.isArray(comments) && comments.length === 0 ? (
         <div className="text-center mt-4 text-gray-500">
           There are no comments yet.
@@ -155,41 +173,30 @@ const Comments = ({ dishID }) => {
             key={index}
             className="block m-auto gap-y-4 text-justify border w-[98%] border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
           >
-            <div className="">
-              <div className="flex justify-between items-center pl-2 pb-1">
-                <span className="flex items-center gap-2 text-l">
+            <div className="flex justify-between items-center pl-2 pb-1 border-b">
+              <div id="review-user-info" className="flex flex-row items-center">
+                <span className="flex items-center text-l pr-2">
                   <FaRegUserCircle size={20} />
-                  <p id="userPost">@{item.User.user_name}</p>
+                  <span id="userPost">@{item.User.user_name}</span>
                 </span>
-                {item.User.user_name === user&&
-                <>
-                  <button
-                    onClick={() =>
-                      handleEdit(item.Id, item.description, item.rating)
-                    }
-                    className="text-sm text-blue-500"
-                    type="button"
-                  >
-                    <BiEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item.Id)}
-                    className="text-sm text-red-500"
-                    type="button"
-                  >
-                    <BiTrash />
-                  </button>
-                </>
-                }
-
-                <p id="date" className="text-sm pr-5">
+                {!editCommentId&&<p id="date" className="text-sm pr-5 text-slate-600">
                   {new Date(item.createdAt).toLocaleDateString("es-AR")}
-                </p>
+                </p>}
               </div>
+              <ReviewActions
+                userName={item.User.user_name}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+                handleCancelEdit={handleCancelEdit}
+                handleUpdate={handleUpdateAway}
+                item={item}
+                isEdit={!!editCommentId}
+              />
             </div>
 
             {editCommentId === item.Id ? (
               <form
+              className="flex justify-between items-center"
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleUpdateComment({
@@ -201,12 +208,12 @@ const Comments = ({ dishID }) => {
               >
                 <input
                   placeholder="Editar comentario"
-                  className="focus:outline-none min-w-full hover:placeholder-gray-600"
+                  className="focus:outline-none flex-1 hover:placeholder-gray-600 border-b p-2"
                   value={currentCommentText}
                   onChange={(e) => setCurrentCommentText(e.target.value)}
                 />
                 <input
-                  type="number"
+                  type="hidden"
                   min="1"
                   max="5"
                   placeholder="Rating (1-5)"
@@ -214,16 +221,19 @@ const Comments = ({ dishID }) => {
                   value={rating}
                   onChange={(e) => setRating(parseInt(e.target.value))}
                 />
-
-                <button type="submit">Guardar</button>
+                <RatingSelector
+                  defaultValue={rating}
+                  onChange={(val) => setRating(val)}
+                />
+                <button ref={updateBtnRef}  type="submit"></button>
               </form>
             ) : (
               <section>
-                <div className="flex justify-between items-center gap-y-4 text-justify border border-solid rounded-xl p-2 m-2 md:h-[full] lg:h-[full]">
+                <div className="flex justify-between items-center text-justify  p-2 md:h-[full] lg:h-[full]">
                   <p>{item.description}</p>
                 </div>
-                <div className="flex justify-between items-center gap-y-4 text-justify p-2 m-2 md:h-[full] lg:h-[full]">
-                  <p>Rating: {item.rating}</p>
+                <div className="flex justify-end md:h-[full] lg:h-[full]">
+                  <RatingComponent ratingValue={item.rating} />
                 </div>
               </section>
             )}
@@ -234,4 +244,117 @@ const Comments = ({ dishID }) => {
   );
 };
 
+const RatingSelector = ({ defaultValue = 0, onChange }) => {
+  const [rating, setRating] = useState(defaultValue);
+
+  const handleStarClick = (value) => {
+    setRating(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  return (
+    <div className="flex flex-row">
+      {[...Array(5)].map((_, index) => {
+        const starValue = index + 1;
+        return (
+          <span key={starValue} onClick={() => handleStarClick(starValue)}>
+            {
+              <FaStar
+                className={` ${
+                  starValue <= rating ? "fill-yellow-400" : "fill-slate-600"
+                }`}
+              />
+            }
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+const RatingComponent = ({ ratingValue }) => {
+  const ratingIntValue = Math.round(ratingValue);
+  return (
+    <div className="flex items-baseline">
+      {[...Array(5)].map((_, index) => {
+        const starValue = index + 1;
+        return (
+          <FaStar
+            className={` ${
+              starValue <= ratingIntValue ? "fill-yellow-400" : "fill-slate-600"
+            }`}
+          />
+        );
+      })}
+
+      <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+        {ratingValue}
+      </p>
+      <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+        out of
+      </p>
+      <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
+        5
+      </p>
+    </div>
+  );
+};
+
+const ReviewActions = ({
+  userName,
+  handleEdit,
+  handleCancelEdit,
+  handleDelete,
+  handleUpdate,
+  item,
+  isEdit,
+}) => {
+  const { user } = useAuthContext();
+  return (
+    <div id="review-actions" className="flex flex-row gap-x-3">
+      {userName === user.slice(1) && (
+        <>
+          {isEdit && (
+            <>
+              <button
+                onClick={() => handleCancelEdit()}
+                className="text-sm text-red-700 font-bold"
+                type="button"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() =>
+                  handleUpdate()
+                }
+                className="text-sm text-blue-500 font-bold"
+                type="button"
+              >
+                Guardar
+              </button>
+            </>
+          )}
+          {!isEdit && (
+            <>
+              <button
+                onClick={() =>
+                  handleEdit(item.Id, item.description, item.rating)
+                }
+                className="text-sm text-blue-500"
+                type="button"
+              >
+                <BiEdit size={20} />
+              </button>
+              <button onClick={()=>handleDelete(item.Id)} className="text-sm text-red-500" type="button">
+                <BiTrash size={20} />
+              </button>
+            </>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
 export default Comments;

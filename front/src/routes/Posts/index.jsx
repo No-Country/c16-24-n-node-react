@@ -287,38 +287,61 @@ const Post = () => {
         throw new Error("Please select an image.");
       }
 
+      Swal.fire({
+        title: "Loading...",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        icon: "info",
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       const reader = new FileReader();
 
       reader.onloadend = async () => {
         const base64 = reader.result.split(",")[1];
 
-        await appApi.post("/recipes/", {
-          ...formData,
-          imageFile: `data:${selectedFile.type};base64,${base64}`,
-        });
+        try {
+          await appApi.post("/recipes/", {
+            ...formData,
+            imageFile: `data:${selectedFile.type};base64,${base64}`,
+          });
 
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Recipe uploaded successfully",
-          timer: 2000,
-          showConfirmButton: false,
-        });
+          Swal.close();
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Recipe uploaded successfully",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+          });
 
-        setFormData({
-          name: "",
-          imageFile: "",
-          description: "",
-          portion: 0,
-          preparation_time: 0,
-          difficulty: 0,
-          process: "",
-          ingredients: [{ name: "" }],
-          categories: [{ name: "" }],
-          hashtags: [{ name: "" }],
-        });
-        setSelectedFile(null);
-        window.location.reload();
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+
+          setFormData({
+            name: "",
+            imageFile: "",
+            description: "",
+            portion: 0,
+            preparation_time: 0,
+            difficulty: 0,
+            process: "",
+            ingredients: [{ name: "" }],
+            categories: [{ name: "" }],
+            hashtags: [{ name: "" }],
+          });
+          setSelectedFile(null);
+        } catch (error) {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to upload recipe",
+          });
+        }
       };
 
       reader.readAsDataURL(selectedFile);
