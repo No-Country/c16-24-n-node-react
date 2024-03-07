@@ -72,7 +72,7 @@ const Detail = () => {
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
   console.log(dish);
-  console.log(user)
+  console.log(user);
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -121,34 +121,29 @@ const Detail = () => {
                           <GiFullPizza className="cursor-pointer" size={20} />
                         )}
                       </button>
-                      <Link>
-                      <a href="#comments">
-                        <button
-                          onClick={addOrRemoveFromBookmark}
-                          data-bookmark-id={dish.id}
-                          className="flex seft-start item-center gap-x-2 pl-2"
-                        >
-                          {dish?.bookMark ? (
-                            <HiOutlineBookmark
-                              className={`cursor-pointer  fill-red-700 text-red-700 `}
-                              size={20}
-                            />
-                          ) : (
-                            <HiOutlineBookmark
-                              className={`cursor-pointer `}
-                              size={20}
-                            />
-                          )}
-                        </button>
-                      </a>                      
-                      </Link>
+                      <button
+                        onClick={addOrRemoveFromBookmark}
+                        data-bookmark-id={dish.id}
+                        className="flex seft-start item-center gap-x-2 pl-2"
+                      >
+                        {dish?.bookMark ? (
+                          <HiOutlineBookmark
+                            className={`cursor-pointer  fill-red-700 text-red-700 `}
+                            size={20}
+                          />
+                        ) : (
+                          <HiOutlineBookmark
+                            className={`cursor-pointer `}
+                            size={20}
+                          />
+                        )}
+                      </button>
                     </div>
                     <div>
                       <a href="#comments">
-                      <button className="flex justify-center item-center pr-2">
-                        <TfiCommentAlt className="cursor-pointer" size={20} />
-                      </button>
-
+                        <button className="flex justify-center item-center pr-2">
+                          <TfiCommentAlt className="cursor-pointer" size={20} />
+                        </button>
                       </a>
                     </div>
                   </div>
