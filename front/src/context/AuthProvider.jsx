@@ -48,8 +48,8 @@ const AuthProvider = ({ children }) => {
   bookmarkDish === null
     ? (tempDishInBookMark = [])
     : (tempDishInBookMark = JSON.parse(bookmarkDish));
-
-  favsDish === null
+  
+    favsDish === null
     ? (tempDishInFavs = [])
     : (tempDishInFavs = JSON.parse(favsDish));
 
@@ -105,34 +105,35 @@ const AuthProvider = ({ children }) => {
 
     const User = user.slice(1);
 
-    const dishData = {
-      User,
-      createdAt,
-      name,
-      primaryimage,
-      description,
-      id: btn.dataset.dishId,
-    };
+      const dishData = {
+        User,
+        createdAt,
+        name,
+        primaryimage,
+        description,
+        id: btn.dataset.dishId,
+      };
 
-    let dishInArray = tempDishInFavs.find(
-      (dish) => dish.id === btn.dataset.dishId
-    );
-
-    if (!dishInArray) {
-      tempDishInFavs.push(dishData);
-      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
-      setFavorites(tempDishInFavs);
-      console.log("Agregado a favoritos");
-    } else {
-      tempDishInFavs = tempDishInFavs.filter(
-        (dish) => dish.id !== btn.dataset.dishId
+      let dishInArray = tempDishInFavs.find(
+        (dish) => dish.id === btn.dataset.dishId
       );
-      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
-      setFavorites(tempDishInFavs);
-      console.log("Eliminado de favoritos");
+
+      if (!dishInArray) {
+        tempDishInFavs.push(dishData);
+        localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+        setFavorites(tempDishInFavs);
+        console.log("Agregado a favoritos");
+      } else {
+        tempDishInFavs = tempDishInFavs.filter(
+          (dish) => dish.id !== btn.dataset.dishId
+        );
+        localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+        setFavorites(tempDishInFavs);
+        console.log("Eliminado de favoritos");
+      }
     }
   };
-
+  
   return (
     <AuthContext.Provider
       value={{
@@ -147,7 +148,7 @@ const AuthProvider = ({ children }) => {
         favorites,
         setFavorites,
         setBookMark,
-        bookMark,
+        bookMark
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
 import { BiSolidSend, BiEdit, BiTrash } from "react-icons/bi";
 import { FaRegUserCircle, FaStar } from "react-icons/fa";
@@ -6,17 +7,14 @@ import { useAuthContext } from "../../context/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 const Comments = ({ dishID }) => {
-  // const { user } = useAuthContext();
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [currentCommentText, setCurrentCommentText] = useState("");
-  const [user, setUser] = useState(sessionStorage.getItem("user"));
+  const [user] = useState(sessionStorage.getItem("user"));
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
   const updateBtnRef = useRef(null);
-
-  // console.log(user)
 
   const fetchComments = async () => {
     try {
@@ -173,7 +171,7 @@ const Comments = ({ dishID }) => {
         comments.map((item, index) => (
           <div
             key={index}
-            className="block m-auto gap-y-4 text-justify border w-[98%] border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
+            className="block mt-2 m-auto gap-y-4 text-justify border w-[98%] border-solid rounded-xl p-2 md:h-[full] lg:h-[full]"
           >
             <div className="flex justify-between items-center pl-2 pb-1 border-b">
               <div id="review-user-info" className="flex flex-row items-center">

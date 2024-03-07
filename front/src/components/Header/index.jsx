@@ -64,7 +64,7 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          <button className="w-[200px] md:ml-8 md:my-0 l:my-7 font-semibold">
+          <button className="flex justify-end items-center w-[200px] md:ml-8 md:my-0 l:my-7 font-semibold">
             <Link
               to="/login"
               className="border shadow-l border-gray-400 p-2 rounded-[10px] "

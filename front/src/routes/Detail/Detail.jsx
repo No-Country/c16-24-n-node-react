@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import appApi from "../../api/appApi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
@@ -9,6 +8,7 @@ import { Link, Navigate } from "react-router-dom";
 import { GiFullPizza } from "react-icons/gi";
 import { CiPizza } from "react-icons/ci";
 import Comments from "../../components/Comments";
+import appApi from "../../api/appApi";
 
 const Detail = () => {
   const {
@@ -58,7 +58,7 @@ const Detail = () => {
     const fetchRecipe = async () => {
       try {
         const books = bookMark?.map((bookMark) => bookMark.id);
-
+   
         const newDataApi = () => {
           const newArrayInBook = books?.find((book) => book === dishID);
 
@@ -76,6 +76,7 @@ const Detail = () => {
 
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
+
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -104,6 +105,7 @@ const Detail = () => {
                     </p>
                   </h3>
                   <img
+                    id="img"
                     className="pt-2 md:w-[500px] md:max-h-[230px] lg:w-full lg:max-h-[400px] object-cover rounded-xl"
                     src={dish?.primaryimage}
                     alt=""
@@ -123,24 +125,24 @@ const Detail = () => {
                         ) : (
                           <GiFullPizza className="cursor-pointer" size={20} />
                         )}
-                      </button>
-                      <button
-                        onClick={addOrRemoveFromBookmark}
-                        data-bookmark-id={dish.id}
-                        className="flex seft-start item-center gap-x-2 pl-2"
-                      >
-                        {dish?.bookMark ? (
-                          <HiOutlineBookmark
-                            className={`cursor-pointer  fill-red-700 text-red-700 `}
-                            size={20}
-                          />
-                        ) : (
-                          <HiOutlineBookmark
-                            className={`cursor-pointer `}
-                            size={20}
-                          />
-                        )}
-                      </button>
+                      </button>                     
+                        <button
+                          onClick={addOrRemoveFromBookmark}
+                          data-bookmark-id={dish.id}
+                          className="flex seft-start item-center gap-x-2 pl-2"
+                        >
+                          {dish?.bookMark ? (
+                            <HiOutlineBookmark
+                              className={`cursor-pointer  fill-red-700 text-red-700 `}
+                              size={20}
+                            />
+                          ) : (
+                            <HiOutlineBookmark
+                              className={`cursor-pointer `}
+                              size={20}
+                            />
+                          )}
+                        </button>        
                     </div>
                     <div>
                       <a href="#comments">

@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
 import "./registro.css";
 import { useForm } from "../../hooks/useForm";
 import { useAuthContext } from "../../context/AuthProvider";
 import appApi from "../../api/appApi";
 import GoogleButton from "../../components/GoogleButton";
-import LoadingSpinner from "../../components/Spinner";
+// import LoadingSpinner from "../../components/Spinner";
+import logo from "../../assets/logo.png";
 
 const EMAIL_REGEX = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 

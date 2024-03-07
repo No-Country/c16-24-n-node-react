@@ -37,7 +37,7 @@ const BookMark = () => {
     };
     fetchRecipe();
   }, [bookMark, favorites]);
-  console.log(dishList);
+
   return (
     <>
       {!logIn && <Navigate to="/login" />}
