@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [user, setUser] = useState(sessionStorage.getItem("user"));
   const [logIn, setLogIn] = useState(!!sessionStorage.getItem("token"));
-  const [favorites, setFavorites ] = useState([]);
-  const [ bookMark, setBookMark ] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [bookMark, setBookMark] = useState([]);
   let userApp = sessionStorage.getItem("user");
 
   useEffect(() => {
@@ -53,13 +53,14 @@ const AuthProvider = ({ children }) => {
   bookmarkDish === null
     ? (tempDishInBookMark = [])
     : (tempDishInBookMark = JSON.parse(bookmarkDish));
-  
-    favsDish === null
+
+  favsDish === null
     ? (tempDishInFavs = [])
     : (tempDishInFavs = JSON.parse(favsDish));
-    
-    const addOrRemoveFromBookmark = (e) => {
-      e.preventDefault();
+
+  const addOrRemoveFromBookmark = (e) => {
+    e.preventDefault();
+    if (user) {
       const btn = e.currentTarget;
       const parent = btn.parentElement.parentElement.parentElement;
       const primaryimage = parent.querySelector("img").src;
@@ -67,9 +68,9 @@ const AuthProvider = ({ children }) => {
       const createdAt = parent.querySelector("#date").textContent;
       const name = parent.querySelector("#name").textContent;
       const description = parent.querySelector("#comentary").textContent;
-      
-      const User = user.slice(1)
-  
+
+      const User = user.slice(1);
+
       const bookmarkData = {
         User,
         createdAt,
@@ -97,47 +98,50 @@ const AuthProvider = ({ children }) => {
         console.log("Eliminado de bookMarks");
       }
     }
-    
-    const addOrRemoveFromFavs = (e) => {
+  };
+
+  const addOrRemoveFromFavs = (e) => {
     e.preventDefault();
-    const btn = e.currentTarget;
-    const parent = btn.parentElement.parentElement.parentElement;
-    const primaryimage = parent.querySelector("img").src;
-    const user = parent.querySelector("#userPost").textContent;
-    const createdAt = parent.querySelector("#date").textContent;
-    const name = parent.querySelector("#name").textContent;
-    const description = parent.querySelector("#comentary").textContent;
-    
-    const User = user.slice(1)
+    if (user) {
+      const btn = e.currentTarget;
+      const parent = btn.parentElement.parentElement.parentElement;
+      const primaryimage = parent.querySelector("img").src;
+      const user = parent.querySelector("#userPost").textContent;
+      const createdAt = parent.querySelector("#date").textContent;
+      const name = parent.querySelector("#name").textContent;
+      const description = parent.querySelector("#comentary").textContent;
 
-    const dishData = {
-      User,
-      createdAt,
-      name,
-      primaryimage,
-      description,
-      id: btn.dataset.dishId,
-    };
+      const User = user.slice(1);
 
-    let dishInArray = tempDishInFavs.find(
-      (dish) => dish.id === btn.dataset.dishId
-    );
+      const dishData = {
+        User,
+        createdAt,
+        name,
+        primaryimage,
+        description,
+        id: btn.dataset.dishId,
+      };
 
-    if (!dishInArray) {
-      tempDishInFavs.push(dishData);
-      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
-      setFavorites(tempDishInFavs);
-      console.log("Agregado a favoritos");
-    } else {
-      tempDishInFavs = tempDishInFavs.filter(
-        (dish) => dish.id !== btn.dataset.dishId
+      let dishInArray = tempDishInFavs.find(
+        (dish) => dish.id === btn.dataset.dishId
       );
-      localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
-      setFavorites(tempDishInFavs);
-      console.log("Eliminado de favoritos");
+
+      if (!dishInArray) {
+        tempDishInFavs.push(dishData);
+        localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+        setFavorites(tempDishInFavs);
+        console.log("Agregado a favoritos");
+      } else {
+        tempDishInFavs = tempDishInFavs.filter(
+          (dish) => dish.id !== btn.dataset.dishId
+        );
+        localStorage.setItem("favorites", JSON.stringify(tempDishInFavs));
+        setFavorites(tempDishInFavs);
+        console.log("Eliminado de favoritos");
+      }
     }
   };
-  
+
   return (
     <AuthContext.Provider
       value={{
@@ -152,7 +156,7 @@ const AuthProvider = ({ children }) => {
         favorites,
         setFavorites,
         setBookMark,
-        bookMark
+        bookMark,
       }}
     >
       {children}

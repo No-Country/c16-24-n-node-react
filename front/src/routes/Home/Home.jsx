@@ -5,15 +5,19 @@ import { HiOutlineBookmark } from "react-icons/hi2";
 import { GiFullPizza } from "react-icons/gi";
 import { CiPizza } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthProvider";
-import appApi from "../../api/appApi";
 import { Link } from "react-router-dom";
+import appApi from "../../api/appApi";
 
 const Home = () => {
   const [dishList, setDishList] = useState([]);
   const [dishAux, setDishAux] = useState([]);
-  const { addOrRemoveFromFavs, addOrRemoveFromBookmark, favorites, bookMark } =
-    useAuthContext();
-
+  const { 
+    addOrRemoveFromFavs, 
+    addOrRemoveFromBookmark, 
+    favorites, 
+    bookMark, 
+    user 
+  } = useAuthContext();
   const currentData = new Date();
 
   useEffect(() => {
@@ -31,14 +35,14 @@ const Home = () => {
           }
         });
 
-        setDishAux(newDataApi);
+        setDishAux(user? newDataApi : resApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
 
     fetchRecipe();
-  }, [favorites]);
+  }, [user, favorites]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -55,15 +59,15 @@ const Home = () => {
           }
         });
         newDataApi.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setDishList(newDataApi);
+        setDishList(user? newDataApi : dishAux );
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
 
     fetchRecipe();
-  }, [bookMark, dishAux]);
-
+  }, [bookMark, dishAux, user]);
+  
   return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px] md:w-full">
@@ -99,7 +103,7 @@ const Home = () => {
                   <div className="flex justify-between items-center py-3">
                     <div className="flex flex-row">
                       <button
-                        onClick={addOrRemoveFromFavs}
+                        onClick={ addOrRemoveFromFavs }
                         data-dish-id={val?.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
@@ -113,7 +117,7 @@ const Home = () => {
                         )}
                       </button>
                       <button
-                        onClick={addOrRemoveFromBookmark}
+                        onClick={ addOrRemoveFromBookmark }
                         data-bookmark-id={val?.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >

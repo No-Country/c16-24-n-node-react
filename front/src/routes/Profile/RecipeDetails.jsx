@@ -19,7 +19,7 @@ const RecipeDetails = () => {
   const [recipe, setRecipe] = useState(null);
   let navigate = useNavigate();
   const currentData = new Date();
-  console.log(user);
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
