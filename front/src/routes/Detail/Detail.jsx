@@ -152,9 +152,18 @@ const Detail = () => {
                       </a>
                     </div>
                   </div>
-                  <h3 id="name" className="text-xl font-bold pb-2">
+                  <h3 id="name" className="text-2xl font-bold pb-2">
                     {dish?.name}
                   </h3>
+                  <div id="categories" className="text-l font-bold pb-2">
+                    <p className="text-bold text-xl">Categories: </p>
+                    {dish?.categories?.map((item, index) => (
+                      <span className="pl-2 font-semibold" key={index}>
+                        {item?.name.charAt(0).toUpperCase() +
+                        item?.name?.slice(1).substring(0, 120)+ ''}
+                      </span>
+                    ))}
+                  </div>
                   <div id="hashtags" className="text-l font-semibold pl-2 pb-2">
                     {dish?.hashtags?.map((item, index) => (
                       <span className="pr-2" key={index}>
@@ -171,7 +180,7 @@ const Detail = () => {
                         dish?.description?.slice(1).substring(0, 120)}
                       ...
                     </div>
-                    <h2 className="text-xl font-semibold">ingredients</h2>
+                    <h2 className="text-xl font-bold">Ingredients</h2>
                     <div
                       id=""
                       className="md:flex md:justify-between sm:block items-center border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
@@ -197,11 +206,11 @@ const Detail = () => {
                         </span>
                         <span className="flex justify-between items-center">
                           <h3 className="font-bold pr-2">Minutes: </h3>
-                          <span>{dish?.preparation_time + "'"}</span>
+                          <span>{dish?.preparation_time}</span>
                         </span>
                       </div>
                     </div>
-                    <h2 className="text-xl font-semibold">Steps</h2>
+                    <h2 className="text-xl font-bold">Steps</h2>
                     <div
                       dangerouslySetInnerHTML={{ __html: dish?.process }}
                       id="process"
