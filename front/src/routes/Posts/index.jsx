@@ -464,6 +464,7 @@ const Post = () => {
                 type="number"
                 id="portion"
                 name="portion"
+                min="1"
                 value={formData.portion}
                 onChange={handleInputChange}
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
@@ -480,6 +481,7 @@ const Post = () => {
                 type="number"
                 id="preparation_time"
                 name="preparation_time"
+                min="1"
                 value={formData.preparation_time}
                 onChange={handleInputChange}
                 className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
