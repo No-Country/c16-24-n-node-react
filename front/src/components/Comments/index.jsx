@@ -10,7 +10,7 @@ const Comments = ({ dishID }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [currentCommentText, setCurrentCommentText] = useState("");
-  const [user, setUser] = useState(sessionStorage.getItem("user").slice(1));
+  const [user, setUser] = useState(sessionStorage.getItem("user"));
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);

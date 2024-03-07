@@ -72,6 +72,7 @@ const Detail = () => {
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
   console.log(dish);
+  console.log(user)
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
