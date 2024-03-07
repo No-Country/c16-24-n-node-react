@@ -2,11 +2,12 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import appApi from "../../api/appApi";
 import Swal from "sweetalert2";
-import { MdDeleteSweep } from "react-icons/md";
-import { MdModeEditOutline } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
 import { useAuthContext } from "../../context/AuthProvider";
 import Comments from "../../components/Comments";
+import { BiEdit, BiTrash } from "react-icons/bi";
+// import { MdDeleteSweep } from "react-icons/md";
+// import { MdModeEditOutline } from "react-icons/md";
 // import { GiFullPizza } from "react-icons/gi";
 // import { CiPizza } from "react-icons/ci";
 // import { TfiCommentAlt } from "react-icons/tfi";
@@ -72,7 +73,7 @@ const RecipeDetails = () => {
 
   return (
     <>
-      <main className="flex justify-center item-center px-4 mt-5">
+      <main className="flex justify-center px-4 mt-5 pb-24">
         <section className="max-w-[1200px] md:w-full">
           <div className="mt-[5%] mx-0">
             <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-1">
@@ -97,41 +98,31 @@ const RecipeDetails = () => {
                     src={recipe?.primaryimage}
                     alt=""
                   />
-                  {/* <div className="flex justify-between items-center py-3">
-                    <div className="flex flex-row">
-                      <button
-                        onClick={addOrRemoveFromFavs}
-                        data-dish-id={recipe?.id}
-                        className="flex seft-start item-center gap-x-2 pl-2"
-                      >
-                        {recipe?.favorite ? (
-                          <CiPizza
-                            className="cursor-pointer fill-rose-700 text-rose-700"
-                            size={20}
-                          />
-                        ) : (
-                          <GiFullPizza className="cursor-pointer" size={20} />
-                        )}
-                      </button>
-                      <button
-                        data-bookmark-id={recipe?.id}
-                        className="flex seft-start item-center gap-x-2 pl-2"
-                      >
-                        <HiOutlineBookmark
-                          className={`cursor-pointer `}
-                          size={20}
-                        />
-                      </button>
-                    </div>
-                    <div>
-                      <button className="flex justify-center item-center pr-2">
-                        <TfiCommentAlt className="cursor-pointer" size={20} />
-                      </button>
-                    </div>
-                  </div> */}
-                  <h3 id="name" className="text-xl font-bold pt-4 pb-2">
-                    {recipe?.name}
-                  </h3>
+                  <div className="flex justify-between items-center">
+                    <h3 id="name" className="text-xl font-bold pt-4 pb-2">
+                      {recipe?.name}
+                    </h3>
+                    {user === "@" + recipe?.User?.user_name ? (
+                      <div className="flex justify-end gap-x-2">
+                        <Link
+                          to={`/recipes/${recipeId}`}
+                          className="text-sm text-blue-500"
+                        >
+                          <BiEdit size={22}/>
+                          
+                        </Link>
+                        <button
+                          onClick={handleDelete}
+                          className="text-sm text-red-500"
+                        >
+                          <BiTrash size={22}/>
+                          
+                        </button>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                   <div id="hashtags" className="text-l font-semibold pl-2 pb-2">
                     {recipe?.hashtags?.map((item, index) => (
                       <span className="pr-2" key={index}>
@@ -163,7 +154,9 @@ const RecipeDetails = () => {
                       </ul>
                       <div className="block">
                         <span className="flex justify-between items-center">
-                          <h3 className="font-bold pr-2">{recipe?.portion > 1?'Portions:':'Portion:' }</h3>
+                          <h3 className="font-bold pr-2">
+                            {recipe?.portion > 1 ? "Portions:" : "Portion:"}
+                          </h3>
                           <span>{recipe?.portion} </span>
                         </span>
                         <span className="flex justify-between items-center">
@@ -172,7 +165,7 @@ const RecipeDetails = () => {
                         </span>
                         <span className="flex justify-between items-center">
                           <h3 className="font-bold pr-2">Minutes: </h3>
-                          <span>{recipe?.preparation_time + "'"}</span>
+                          <span>{recipe?.preparation_time}</span>
                         </span>
                       </div>
                     </div>
@@ -190,30 +183,6 @@ const RecipeDetails = () => {
           </div>
         </section>
       </main>
-      <hr className="my-4" />
-      {user === "@" + recipe?.User?.user_name ? (
-        <>
-          <div className="flex justify-evenly pt-5">
-            <Link
-              to={`/recipes/${recipeId}`}
-              className="text-white bg-green-400 px-4 py-2 rounded-lg hover:bg-green-600 flex items-center gap-2"
-            >
-              <MdModeEditOutline />
-              Edit
-            </Link>
-            <button
-              onClick={handleDelete}
-              className="text-white bg-red-400  px-4 py-2 rounded-lg hover:bg-red-600 flex items-center gap-2"
-            >
-              <MdDeleteSweep />
-              Delete
-            </button>
-          </div>
-          <hr className="my-10" />
-        </>
-      ) : (
-        <></>
-      )}
     </>
   );
 };
