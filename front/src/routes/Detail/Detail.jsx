@@ -145,6 +145,9 @@ const Detail = () => {
                         <button className="flex justify-center item-center pr-2">
                           <TfiCommentAlt className="cursor-pointer" size={20} />
                         </button>
+                        <button className="flex justify-center item-center pr-2">
+                          <TfiCommentAlt className="cursor-pointer" size={20} />
+                        </button>
                       </a>
                     </div>
                   </div>
