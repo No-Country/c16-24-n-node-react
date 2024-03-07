@@ -136,9 +136,12 @@ console.log(dish)
                       </button>
                     </div>
                     <div>
+                      <a href="#comments">
                       <button className="flex justify-center item-center pr-2">
                         <TfiCommentAlt className="cursor-pointer" size={20} />
                       </button>
+
+                      </a>
                     </div>
                   </div>
                   <h3 id="name" className="text-xl font-bold pb-2">
@@ -151,7 +154,7 @@ console.log(dish)
                       </span>
                     ))}
                   </div>
-                  <div className="flex flex-col gap-y-4">
+                  <div className="flidex flex-col gap-y-4">
                     <div
                       id="comentary"
                       className="border text-justify border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
