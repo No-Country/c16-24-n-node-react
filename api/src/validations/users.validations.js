@@ -49,7 +49,11 @@ const searchUserValidation = checkSchema({
 });
 
 const getUserValidation = checkSchema({
-  userName: { ...userNameValidOptions, in: "params" },
+  userName: { ...userNameValidOptions, in: "params",
+  isLength: {
+    options: { min: 2, max: 100 },
+    errorMessage: validationErrorMessages.lengthMinMax(2, 100),
+  }, },
 });
 
 const getUserRecipesValidation = checkSchema({
