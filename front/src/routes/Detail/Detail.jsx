@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import appApi from "../../api/appApi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
@@ -9,6 +8,7 @@ import { Link, Navigate } from "react-router-dom";
 import { GiFullPizza } from "react-icons/gi";
 import { CiPizza } from "react-icons/ci";
 import Comments from "../../components/Comments";
+import appApi from "../../api/appApi";
 
 const Detail = () => {
   const {
@@ -71,8 +71,6 @@ const Detail = () => {
 
     fetchRecipe();
   }, [bookMark, dishID, dishAux]);
-  console.log(dish);
-  console.log(user)
   return (
     <div className="flex justify-center">
       {!dish && <span className="loader" />}
@@ -121,7 +119,7 @@ const Detail = () => {
                           <GiFullPizza className="cursor-pointer" size={20} />
                         )}
                       </button>
-                      <Link>
+
                       <a href="#comments">
                         <button
                           onClick={addOrRemoveFromBookmark}
@@ -140,15 +138,13 @@ const Detail = () => {
                             />
                           )}
                         </button>
-                      </a>                      
-                      </Link>
+                      </a>
                     </div>
                     <div>
                       <a href="#comments">
-                      <button className="flex justify-center item-center pr-2">
-                        <TfiCommentAlt className="cursor-pointer" size={20} />
-                      </button>
-
+                        <button className="flex justify-center item-center pr-2">
+                          <TfiCommentAlt className="cursor-pointer" size={20} />
+                        </button>
                       </a>
                     </div>
                   </div>

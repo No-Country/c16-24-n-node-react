@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from "react";
 import { BiSolidSend, BiEdit, BiTrash } from "react-icons/bi";
 import { FaRegUserCircle, FaStar } from "react-icons/fa";
@@ -10,7 +11,7 @@ const Comments = ({ dishID }) => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [currentCommentText, setCurrentCommentText] = useState("");
-  const [user, setUser] = useState(sessionStorage.getItem("user"));
+  const [user] = useState(sessionStorage.getItem("user").slice(1));
   const [rating, setRating] = useState(0);
   const [editCommentId, setEditCommentId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
@@ -281,7 +282,7 @@ const RatingComponent = ({ ratingValue }) => {
       {[...Array(5)].map((_, index) => {
         const starValue = index + 1;
         return (
-          <FaStar
+          <FaStar key={index}
             className={` ${
               starValue <= ratingIntValue ? "fill-yellow-400" : "fill-slate-600"
             }`}
