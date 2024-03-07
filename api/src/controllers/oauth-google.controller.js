@@ -27,7 +27,7 @@ const googleOauth = passport.use(
             email,
             signin_method: SignInMethods.google_oauth,
             password: "",
-            user_name: `u-${email}`,
+            user_name: `u_${email.replace(/[.@]/g, "_")}`,
           };
           const savedUser = await createUser(newUser);
           return done(null, savedUser);
