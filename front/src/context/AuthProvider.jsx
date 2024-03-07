@@ -48,62 +48,65 @@ const AuthProvider = ({ children }) => {
   bookmarkDish === null
     ? (tempDishInBookMark = [])
     : (tempDishInBookMark = JSON.parse(bookmarkDish));
-  
-    favsDish === null
+
+  favsDish === null
     ? (tempDishInFavs = [])
     : (tempDishInFavs = JSON.parse(favsDish));
 
   const addOrRemoveFromBookmark = (e) => {
     e.preventDefault();
-    const btn = e.currentTarget;
-    const parent = btn.parentElement.parentElement.parentElement;
-    const primaryimage = parent.querySelector("img").src;
-    const user = parent.querySelector("#userPost").textContent;
-    const createdAt = parent.querySelector("#date").textContent;
-    const name = parent.querySelector("#name").textContent;
-    const description = parent.querySelector("#comentary").textContent;
+    if (user) {
+      const btn = e.currentTarget;
+      const parent = btn.parentElement.parentElement.parentElement;
+      const primaryimage = parent.querySelector("img").src;
+      const user = parent.querySelector("#userPost").textContent;
+      const createdAt = parent.querySelector("#date").textContent;
+      const name = parent.querySelector("#name").textContent;
+      const description = parent.querySelector("#comentary").textContent;
 
-    const User = user.slice(1);
+      const User = user.slice(1);
 
-    const bookmarkData = {
-      User,
-      createdAt,
-      name,
-      primaryimage,
-      description,
-      id: btn.dataset.bookmarkId,
-    };
+      const bookmarkData = {
+        User,
+        createdAt,
+        name,
+        primaryimage,
+        description,
+        id: btn.dataset.bookmarkId,
+      };
 
-    let bookMarkInArray = tempDishInBookMark.find(
-      (bookmark) => bookmark.id === btn.dataset.bookmarkId
-    );
-
-    if (!bookMarkInArray) {
-      tempDishInBookMark.push(bookmarkData);
-      localStorage.setItem("bookMark", JSON.stringify(tempDishInBookMark));
-      setBookMark(tempDishInBookMark);
-      console.log("Agregado a bookMarks");
-    } else {
-      tempDishInBookMark = tempDishInBookMark.filter(
-        (bookMark) => bookMark.id !== btn.dataset.bookmarkId
+      let bookMarkInArray = tempDishInBookMark.find(
+        (bookmark) => bookmark.id === btn.dataset.bookmarkId
       );
-      localStorage.setItem("bookMark", JSON.stringify(tempDishInBookMark));
-      setBookMark(tempDishInBookMark);
-      console.log("Eliminado de bookMarks");
+
+      if (!bookMarkInArray) {
+        tempDishInBookMark.push(bookmarkData);
+        localStorage.setItem("bookMark", JSON.stringify(tempDishInBookMark));
+        setBookMark(tempDishInBookMark);
+        console.log("Agregado a bookMarks");
+      } else {
+        tempDishInBookMark = tempDishInBookMark.filter(
+          (bookMark) => bookMark.id !== btn.dataset.bookmarkId
+        );
+        localStorage.setItem("bookMark", JSON.stringify(tempDishInBookMark));
+        setBookMark(tempDishInBookMark);
+        console.log("Eliminado de bookMarks");
+      }
     }
   };
 
   const addOrRemoveFromFavs = (e) => {
     e.preventDefault();
-    const btn = e.currentTarget;
-    const parent = btn.parentElement.parentElement.parentElement;
-    const primaryimage = parent.querySelector("img").src;
-    const user = parent.querySelector("#userPost").textContent;
-    const createdAt = parent.querySelector("#date").textContent;
-    const name = parent.querySelector("#name").textContent;
-    const description = parent.querySelector("#comentary").textContent;
+    if (user) {
+      const btn = e.currentTarget;
+      const parent = btn.parentElement.parentElement.parentElement;
+      const primaryimage = parent.querySelector("img").src;
+      const user = parent.querySelector("#userPost").textContent;
+      const createdAt = parent.querySelector("#date").textContent;
+      const name = parent.querySelector("#name").textContent;
+      const description = parent.querySelector("#comentary").textContent;
 
-    const User = user.slice(1);
+      const User = user.slice(1);
 
       const dishData = {
         User,
@@ -133,7 +136,7 @@ const AuthProvider = ({ children }) => {
       }
     }
   };
-  
+
   return (
     <AuthContext.Provider
       value={{
@@ -148,7 +151,7 @@ const AuthProvider = ({ children }) => {
         favorites,
         setFavorites,
         setBookMark,
-        bookMark
+        bookMark,
       }}
     >
       {children}
