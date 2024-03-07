@@ -10,6 +10,7 @@ import { TbSearch } from "react-icons/tb";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import appApi from "../../api/appApi";
+import SearchUsersComponent from "./UserSearch";
 
 const Seach = () => {
   const {
@@ -24,29 +25,44 @@ const Seach = () => {
   const [dishAux, setDishAux] = useState([]);
   const currentData = new Date();
 
+  const checkIsFav = (idtoCheck) => {
+    return favorites.find((fav) => fav.id == idtoCheck);
+  };
+
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const res = await appApi.get("/recipes");
+        const res = await appApi.get(`/recipes/`);
         const resApi = res?.data?.recipes;
-        const favs = favorites.map((fav) => fav.id);
-
         const newDataApi = resApi.map((data) => {
-          const newArray = favs.find((fav) => fav === data.id);
-          if (newArray) {
+          const isInFav = checkIsFav(data.id);
+          if (isInFav) {
             return { ...data, favorites: true };
           } else {
             return { ...data, favorites: false };
           }
         });
+
         setDishAux(newDataApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
-
     fetchRecipe();
-  }, [favorites]);
+  }, []);
+
+  useEffect(()=>{
+    const newDataApi = dishAux.map((data) => {
+      const isInFav = checkIsFav(data.id);
+      if (isInFav) {
+        return { ...data, favorites: true };
+      } else {
+        return { ...data, favorites: false };
+      }
+    });
+
+    setDishAux(newDataApi);
+  },[favorites])
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -76,7 +92,7 @@ const Seach = () => {
     <>
       {!logIn && <Navigate to="/login" />}
       <main className="flex justify-center px-4 mt-5">
-        <section className="lg:w-[1200px]">
+        <section className="max-w-[1200px] lg:w-[1200px] flex-1">
           <div className="mb-[5%] mt-[3%] mx-0">
             <div className="flex justify-center items-center pb-12 ">
               <TbSearch size={35} className="ml-2  text-gray-800" />
@@ -90,6 +106,7 @@ const Seach = () => {
                 }}
               />
             </div>
+            <SearchUsersComponent userTerm={searchTerm} />
             <div className="flex flex-wrap md:gap-4 md:gap-y-24 justify-center items-center pb-20">
               {dishList
                 .filter((val) => {
