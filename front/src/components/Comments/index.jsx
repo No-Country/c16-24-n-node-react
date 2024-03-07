@@ -118,7 +118,7 @@ const Comments = ({ dishID }) => {
   };
 
   return (
-    <article>
+    <article id="comments">
       <h2 className="text-xl font-semibold m-1">
         <p>{`Reviews: (${comments.length})`}</p>
         <RatingComponent ratingValue={averageRating} />
