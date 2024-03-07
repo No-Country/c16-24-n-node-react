@@ -4,16 +4,16 @@ import appApi from "../../api/appApi";
 import Swal from "sweetalert2";
 import { MdDeleteSweep } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
-import { GiFullPizza } from "react-icons/gi";
-import { CiPizza } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
-import { TfiCommentAlt } from "react-icons/tfi";
-import { HiOutlineBookmark } from "react-icons/hi2";
 import { useAuthContext } from "../../context/AuthProvider";
 import Comments from "../../components/Comments";
+// import { GiFullPizza } from "react-icons/gi";
+// import { CiPizza } from "react-icons/ci";
+// import { TfiCommentAlt } from "react-icons/tfi";
+// import { HiOutlineBookmark } from "react-icons/hi2";
 
 const RecipeDetails = () => {
-  const { addOrRemoveFromFavs, favorites, user } = useAuthContext();
+  const { favorites, user } = useAuthContext();
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState(null);
   let navigate = useNavigate();
@@ -97,7 +97,7 @@ const RecipeDetails = () => {
                     src={recipe?.primaryimage}
                     alt=""
                   />
-                  <div className="flex justify-between items-center py-3">
+                  {/* <div className="flex justify-between items-center py-3">
                     <div className="flex flex-row">
                       <button
                         onClick={addOrRemoveFromFavs}
@@ -128,8 +128,8 @@ const RecipeDetails = () => {
                         <TfiCommentAlt className="cursor-pointer" size={20} />
                       </button>
                     </div>
-                  </div>
-                  <h3 id="name" className="text-xl font-bold pb-2">
+                  </div> */}
+                  <h3 id="name" className="text-xl font-bold pt-4 pb-2">
                     {recipe?.name}
                   </h3>
                   <div id="hashtags" className="text-l font-semibold pl-2 pb-2">
@@ -148,7 +148,7 @@ const RecipeDetails = () => {
                         recipe?.description?.slice(1).substring(0, 120)}
                       ...
                     </div>
-                    <h2 className="text-xl font-semibold">Ingredientes</h2>
+                    <h2 className="text-xl font-semibold">ingredients</h2>
                     <div
                       id=""
                       className="flex justify-between items-center border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
@@ -163,20 +163,20 @@ const RecipeDetails = () => {
                       </ul>
                       <div className="block">
                         <span className="flex justify-between items-center">
-                          <h3 className="font-normal pr-2">Portion</h3>
+                          <h3 className="font-bold pr-2">{recipe?.portion > 1?'Portions:':'Portion:' }</h3>
                           <span>{recipe?.portion} </span>
                         </span>
                         <span className="flex justify-between items-center">
-                          <h3 className="font-normal pr-2">Difficulty </h3>
+                          <h3 className="font-bold pr-2">Difficulty: </h3>
                           <span>{recipe?.difficulty} </span>
                         </span>
                         <span className="flex justify-between items-center">
-                          <h3 className="font-normal pr-2">Time </h3>
+                          <h3 className="font-bold pr-2">Minutes: </h3>
                           <span>{recipe?.preparation_time + "'"}</span>
                         </span>
                       </div>
                     </div>
-                    <h2 className="text-xl font-semibold">Pasos</h2>
+                    <h2 className="text-xl font-semibold">Steps</h2>
                     <div
                       dangerouslySetInnerHTML={{ __html: recipe?.process }}
                       id="process"

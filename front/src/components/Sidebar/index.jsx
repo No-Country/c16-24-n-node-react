@@ -10,7 +10,7 @@ const Sidebar = () => {
   const [expanded, setExpanded] = useState(window.innerWidth >= 768);
 
   const changeSize = () => {    
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1460) {
       setExpanded(false);
     } else {
       setExpanded(true);

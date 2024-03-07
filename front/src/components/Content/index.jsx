@@ -4,7 +4,7 @@ import Login from "../../routes/Login/Login";
 import Home from "../../routes/Home/Home";
 import Posts from "../../routes/Posts";
 import Search from "../../routes/Search";
-import Reviews from "../../routes/Reviews";
+import BookMark from "../../routes/BookMark";
 import Recipes from "../../routes/Recipes";
 import Profile from "../../routes/Profile";
 import RecipeDetails from "../../routes/Profile/RecipeDetails";
@@ -24,7 +24,7 @@ const Content = () => {
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<Posts />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/bookmark" element={<BookMark />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
