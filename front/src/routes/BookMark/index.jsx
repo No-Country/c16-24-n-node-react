@@ -7,6 +7,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LikesComponent from "../../components/Likes/LikesComponent";
+import { IoBookmarks } from "react-icons/io5";
 
 const BookMark = () => {
   const {
@@ -75,7 +76,7 @@ const BookMark = () => {
                       </Link>
                       <div className="flex justify-between items-center py-3">
                         <div className="flex flex-row">
-                          <LikesComponent recipeId={val.id}/>
+                          <LikesComponent recipeId={val.id} />
                           <button
                             onClick={addOrRemoveFromBookmark}
                             data-bookmark-id={val?.id}
@@ -118,10 +119,11 @@ const BookMark = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center">
-              <h2 className=" text-2xl font-bold">
-                There are no favorite recipes
-              </h2>
+            <div className="flex items-center justify-center gap-5 mt-5">
+              <IoBookmarks className="text-4xl" />
+              <p className=" text-3xl font-bold">
+                There are no favorite recipes!
+              </p>
             </div>
           )}
         </section>

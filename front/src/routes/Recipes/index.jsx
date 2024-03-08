@@ -7,6 +7,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import appApi from "../../api/appApi";
+import { IoBookmarks } from "react-icons/io5";
 
 const Recipes = () => {
   const { addOrRemoveFromBookmark, logIn } = useAuthContext();
@@ -47,10 +48,11 @@ const Recipes = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-center">
-                <h2 className=" text-2xl font-bold">
-                  There are no favorite recipes
-                </h2>
+              <div className="flex items-center justify-center gap-5 mt-5">
+                <IoBookmarks className="text-4xl" />
+                <p className=" text-3xl font-bold">
+                  There are no favorite recipes!
+                </p>
               </div>
             )}
           </section>
