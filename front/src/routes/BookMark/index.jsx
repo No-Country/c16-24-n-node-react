@@ -120,9 +120,9 @@ const BookMark = () => {
             </div>
           ) : (
             <div className="flex items-center justify-center gap-5 mt-5">
-              <IoBookmarks className="text-4xl" />
+              <IoBookmarks className="text-4xl text-red-600" />
               <p className=" text-3xl font-bold">
-                There are no favorite recipes!
+                There are no bookmark recipes!
               </p>
             </div>
           )}
