@@ -540,7 +540,7 @@ const Post = () => {
             {formData.ingredients.map((ingredient, index) => (
               <div
                 key={index}
-                className=" relative flex justify-between items-center mb-3"
+                className="relative flex justify-between items-center mb-3"
               >
                 <input
                   key={index}
@@ -556,16 +556,18 @@ const Post = () => {
                 >
                   Ingredients:
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleIngredientDelete(index)}
-                  className="absolute right-5"
-                >
-                  <MdDelete
-                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                    size={25}
-                  />
-                </button>
+                {formData.ingredients.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleIngredientDelete(index)}
+                    className="absolute right-5"
+                  >
+                    <MdDelete
+                      className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                      size={25}
+                    />
+                  </button>
+                )}
               </div>
             ))}
             <div className="flex justify-end items-center">
@@ -583,37 +585,39 @@ const Post = () => {
               </button>
             </div>
           </div>
+
           <hr className="mb-5" />
           <div className="mb-4">
             {formData.categories.map((category, index) => (
               <div
                 key={index}
-                className=" relative flex justify-between items-center mb-3"
+                className="relative flex justify-between items-center mb-3"
               >
                 <input
-                  key={index}
                   type="text"
-                  placeholder="Another category"
                   value={category.name}
-                  onChange={(event) => handleCategoryChange(index, event)}
+                  placeholder="New category"
+                  onChange={(e) => handleCategoryChange(index, e)}
                   className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                 />
                 <label
                   className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
-                  htmlFor="Categories"
+                  htmlFor="ingredients"
                 >
                   Categories:
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleCategoryDelete(index)}
-                  className="absolute right-5"
-                >
-                  <MdDelete
-                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                    size={25}
-                  />
-                </button>
+                {formData.categories.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleCategoryDelete(index)}
+                    className="absolute right-5"
+                  >
+                    <MdDelete
+                      className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700"
+                      size={25}
+                    />
+                  </button>
+                )}
               </div>
             ))}
             <div className="flex justify-end items-center">
@@ -636,32 +640,33 @@ const Post = () => {
             {formData.hashtags.map((hashtag, index) => (
               <div
                 key={index}
-                className=" relative flex justify-between items-center mb-3"
+                className="relative flex justify-between items-center mb-3"
               >
                 <input
-                  key={index}
                   type="text"
-                  placeholder="Another hashtags"
                   value={hashtag.name}
-                  onChange={(event) => handleHashtagChange(index, event)}
+                  placeholder="New hashtag"
+                  onChange={(e) => handleHashtagChange(index, e)}
                   className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                 />
                 <label
                   className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
-                  htmlFor="Hashtags"
+                  htmlFor="ingredients"
                 >
-                  Hashtags:
+                  Hashtag:
                 </label>
-                <button
-                  type="button"
-                  onClick={() => handleHashtagDelete(index)}
-                  className="absolute right-5"
-                >
-                  <MdDelete
-                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                    size={25}
-                  />
-                </button>
+                {formData.hashtags.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleHashtagDelete(index)}
+                    className="absolute right-5"
+                  >
+                    <MdDelete
+                      className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700"
+                      size={25}
+                    />
+                  </button>
+                )}
               </div>
             ))}
             <div className="flex justify-end items-center">

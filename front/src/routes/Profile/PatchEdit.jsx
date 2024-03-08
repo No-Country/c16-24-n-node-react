@@ -164,7 +164,32 @@ const PatchEdit = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (formData.ingredients.some((ingredient) => ingredient.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Ingredients",
+        text: "Please fill in all ingredient fields.",
+      });
+      return;
+    }
 
+    if (formData.categories.some((category) => category.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Categories",
+        text: "Please fill in all category fields.",
+      });
+      return;
+    }
+
+    if (formData.hashtags.some((hashtag) => hashtag.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Hashtags",
+        text: "Please fill in all hashtag fields.",
+      });
+      return;
+    }
     try {
       if (selectedFile) {
         const reader = new FileReader();
@@ -204,6 +229,32 @@ const PatchEdit = () => {
   };
 
   const updateRecipe = async (data) => {
+    if (formData.ingredients.some((ingredient) => ingredient.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Ingredients",
+        text: "Please fill in all ingredient fields.",
+      });
+      return;
+    }
+
+    if (formData.categories.some((category) => category.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Categories",
+        text: "Please fill in all category fields.",
+      });
+      return;
+    }
+
+    if (formData.hashtags.some((hashtag) => hashtag.name === "")) {
+      Swal.fire({
+        icon: "warning",
+        title: "Empty Hashtags",
+        text: "Please fill in all hashtag fields.",
+      });
+      return;
+    }
     try {
       await appApi.patch(`/recipes/${recipeId}`, data);
 
@@ -417,7 +468,7 @@ const PatchEdit = () => {
             {formData.ingredients.map((ingredient, index) => (
               <div
                 key={index}
-                className=" relative flex justify-between items-center mb-3"
+                className="relative flex justify-between items-center mb-3"
               >
                 <input
                   type="text"
@@ -426,18 +477,21 @@ const PatchEdit = () => {
                   onChange={(e) => handleIngredientChange(index, e)}
                   className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
                 />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveIngredient(index)}
-                  className="absolute right-5"
-                >
-                  <MdDelete
-                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                    size={25}
-                  />
-                </button>
+                {formData.ingredients.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveIngredient(index)}
+                    className="absolute right-5"
+                  >
+                    <MdDelete
+                      className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                      size={25}
+                    />
+                  </button>
+                )}
               </div>
             ))}
+
             <div className="flex justify-end items-center">
               <button
                 type="button"
@@ -449,11 +503,14 @@ const PatchEdit = () => {
             </div>
           </div>
         </div>
+        <label htmlFor="ingredients" className="block mb-2 text-xl">
+          Categories:
+        </label>
         <div className="mb-4">
           {formData.categories.map((category, index) => (
             <div
               key={index}
-              className=" relative flex justify-between items-center mb-3"
+              className="relative flex justify-between items-center mb-3"
             >
               <input
                 type="text"
@@ -462,24 +519,21 @@ const PatchEdit = () => {
                 onChange={(e) => handleCategoryChange(index, e)}
                 className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
               />
-              <label
-                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
-                htmlFor="Categories"
-              >
-                Categories:
-              </label>
-              <button
-                type="button"
-                onClick={() => handleRemoveCategory(index)}
-                className="absolute right-5"
-              >
-                <MdDelete
-                  className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                  size={25}
-                />
-              </button>
+              {formData.categories.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveCategory(index)}
+                  className="absolute right-5"
+                >
+                  <MdDelete
+                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                    size={25}
+                  />
+                </button>
+              )}
             </div>
           ))}
+
           <div className="flex justify-end items-center">
             <button
               type="button"
@@ -491,13 +545,13 @@ const PatchEdit = () => {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="hashtags" className="block mb-2">
-            Hashtags:
+          <label htmlFor="ingredients" className="block mb-2 text-xl">
+            Hashtag:
           </label>
           {formData.hashtags.map((hashtag, index) => (
             <div
               key={index}
-              className=" relative flex justify-between items-center mb-3"
+              className="relative flex justify-between items-center mb-3"
             >
               <input
                 type="text"
@@ -506,24 +560,21 @@ const PatchEdit = () => {
                 onChange={(e) => handleHashtagChange(index, e)}
                 className="p-2 mt-1 mr-2 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-200 focus:ring-opacity-50"
               />
-              <label
-                className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[calc(50%-53px)] xs:left-[calc(50%-53px)] bg-white"
-                htmlFor="Hashtags"
-              >
-                Hashtags:
-              </label>
-              <button
-                type="button"
-                onClick={() => handleRemoveHashtag(index)}
-                className="absolute right-5"
-              >
-                <MdDelete
-                  className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
-                  size={25}
-                />
-              </button>
+              {formData.hashtags.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveHashtag(index)}
+                  className="absolute right-5"
+                >
+                  <MdDelete
+                    className="text-red-500 hover:text-red-700 focus:outline-none focus:text-red-700 "
+                    size={25}
+                  />
+                </button>
+              )}
             </div>
           ))}
+
           <div className="flex justify-end items-center">
             <button
               type="button"
