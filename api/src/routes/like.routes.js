@@ -2,8 +2,8 @@ const { Router } = require("express");
 const { jwtValidator } = require("../middlewares");
 const {
   toggleLikeRecipe,
-  getLikesForRecipePublic,
-  getLikesForRecipePrivate,
+  getLikesCountForRecipePrivate,
+  getLikesCountForRecipePublic,
 } = require("../controllers/like.controller");
 
 const likesRoutes = Router();
