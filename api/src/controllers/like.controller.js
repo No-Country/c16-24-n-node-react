@@ -9,30 +9,51 @@ const toggleLikeRecipe = async (userId, recipeId) => {
   if (existingLike) {
     // Si ya existe un like para esta receta por este usuario, eliminar el like
     await existingLike.destroy();
-    return { message: "Like eliminado de la receta correctamente" };
+    return { created:false, message: "Like eliminado de la receta correctamente" };
   } else {
     // Si no existe un like para esta receta por este usuario, crear un nuevo like
     await Like.create({ userId, recipeId });
-    return { message: "Like agregado a la receta correctamente" };
+    return { created:true, message: "Like agregado a la receta correctamente" };
   }
 };
 // Función para obtener los likes de una receta
-const getLikesForRecipe = async (recipeId) => {
+const getLikesForRecipePublic = async (recipeId) => {
   // Obtener todos los likes para la receta especificada
-  const likes = await Like.findAll({
+  const likes = await Like.findAndCountAll({
     where: { recipeId },
   });
-
-  // Calcular el total de likes
-  const totalLikes = likes.length;
-
   // Preparar la respuesta
   const response = {
-    totalLikes,
-    likes,
+    likes: likes.count,
   };
 
   return response;
 };
 
-module.exports = { toggleLikeRecipe, getLikesForRecipe };
+const getLikesForRecipePrivate = async (recipeId, userId) => {
+  // Obtener todos los likes para la receta especificada
+  const likes = await Like.findAndCountAll({
+    where: { recipeId },
+  });
+
+  const userLiked = await Like.findOne({
+    where: {
+      recipeId: recipeId,
+      userId: userId,
+    },
+  });
+
+  // Preparar la respuesta
+  const response = {
+    likes: likes.count,
+    liked: !!userLiked,
+  };
+
+  return response;
+};
+
+module.exports = {
+  toggleLikeRecipe,
+  getLikesForRecipePublic,
+  getLikesForRecipePrivate,
+};

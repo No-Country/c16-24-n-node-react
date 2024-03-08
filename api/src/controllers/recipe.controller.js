@@ -185,7 +185,9 @@ const updateRecipe = async (userId, recipeId, updatedAttributes) => {
     !updatedAttributes.categories ||
     !updatedAttributes.hashtags
   )
+  {
     throw Error("Faltan datos");
+  }
 
   if (updatedAttributes.ingredients.length < 1) {
     throw new Error("Debe tener al menos un ingrediente");
@@ -332,19 +334,11 @@ const searchRecipesByName = async (name) => {
     const recipes = await Recipe.findAll({
       where: {
         name: {
-          [Op.like]: `%${name}%`, // Búsqueda por coincidencia parcial del nombre
+          [Op.iLike]: `%${name}%`, // Búsqueda por coincidencia parcial del nombre
         },
         hidden: false,
       },
       include: [
-        {
-          model: Ingredient,
-          attributes: ["name"],
-        },
-        {
-          model: Category,
-          attributes: ["name"],
-        },
         {
           model: Hashtag,
           attributes: ["name"],
