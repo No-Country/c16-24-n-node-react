@@ -17,7 +17,7 @@ const toggleLikeRecipe = async (userId, recipeId) => {
   }
 };
 // Función para obtener los likes de una receta
-const getLikesForRecipePublic = async (recipeId) => {
+const getLikesCountForRecipePublic = async (recipeId) => {
   // Obtener todos los likes para la receta especificada
   const likes = await Like.findAndCountAll({
     where: { recipeId },
@@ -30,7 +30,7 @@ const getLikesForRecipePublic = async (recipeId) => {
   return response;
 };
 
-const getLikesForRecipePrivate = async (recipeId, userId) => {
+const getLikesCountForRecipePrivate = async (recipeId, userId) => {
   // Obtener todos los likes para la receta especificada
   const likes = await Like.findAndCountAll({
     where: { recipeId },
@@ -54,6 +54,6 @@ const getLikesForRecipePrivate = async (recipeId, userId) => {
 
 module.exports = {
   toggleLikeRecipe,
-  getLikesForRecipePublic,
-  getLikesForRecipePrivate,
+  getLikesCountForRecipePublic,
+  getLikesCountForRecipePrivate,
 };

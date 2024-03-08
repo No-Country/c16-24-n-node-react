@@ -22,7 +22,7 @@ likesRoutes.post("/:recipeId/like", [jwtValidator], async (req, res) => {
 likesRoutes.get("/:recipeId/likes", async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const likes = await getLikesForRecipePublic(recipeId);
+    const likes = await getLikesCountForRecipePublic(recipeId);
     return res.status(200).json(likes);
   } catch (error) {
     console.error("Error al obtener los likes de la receta:", error);
@@ -33,7 +33,7 @@ likesRoutes.get("/:recipeId/likes", async (req, res) => {
 likesRoutes.get("/:recipeId/likes_pr", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const likes = await getLikesForRecipePrivate(recipeId, req.user.id);
+    const likes = await getLikesCountForRecipePrivate(recipeId, req.user.id);
     return res.status(201).json(likes);
   } catch (error) {
     console.error("Error al obtener los likes de la receta:", error);

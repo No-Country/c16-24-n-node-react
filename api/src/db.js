@@ -110,6 +110,9 @@ Recipe.belongsToMany(User, {
   foreignKey: "recipeId",
 });
 
+Like.belongsTo(User, { foreignKey: 'userId' });
+Like.belongsTo(Recipe, { foreignKey: 'recipeId' });
+
 //?-----Relaciones de Followers-----//
 
 User.belongsToMany(User, {

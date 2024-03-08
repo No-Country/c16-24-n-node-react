@@ -13,6 +13,7 @@ const {
   updateUserName,
   deleteUser,
   getUserRecipes,
+  getUserLikes,
 } = require("../controllers/user.controller");
 const { responseMessages } = require("../utils/validation-errors.values");
 
@@ -106,5 +107,20 @@ userRoutes.delete(
     }
   }
 );
+
+userRoutes.get('/likes',[jwtValidator], async (req, res)=>{
+  try {
+    const data = await getUserLikes(req.user.id);
+    return res.status(200).json({ok:true, data});
+  } catch (error) {
+    console.log(error);
+      if (error.status) {
+        return res.status(error.status).json({ ok: false, message: error.msg });
+      }
+      return res
+        .status(500)
+        .json({ ok: false, message: responseMessages.internalServerError });
+  }
+});
 
 module.exports = userRoutes;

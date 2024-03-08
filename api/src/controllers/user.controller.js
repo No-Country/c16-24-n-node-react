@@ -1,4 +1,4 @@
-const { User, Profile, Recipe } = require("../db");
+const { User, Profile, Recipe, Like } = require("../db");
 const { SignInMethods } = require("../enums/signin-methods.enum");
 const { compareHash, passwordHash } = require("../utils/bcrypt.helper");
 const { deleteCloudinaryImage } = require("../utils/cloudinary.helper");
@@ -66,11 +66,11 @@ const getUserByUsernameOrThrow = async (userName) => {
           as: "Recipes",
           where: { hidden: false },
           attributes: [],
-          required:false,
+          required: false,
         },
       ],
     });
-    if(!user){
+    if (!user) {
       throw { status: 400, msg: responseMessages.userNotRegistered };
     }
     return {
@@ -200,6 +200,50 @@ const getUserRecipes = async (
   }
 };
 
+const getUserLikes = async (userId, page = 1, perPage = 10) => {
+  const _page = page < 1 ? 1 : page;
+  const _perPage = perPage > 10 ? 10 : perPage;
+
+  try {
+    const user = User.findOne({
+      where:{
+        id:userId,
+        deleted:false,
+      }
+    });
+    if(!user){
+      throw {status:404, msg:responseMessages.userNotRegistered}
+    }
+    const data = Like.findAll({
+      where:{
+        userId,
+        isDeleted:false,
+      },
+      attributes:[],
+      include: [
+        {
+          model:Recipe,
+          where:{
+            hidden: false,
+          },
+          attributes:["id", "primaryimage", "name", "description", "createdAt"],
+        },
+        {
+          model:User,
+          attributes:["id","user_name"]
+        }
+      ],
+      offset: (_page - 1) * _perPage,
+      limit: _perPage,
+      order: [["createdAt", "DESC"]],
+    });
+    return data;
+
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -210,4 +254,5 @@ module.exports = {
   getUserRecipes,
   deleteUser,
   getUserByUsernameOrThrow,
+  getUserLikes,
 };
