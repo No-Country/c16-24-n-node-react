@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
@@ -11,14 +11,17 @@ import appApi from "../../api/appApi";
 const Home = () => {
   const [dishList, setDishList] = useState([]);
   const [dishAux, setDishAux] = useState([]);
-  const { 
-    addOrRemoveFromFavs, 
-    addOrRemoveFromBookmark, 
-    favorites, 
-    bookMark, 
-    user 
+  const [loading, setLoading] = useState(true);
+  const {
+    addOrRemoveFromFavs,
+    addOrRemoveFromBookmark,
+    favorites,
+    bookMark,
+    user,
   } = useAuthContext();
-  const currentData = new Date();
+  const { loaderRef, page, setPage, hasMore, setHasMore } = useInfiniteScroll(
+    (newPage) => setPage(newPage + 1)
+  );
 
   const checkIsFav = (idtoCheck) => {
     return favorites.find((fav) => fav.id == idtoCheck);
@@ -26,8 +29,9 @@ const Home = () => {
 
   useEffect(() => {
     const fetchRecipe = async () => {
+      setLoading(true);
       try {
-        const res = await appApi.get(`/recipes/`);
+        const res = await appApi.get(`/recipes?page=${page}`);
         const resApi = res?.data?.recipes;
         const newDataApi = resApi.map((data) => {
           const isInFav = checkIsFav(data.id);
@@ -37,16 +41,28 @@ const Home = () => {
             return { ...data, favorites: false };
           }
         });
+        if (page === 1) {
+          setDishAux([...newDataApi]);
+        } else {
+          setDishAux((prevRec) => [...prevRec, ...newDataApi]);
+        }
+        if (resApi.length === 0 || resApi.length < 10) {
+          setHasMore(false);
+          return;
+        }
 
-        setDishAux(user? newDataApi : resApi);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching recipe:", error);
       }
     };
-    fetchRecipe();
-  }, []);
+    if(hasMore){
+      fetchRecipe();
+    }
+  }, [page, hasMore]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const newDataApi = dishAux.map((data) => {
       const isInFav = checkIsFav(data.id);
       if (isInFav) {
@@ -57,7 +73,7 @@ const Home = () => {
     });
 
     setDishAux(newDataApi);
-  },[favorites])
+  }, [favorites]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -74,7 +90,7 @@ const Home = () => {
           }
         });
         newDataApi.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setDishList(user? newDataApi : dishAux );
+        setDishList(user ? newDataApi : dishAux);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -82,7 +98,7 @@ const Home = () => {
 
     fetchRecipe();
   }, [bookMark, dishAux, user]);
-  
+
   return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px] md:w-full">
@@ -105,7 +121,7 @@ const Home = () => {
                       </p>
                     </Link>
                     <p id="date" className="text-sm md:pr-5 sm:p-0">
-                      {currentData.toDateString("es-AR", val?.createdAt)}
+                      {new Date(val?.createdAt).toLocaleDateString("es-AR")}
                     </p>
                   </h3>
                   <Link to={`/detail?dishID=${val?.id}`}>
@@ -118,7 +134,7 @@ const Home = () => {
                   <div className="flex justify-between items-center py-3">
                     <div className="flex flex-row">
                       <button
-                        onClick={ addOrRemoveFromFavs }
+                        onClick={addOrRemoveFromFavs}
                         data-dish-id={val?.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
@@ -132,7 +148,7 @@ const Home = () => {
                         )}
                       </button>
                       <button
-                        onClick={ addOrRemoveFromBookmark }
+                        onClick={addOrRemoveFromBookmark}
                         data-bookmark-id={val?.id}
                         className="flex seft-start item-center gap-x-2 pl-2"
                       >
@@ -169,9 +185,51 @@ const Home = () => {
               </div>
             ))}
           </div>
+          {hasMore && (
+            <>
+              <div className="mt-12 mb-16 w-full flex justify-center">
+                <span className="loader justify-center"></span>
+              </div>
+              {!loading && <div ref={loaderRef}></div>}
+            </>
+          )}
         </div>
       </section>
     </main>
   );
 };
+
+const useInfiniteScroll = (callback) => {
+  const loaderRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && loaderRef.current) {
+          if (hasMore) {
+            callback(page);
+          }
+        }
+      },
+      {
+        threshold: 0.9,
+      }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [callback]);
+
+  return { loaderRef, page, hasMore, setHasMore, setPage };
+};
+
 export default Home;
