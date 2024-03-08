@@ -13,6 +13,7 @@ const {
   deleteRecipe,
   searchRecipesByName,
   updateRecipeImage,
+  getRecipesByHashtag,
 } = require("../controllers/recipe.controller");
 
 const recipesRoutes = Router();
@@ -46,7 +47,7 @@ recipesRoutes.get("/:recipeId", [jwtValidator], async (req, res) => {
 });
 
 recipesRoutes.get("/", async (req, res) => {
-  const {query} = req;
+  const { query } = req;
   try {
     const recipes = await getRecipes(query.page, query.perPage);
     if (!recipes || recipes.length === 0) {
@@ -74,7 +75,11 @@ recipesRoutes.patch("/:recipeId", [jwtValidator], async (req, res) => {
   try {
     const { recipeId } = req.params;
     const updateFields = req.body;
-    const updatedRecipe = await updateRecipe(req.user.id, recipeId, updateFields);
+    const updatedRecipe = await updateRecipe(
+      req.user.id,
+      recipeId,
+      updateFields
+    );
     return res.status(200).json({
       message: "Receta actualizada exitosamente",
       recipe: updatedRecipe,
@@ -112,6 +117,22 @@ recipesRoutes.delete("/:recipeId", [jwtValidator], async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+recipesRoutes.get("/category/:catName", async (req, res) => {
+  const { catName } = req.params;
+  try {
+    const data = await getRecipesByHashtag(catName);
+    return res.status(200).json({ok:true, data});
+  } catch (error) {
+    console.log(error);
+    if (error.status) {
+      return res.status(error.status).json({ ok: false, message: error.msg });
+    }
+    return res
+      .status(500)
+      .json({ ok: false, message: responseMessages.internalServerError });
   }
 });
 

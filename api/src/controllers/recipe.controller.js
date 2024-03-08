@@ -4,6 +4,7 @@ const {
   cloudinary,
   deleteCloudinaryImage,
 } = require("../utils/cloudinary.helper");
+const { responseMessages } = require("../utils/validation-errors.values");
 
 const uploadImageToCloudinary = async (imageBase64) => {
   try {
@@ -184,8 +185,7 @@ const updateRecipe = async (userId, recipeId, updatedAttributes) => {
     !updatedAttributes.ingredients ||
     !updatedAttributes.categories ||
     !updatedAttributes.hashtags
-  )
-  {
+  ) {
     throw Error("Faltan datos");
   }
 
@@ -257,7 +257,7 @@ const updateRecipeImage = async (recipeId, newImageFile) => {
 const getRecipes = async (page = 1, perPage = 10) => {
   const _page = page < 1 ? 1 : page;
   const _perPage = perPage > 10 ? 10 : perPage;
-  
+
   // Obtener todas las recetas ordenadas por fecha de creación de forma descendente
   const recipes = await Recipe.findAll({
     where: { hidden: false },
@@ -376,6 +376,39 @@ const deleteRecipe = async (recipeId) => {
   return remainingRecipes;
 };
 
+const getRecipesByHashtag = async (hashtagName, page = 1, perPage = 10) => {
+  const _page = page < 1 ? 1 : page;
+  const _perPage = perPage > 10 ? 10 : perPage;
+  try {
+    const data = await Recipe.findAll({
+      where: {
+        hidden: false,
+      },
+      attributes: ["name", "id", "description", "createdAt", "primaryimage"],
+      include: [
+        {
+          model: Hashtag,
+          attributes: [],
+          where: {
+            name: hashtagName,
+          },
+        },
+        {
+          model: User,
+          attributes: ["user_name", "id"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      offset: (_page - 1) * _perPage,
+      limit: _perPage,
+    });
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
@@ -384,4 +417,5 @@ module.exports = {
   updateRecipe,
   updateRecipeImage,
   deleteRecipe,
+  getRecipesByHashtag,
 };
