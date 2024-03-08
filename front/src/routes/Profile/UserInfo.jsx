@@ -90,7 +90,7 @@ const UserInfoComponent = ({ userName }) => {
                 profileUserId={profileData?.id}
                 recipesCount={profileData.recipesCount}
               />
-              <p className="max-sm:text-sm bg-slate-200 m-2 rounded-2xl px-4 py-2 overflow-y-auto">
+              <p className="max-sm:text-sm  bg-slate-200 m-2 rounded-2xl px-4 py-2 overflow-y-auto">
                 {profileData?.description ? profileData?.description : ""}
               </p>
             </div>

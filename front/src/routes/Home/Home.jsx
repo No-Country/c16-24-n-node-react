@@ -67,7 +67,7 @@ const Home = () => {
 
     fetchRecipe();
   }, [bookMark, dishAux, user]);
-  
+  console.log(dishList)
   return (
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px] md:w-full">
