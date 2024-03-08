@@ -9,7 +9,7 @@ const uUIDValidOptions = {
   trim: true,
   notEmpty: { errorMessage: validationErrorMessages.notEmpty },
   isUUID: { errorMessage: validationErrorMessages.notUUID },
-}
+};
 
 const searchUserValidation = checkSchema({
   term: {
@@ -49,31 +49,38 @@ const searchUserValidation = checkSchema({
 });
 
 const getUserValidation = checkSchema({
-  userName: { ...userNameValidOptions, in: "params",
-  isLength: {
-    options: { min: 2, max: 64 },
-    errorMessage: validationErrorMessages.lengthMinMax(2, 64),
-  }, },
+  userName: {
+    ...userNameValidOptions,
+    in: "params",
+    isLength: {
+      options: { min: 2, max: 64 },
+      errorMessage: validationErrorMessages.lengthMinMax(2, 64),
+    },
+  },
 });
 
 const getUserRecipesValidation = checkSchema({
   userName: {
     ...userNameValidOptions,
     in: "params",
+    isLength: {
+      options: { min: 2, max: 64 },
+      errorMessage: validationErrorMessages.lengthMinMax(2, 64),
+    },
   },
 });
 
 const followUserValidation = checkSchema({
-  to_follow_id:{...uUIDValidOptions, in:"body"}
+  to_follow_id: { ...uUIDValidOptions, in: "body" },
 });
 
 const unFollowValidation = checkSchema({
-  userId:{...uUIDValidOptions, in:"params"}
-})
+  userId: { ...uUIDValidOptions, in: "params" },
+});
 
 const isFollowingValidation = checkSchema({
-  userId:{...uUIDValidOptions, in:"params"}
-})
+  userId: { ...uUIDValidOptions, in: "params" },
+});
 
 module.exports = {
   searchUserValidation,
@@ -81,5 +88,5 @@ module.exports = {
   getUserRecipesValidation,
   followUserValidation,
   unFollowValidation,
-  isFollowingValidation
+  isFollowingValidation,
 };
