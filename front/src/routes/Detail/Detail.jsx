@@ -157,7 +157,7 @@ const Detail = () => {
                         className="border text-justify border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
                       >
                         {dishAux?.description?.charAt(0).toUpperCase() +
-                          dishAux?.description?.slice(1).substring(0, 120)}
+                          dishAux?.description?.slice(1)}
                         ...
                       </div>
                       <h2 className="text-xl font-bold">Ingredients</h2>

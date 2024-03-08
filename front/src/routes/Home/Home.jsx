@@ -45,7 +45,7 @@ const Home = () => {
     if(hasMore){
       fetchRecipe();
     }
-  }, [page, hasMore]);
+  }, [page, hasMore, setHasMore]);
 
   useEffect(() => {
     const fetchRecipe = async () => {

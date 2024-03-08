@@ -139,7 +139,8 @@ const RecipeDetails = () => {
                         recipe?.description?.slice(1).substring(0, 120)}
                       ...
                     </div>
-                    <h2 className="text-xl font-semibold">ingredients</h2>
+                  
+                    <h2 className="text-xl font-semibold">Ingredients</h2>
                     <div
                       id=""
                       className="flex justify-between items-center border border-solid rounded-xl p-2 md:h-[full] lg:h-[full] "
