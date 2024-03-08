@@ -89,7 +89,7 @@ const updatePassword = async (newPasswordData, userId) => {
   try {
     const { password, new_password } = newPasswordData;
     const user = await getUserById(userId);
-    if (user.signin_metgod == SignInMethods.email_password) {
+    if (user.signin_method == SignInMethods.email_password) {
       await compareHash(password, user.password);
     }
     user.password = await passwordHash(new_password);

@@ -43,6 +43,7 @@ const Comments = ({ dishID }) => {
   };
 
   useEffect(() => {
+    console.log("perro")
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -60,6 +61,7 @@ const Comments = ({ dishID }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("perro 2")
     e.preventDefault();
     try {
       const response = await appApi.post(`/reviews?recipeId=${dishID}`, {
@@ -77,7 +79,7 @@ const Comments = ({ dishID }) => {
       setCommentText("");
       setRating(0);
 
-      fetchComments();
+      await fetchComments();
     } catch (error) {
       console.error("Error al enviar el comentario:", error);
     }
@@ -96,7 +98,7 @@ const Comments = ({ dishID }) => {
         rating: updatedComment.rating,
       });
 
-      fetchComments();
+      await fetchComments();
 
       handleCancelEdit();
     } catch (error) {
@@ -109,14 +111,14 @@ const Comments = ({ dishID }) => {
       await appApi.delete(`/reviews/delete?reviewId=${commentId}`);
       setComments(comments.filter((comment) => comment.Id !== commentId));
 
-      fetchComments();
+      await fetchComments();
     } catch (error) {
       console.error("Error al eliminar el comentario:", error);
     }
   };
 
   return (
-    <article id="comments">
+    <article id="comments" className="w-full">
       <h2 className="text-xl font-semibold m-1">
         <p>{`Reviews: (${comments.length})`}</p>
         <RatingComponent ratingValue={averageRating} />
@@ -175,11 +177,13 @@ const Comments = ({ dishID }) => {
               <div id="review-user-info" className="flex flex-row items-center">
                 <span className="flex items-center text-l pr-2">
                   <FaRegUserCircle size={20} />
-                  <span id="userPost">@{item.User.user_name}</span>
+                  <span id="UserPost">@{item.User.user_name}</span>
                 </span>
-                {!editCommentId&&<p id="date" className="text-sm pr-5 text-slate-600">
-                  {new Date(item.createdAt).toLocaleDateString("es-AR")}
-                </p>}
+                {!editCommentId && (
+                  <p id="date" className="text-sm pr-5 text-slate-600">
+                    {new Date(item.createdAt).toLocaleDateString("es-AR")}
+                  </p>
+                )}
               </div>
               <ReviewActions
                 userName={item.User.user_name}
@@ -194,7 +198,7 @@ const Comments = ({ dishID }) => {
 
             {editCommentId === item.Id ? (
               <form
-              className="flex justify-between items-center"
+                className="flex justify-between items-center"
                 onSubmit={(e) => {
                   e.preventDefault();
                   handleUpdateComment({
@@ -223,7 +227,7 @@ const Comments = ({ dishID }) => {
                   defaultValue={rating}
                   onChange={(val) => setRating(val)}
                 />
-                <button ref={updateBtnRef}  type="submit"></button>
+                <button ref={updateBtnRef} type="submit"></button>
               </form>
             ) : (
               <section>
@@ -279,7 +283,8 @@ const RatingComponent = ({ ratingValue }) => {
       {[...Array(5)].map((_, index) => {
         const starValue = index + 1;
         return (
-          <FaStar key={index}
+          <FaStar
+            key={`ro-${starValue}`}
             className={` ${
               starValue <= ratingIntValue ? "fill-yellow-400" : "fill-slate-600"
             }`}
@@ -321,16 +326,14 @@ const ReviewActions = ({
                 className="text-sm text-red-700 font-bold"
                 type="button"
               >
-                Cancelar
+                Cancel
               </button>
               <button
-                onClick={() =>
-                  handleUpdate()
-                }
+                onClick={() => handleUpdate()}
                 className="text-sm text-blue-500 font-bold"
                 type="button"
               >
-                Guardar
+                Save
               </button>
             </>
           )}
@@ -345,7 +348,11 @@ const ReviewActions = ({
               >
                 <BiEdit size={20} />
               </button>
-              <button onClick={()=>handleDelete(item.Id)} className="text-sm text-red-500" type="button">
+              <button
+                onClick={() => handleDelete(item.Id)}
+                className="text-sm text-red-500"
+                type="button"
+              >
                 <BiTrash size={20} />
               </button>
             </>

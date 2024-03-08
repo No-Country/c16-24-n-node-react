@@ -5,12 +5,17 @@ const AuthContext = createContext([]);
 
 export const useAuthContext = () => useContext(AuthContext);
 
+const getFavsFromLocal = () => {
+  const favsDish = localStorage.getItem("favorites");
+  return !!favsDish ? JSON.parse(favsDish) : [];
+};
+
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [user, setUser] = useState(sessionStorage.getItem("user"));
   const [logIn, setLogIn] = useState(!!sessionStorage.getItem("token"));
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(getFavsFromLocal());
   const [bookMark, setBookMark] = useState([]);
   let userApp = sessionStorage.getItem("user");
 
@@ -32,16 +37,6 @@ const AuthProvider = ({ children }) => {
       ? (tempDishInBookMark = [])
       : (tempDishInBookMark = JSON.parse(bookmarkDish));
     setBookMark(tempDishInBookMark);
-  }, []);
-
-  useEffect(() => {
-    const favsDish = localStorage.getItem("favorites");
-    let tempDishInFavs;
-
-    favsDish === null
-      ? (tempDishInFavs = [])
-      : (tempDishInFavs = JSON.parse(favsDish));
-    setFavorites(tempDishInFavs);
   }, []);
 
   const bookmarkDish = localStorage.getItem("bookMark");

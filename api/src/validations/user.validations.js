@@ -9,7 +9,8 @@ const {
 
 const changePasswordValidation = checkSchema({
   password: {
-    ...passwordValidOptions,
+    in: "body",
+    trim: true,
     optional: true,
     custom: {
       options: (value, { req }) => value !== req.body.new_password,

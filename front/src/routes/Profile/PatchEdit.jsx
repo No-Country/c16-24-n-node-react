@@ -49,11 +49,27 @@ const PatchEdit = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "difficulty") {
+      if (value === "" || (value >= 1 && value <= 5)) {
+        setFormData({
+          ...formData,
+          [name]: value === "" ? "" : parseInt(value),
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Invalid Difficulty",
+          text: "Difficulty should be between 1 and 5, or leave it empty.",
+        });
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
+
   const handleIngredientChange = (index, event) => {
     const { value } = event.target;
     setFormData((prevFormData) => {
@@ -224,8 +240,10 @@ const PatchEdit = () => {
         Edit Recipe
       </h2>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
-      <div className="relative flex flex-col items-center justify-center w-full">
-        <p className="text-center text-gray-500 font-bold px-2" >current image</p>
+        <div className="relative flex flex-col items-center justify-center w-full">
+          <p className="text-center text-gray-500 font-bold px-2">
+            current image
+          </p>
           <img
             src={imageUrl}
             alt="Preview"
@@ -260,7 +278,9 @@ const PatchEdit = () => {
             )}
             {previewImage && (
               <div className="absolute w-full xs:h-[260px]">
-                 <p className="absolute top-[-30px] text-gray-500 font-bold px-2 left-[calc(50%-52px)] bg-white">Image preview</p>
+                <p className="absolute top-[-30px] text-gray-500 font-bold px-2 left-[calc(50%-52px)] bg-white">
+                  Image preview
+                </p>
                 <img
                   src={previewImage}
                   alt="Preview"
@@ -322,6 +342,7 @@ const PatchEdit = () => {
               type="number"
               id="portion"
               name="portion"
+              min="1"
               value={formData.portion}
               onChange={handleInputChange}
               className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
@@ -338,6 +359,7 @@ const PatchEdit = () => {
               type="number"
               id="preparation_time"
               name="preparation_time"
+              min="1"
               value={formData.preparation_time}
               onChange={handleInputChange}
               className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
@@ -346,7 +368,7 @@ const PatchEdit = () => {
               className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[30%] xs:left-[18%] bg-white"
               htmlFor="Time"
             >
-              Time:
+              Minutes:
             </label>
           </div>
 
@@ -355,6 +377,7 @@ const PatchEdit = () => {
               type="number"
               id="difficulty"
               name="difficulty"
+              max="5"
               value={formData.difficulty}
               onChange={handleInputChange}
               className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
@@ -363,7 +386,7 @@ const PatchEdit = () => {
               className="absolute top-[-10px] text-gray-500 font-bold px-2 sm:left-[25%] xs:left-[23%] bg-white"
               htmlFor=" Difficulty"
             >
-              Difficulty:
+              Difficulty: 1-5
             </label>
           </div>
         </div>

@@ -1,6 +1,9 @@
 const { Op } = require("sequelize");
 const { Recipe, Ingredient, Category, Hashtag, User } = require("../db");
-const { cloudinary, deleteCloudinaryImage } = require("../utils/cloudinary.helper");
+const {
+  cloudinary,
+  deleteCloudinaryImage,
+} = require("../utils/cloudinary.helper");
 
 const uploadImageToCloudinary = async (imageBase64) => {
   try {
@@ -10,7 +13,7 @@ const uploadImageToCloudinary = async (imageBase64) => {
     });
     return result.secure_url; // Devuelve la URL segura de la imagen subida
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw new Error("Error al subir la imagen a Cloudinary");
   }
 };
@@ -243,14 +246,16 @@ const updateRecipeImage = async (recipeId, newImageFile) => {
   // Actualizar el atributo de imagen de la receta
   existingRecipe.primaryimage = newImageUrl;
 
-
   // Guardar los cambios en la base de datos
   await existingRecipe.save();
 
   return existingRecipe;
 };
 
-const getRecipes = async () => {
+const getRecipes = async (page = 1, perPage = 10) => {
+  const _page = page < 1 ? 1 : page;
+  const _perPage = perPage > 10 ? 10 : perPage;
+  
   // Obtener todas las recetas ordenadas por fecha de creación de forma descendente
   const recipes = await Recipe.findAll({
     where: { hidden: false },
@@ -276,6 +281,8 @@ const getRecipes = async () => {
         attributes: ["user_name"],
       },
     ],
+    offset: (_page - 1) * _perPage,
+    limit: _perPage,
   });
   return recipes;
 };
@@ -308,7 +315,12 @@ const getRecipeById = async (recipeId) => {
   if (!recipe) {
     throw new Error(`No se encontró ninguna receta con el ID ${recipeId}.`);
   }
-  const recipeData = {...JSON.parse(JSON.stringify(recipe)), ingredients:recipe.Ingredients, categories:recipe.Categories, hashtags: recipe.Hashtags}
+  const recipeData = {
+    ...JSON.parse(JSON.stringify(recipe)),
+    ingredients: recipe.Ingredients,
+    categories: recipe.Categories,
+    hashtags: recipe.Hashtags,
+  };
   delete recipeData.Ingredients;
   delete recipeData.Categories;
   delete recipeData.Hashtags;

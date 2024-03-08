@@ -19,7 +19,7 @@ const UserInfoComponent = ({ userName }) => {
       const { data: resData } = await appApi.get(`/users/${userName}`);
       setProfileData(resData?.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError(
         "The link you selected may not work or the page may have been removed."
       );
@@ -39,7 +39,7 @@ const UserInfoComponent = ({ userName }) => {
       ) : !profileData ? (
         <p>{error}</p>
       ) : (
-        <section className="flex relative justify-center items-center md:gap-6 flex-col md:flex-row">
+        <section className="flex relative w-2/3 justify-center items-center md:gap-6 flex-col md:flex-row">
           <div className="hidden md:flex">
             <ProfileImageComponent profileImage={profileData.image} />
           </div>
@@ -117,7 +117,7 @@ const ProfileImageComponent = ({ profileImage }) => {
   );
 };
 
-const FollowsUserComponent = ({
+export const FollowsUserComponent = ({
   profileUName,
   profileUserId,
   recipesCount,
@@ -144,15 +144,21 @@ const FollowsUserComponent = ({
   }, [isFollowing]);
 
   return (
-    <div className={`grid grid-cols-2 ${isOtherUser ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-x-10 gap-y-2 w-full px-5 justify-center items-center max-sm:text-sm`}>
-      { isOtherUser && (
+    <div
+      className={`grid grid-cols-2 ${
+        isOtherUser ? "lg:grid-cols-4" : "lg:grid-cols-3"
+      } gap-x-10 gap-y-2 w-full px-5 justify-center items-center max-sm:text-sm`}
+    >
+      {isOtherUser && (
         <FollowBtnComponent
           toFollowId={profileUserId}
           isFollowing={isFollowing}
           setIsFollowing={setIsFollowing}
         />
       )}
-      <span className="cursor-default text-center">{`${recipesCount} recipes`}</span>
+      {recipesCount && (
+        <span className="cursor-default text-center">{`${recipesCount} recipes`}</span>
+      )}
       <span className="cursor-pointer text-center">{`${followInfo.seguidores} follower(s)`}</span>
       <span className="cursor-pointer text-center">{`${followInfo.seguidos} follow(s)`}</span>
     </div>
@@ -195,12 +201,21 @@ const FollowBtnComponent = ({ toFollowId, isFollowing, setIsFollowing }) => {
       disabled={isLoading}
       onClick={handleActions}
     >
-      {
-        isLoading ? <LoadingSpinner className={"w-4 h-4"}/> :
+      {isLoading ? (
+        <LoadingSpinner className={"w-4 h-4"} />
+      ) : (
         <span className="flex items-center">
-          {isFollowing ? <><LiaCookieBiteSolid size={20}/> Unfollow</>: <><LiaCookieSolid size={20}/> Follow</>}
+          {isFollowing ? (
+            <>
+              <LiaCookieBiteSolid size={20} /> Unfollow
+            </>
+          ) : (
+            <>
+              <LiaCookieSolid size={20} /> Follow
+            </>
+          )}
         </span>
-      }
+      )}
     </button>
   );
 };

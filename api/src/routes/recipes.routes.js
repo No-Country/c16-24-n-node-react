@@ -46,8 +46,9 @@ recipesRoutes.get("/:recipeId", [jwtValidator], async (req, res) => {
 });
 
 recipesRoutes.get("/", async (req, res) => {
+  const {query} = req;
   try {
-    const recipes = await getRecipes();
+    const recipes = await getRecipes(query.page, query.perPage);
     if (!recipes || recipes.length === 0) {
       return res.status(404).json({ message: "No se encontraron recetas." });
     }

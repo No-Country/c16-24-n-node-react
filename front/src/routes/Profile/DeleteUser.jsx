@@ -4,11 +4,14 @@ import Swal from "sweetalert2";
 import appApi from "../../api/appApi";
 import { useAuthContext } from "../../context/AuthProvider";
 import { BiSolidUserMinus } from "react-icons/bi";
+import { MdOutlineVisibility } from "react-icons/md";
+import { MdOutlineVisibilityOff } from "react-icons/md";
 
 const DeleteUser = () => {
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { setLogIn } = useAuthContext();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleDeleteUser = async () => {
     if (!password) {
@@ -54,6 +57,10 @@ const DeleteUser = () => {
     });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <section className="mx-auto max-w-md">
       <h1 className="mb-4 text-start text-2xl">Delete User</h1>
@@ -62,16 +69,26 @@ const DeleteUser = () => {
           <BiSolidUserMinus className="mt-2 text-gray-500" size={30} />
           <input
             className="p-2 mt-1 w-full rounded-md border text-gray-500 border-gray-500 shadow-sm focus:border-gray-300  focus:ring-gray-200 focus:ring-opacity-50 h-10"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder=" Contraseña"
           />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute top-4 right-3"
+          >
+            {showPassword ? (
+              <MdOutlineVisibilityOff />
+            ) : (
+              <MdOutlineVisibility />
+            )}
+          </button>
           <label
             className="absolute top-[-10px] text-gray-500 font-bold px-2 left-[calc(50%-50px)] bg-white"
             htmlFor="User name:"
           >
-            User name:
+            Password:
           </label>
         </div>
       </div>

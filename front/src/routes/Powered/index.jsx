@@ -1,5 +1,6 @@
 import { BsLinkedin } from "react-icons/bs";
 import { FaSquareGithub, FaSquareGitlab } from "react-icons/fa6";
+import { TbWorldWww } from "react-icons/tb";
 
 function Powered() {
   const developers = [
@@ -7,38 +8,44 @@ function Powered() {
       name: "Eduardo Abba",
       stack: "Project Manager",
       linkedin: "https://www.linkedin.com/in/eduardo-abba-cibertech/",
-      github: "https://github.com/",
+      github: "https://github.com/abbacibertech",
+      // web: "https://",
     },
     {
       name: "Daniel Jerez",
-      stack: "UX/UI",
+      stack: "UX/UI Design",
       linkedin: "https://www.linkedin.com/in/daniel-jerez-design",
-      github: "https://github.com/",
+      github: "https://github.com/diciembre2004",
+      // web: "https://",
     },
     {
       name: "Gustavo Baranda",
-      stack: "Frontend",
+      stack: "Front End Developer",
       linkedin: "https://www.linkedin.com/in/gustavobaranda/",
-      github: "https://github.com/",
+      github: "https://github.com/GustavoBaranda",
+      // web: "https://",
     },
     {
       name: "Luca Carena",
-      stack: "Frontend",
+      stack: "Front End Developer",
       linkedin: "https://www.linkedin.com/in/luca-carena-463855127/",
-      github: "https://github.com/",
-      gitlab: "https://gitlab.com/",
+      github: "https://github.com/LucaCarena97",
+      gitlab: "https://gitlab.com/lucacarena98",
+      web: "https://luca-carena.netlify.app/",
     },
     {
       name: "Jorge Trujillo",
-      stack: "Backend",
-      linkedin: "https://www.linkedin.com/in/jorge-trujillo-91a00a163/",
-      github: "https://github.com/",
+      stack: "Back End Developer",
+      linkedin: "www.linkedin.com/in/jorge-trujillo-ch",
+      github: "https://github.com/xiriuxb",
+      web: "https://xiriuxb.github.io/",
     },
     {
       name: "Anibal Elbaum",
-      stack: "Backend",
+      stack: "Back End Developer",
       linkedin: "https://www.linkedin.com/in/inganibalelbaum",
-      github: "https://github.com/",
+      github: "https://github.com/andavian",
+      // web: "https://",
     },
   ];
 
@@ -85,6 +92,16 @@ function Powered() {
                       rel="noopener noreferrer"
                     >
                       <FaSquareGitlab className="text-[40px]" />
+                    </a>
+                  )}
+                  {developer.web && (
+                    <a
+                      href={developer.web}
+                      className="text-blue-400 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TbWorldWww className="text-[40px]" />
                     </a>
                   )}
                 </div>
