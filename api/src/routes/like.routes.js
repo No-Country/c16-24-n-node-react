@@ -2,17 +2,17 @@ const { Router } = require("express");
 const { jwtValidator } = require("../middlewares");
 const {
   toggleLikeRecipe,
-  getLikesForRecipe,
+  getLikesForRecipePublic,
+  getLikesForRecipePrivate,
 } = require("../controllers/like.controller");
 
 const likesRoutes = Router();
 
 likesRoutes.post("/:recipeId/like", [jwtValidator], async (req, res) => {
   try {
-    const { userId } = req.user;
     const { recipeId } = req.params;
-    const like = await toggleLikeRecipe(userId, recipeId);
-    return res.status(201).json({ like });
+    const like = await toggleLikeRecipe(req.user.id, recipeId);
+    return res.status(200).json(like);
   } catch (error) {
     console.error("Error al dar/quitar like a la receta:", error);
     res.status(500).json({ error: "Error interno del servidor" });
@@ -22,8 +22,19 @@ likesRoutes.post("/:recipeId/like", [jwtValidator], async (req, res) => {
 likesRoutes.get("/:recipeId/likes", async (req, res) => {
   try {
     const { recipeId } = req.params;
-    const likes = await getLikesForRecipe(recipeId);
-    return res.status(201).json({ likes });
+    const likes = await getLikesForRecipePublic(recipeId);
+    return res.status(200).json(likes);
+  } catch (error) {
+    console.error("Error al obtener los likes de la receta:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
+likesRoutes.get("/:recipeId/likes_pr", [jwtValidator], async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+    const likes = await getLikesForRecipePrivate(recipeId, req.user.id);
+    return res.status(201).json(likes);
   } catch (error) {
     console.error("Error al obtener los likes de la receta:", error);
     res.status(500).json({ error: "Error interno del servidor" });
