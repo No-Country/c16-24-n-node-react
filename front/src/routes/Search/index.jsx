@@ -11,6 +11,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import appApi from "../../api/appApi";
 import SearchUsersComponent from "./UserSearch";
+import LikesComponent from "../../components/Likes/LikesComponent";
 
 const Seach = () => {
   const {
@@ -34,35 +35,13 @@ const Seach = () => {
       try {
         const res = await appApi.get(`/recipes/`);
         const resApi = res?.data?.recipes;
-        const newDataApi = resApi.map((data) => {
-          const isInFav = checkIsFav(data.id);
-          if (isInFav) {
-            return { ...data, favorites: true };
-          } else {
-            return { ...data, favorites: false };
-          }
-        });
-
-        setDishAux(newDataApi);
+        setDishAux(resApi);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
     };
     fetchRecipe();
   }, []);
-
-  useEffect(()=>{
-    const newDataApi = dishAux.map((data) => {
-      const isInFav = checkIsFav(data.id);
-      if (isInFav) {
-        return { ...data, favorites: true };
-      } else {
-        return { ...data, favorites: false };
-      }
-    });
-
-    setDishAux(newDataApi);
-  },[favorites])
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -86,7 +65,7 @@ const Seach = () => {
     };
 
     fetchRecipe();
-  }, [bookMark, dishAux, setDishList]);
+  }, [bookMark, dishAux]);
 
   return (
     <>
@@ -150,23 +129,7 @@ const Seach = () => {
                         </Link>
                         <div className="flex justify-between items-center py-3">
                           <div className="flex flex-row">
-                            <button
-                              onClick={addOrRemoveFromFavs}
-                              data-dish-id={val.id}
-                              className="flex seft-start item-center gap-x-2 pl-2"
-                            >
-                              {val.favorites ? (
-                                <CiPizza
-                                  className="cursor-pointer fill-rose-700 text-rose-700"
-                                  size={20}
-                                />
-                              ) : (
-                                <GiFullPizza
-                                  className="cursor-pointer"
-                                  size={20}
-                                />
-                              )}
-                            </button>
+                            <LikesComponent recipeId={val.id} />
                             <button
                               onClick={addOrRemoveFromBookmark}
                               data-bookmark-id={val.id}

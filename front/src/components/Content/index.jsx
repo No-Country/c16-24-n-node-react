@@ -17,6 +17,7 @@ import Registro from "../../routes/Register/Registro";
 import Detail from "../../routes/Detail/Detail";
 import UsersProfilePage from "../../routes/Users";
 import Powered from "../../routes/Powered";
+import RecipesByTag from "../../routes/RecipesByTag";
 
 const Content = () => {
   return (
@@ -27,6 +28,7 @@ const Content = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/bookmark" element={<BookMark />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/tag/:tagName" element={<RecipesByTag />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         <Route path="/privacy" element={<Privacy />} />

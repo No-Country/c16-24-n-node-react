@@ -2,20 +2,17 @@ import { useState, useEffect, useRef } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
-import { GiFullPizza } from "react-icons/gi";
-import { CiPizza } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Link } from "react-router-dom";
 import appApi from "../../api/appApi";
+import LikesComponent from "../../components/Likes/LikesComponent";
 
 const Home = () => {
   const [dishList, setDishList] = useState([]);
   const [dishAux, setDishAux] = useState([]);
   const [loading, setLoading] = useState(true);
   const {
-    addOrRemoveFromFavs,
     addOrRemoveFromBookmark,
-    favorites,
     bookMark,
     user,
   } = useAuthContext();
@@ -23,28 +20,16 @@ const Home = () => {
     (newPage) => setPage(newPage + 1)
   );
 
-  const checkIsFav = (idtoCheck) => {
-    return favorites.find((fav) => fav.id == idtoCheck);
-  };
-
   useEffect(() => {
     const fetchRecipe = async () => {
       setLoading(true);
       try {
         const res = await appApi.get(`/recipes?page=${page}`);
         const resApi = res?.data?.recipes;
-        const newDataApi = resApi.map((data) => {
-          const isInFav = checkIsFav(data.id);
-          if (isInFav) {
-            return { ...data, favorites: true };
-          } else {
-            return { ...data, favorites: false };
-          }
-        });
         if (page === 1) {
-          setDishAux([...newDataApi]);
+          setDishAux(resApi);
         } else {
-          setDishAux((prevRec) => [...prevRec, ...newDataApi]);
+          setDishAux((prevRec) => [...prevRec, ...resApi]);
         }
         if (resApi.length === 0 || resApi.length < 10) {
           setHasMore(false);
@@ -61,19 +46,6 @@ const Home = () => {
       fetchRecipe();
     }
   }, [page, hasMore]);
-
-  useEffect(() => {
-    const newDataApi = dishAux.map((data) => {
-      const isInFav = checkIsFav(data.id);
-      if (isInFav) {
-        return { ...data, favorites: true };
-      } else {
-        return { ...data, favorites: false };
-      }
-    });
-
-    setDishAux(newDataApi);
-  }, [favorites]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -103,7 +75,7 @@ const Home = () => {
     <main className="flex justify-center px-4 mt-5">
       <section className="max-w-[1200px] md:w-full">
         <div className="my-[5%] mx-0">
-          <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center pb-20">
+          <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-12 md:gap-y-24 sm:mb-5 justify-center items-center">
             {dishList.map((val) => (
               <div
                 className="md:max-w-[550px] md:w-[550px] md:h-[380px] lg:max-w-full lg:w-full lg:h-full gap-4"
@@ -132,21 +104,8 @@ const Home = () => {
                     />
                   </Link>
                   <div className="flex justify-between items-center py-3">
-                    <div className="flex flex-row">
-                      <button
-                        onClick={addOrRemoveFromFavs}
-                        data-dish-id={val?.id}
-                        className="flex seft-start item-center gap-x-2 pl-2"
-                      >
-                        {val.favorites ? (
-                          <CiPizza
-                            className="cursor-pointer fill-red-700 text-red-700"
-                            size={20}
-                          />
-                        ) : (
-                          <GiFullPizza className="cursor-pointer" size={20} />
-                        )}
-                      </button>
+                    <div className="flex items-center flex-row">
+                      <LikesComponent recipeId={val.id} />
                       <button
                         onClick={addOrRemoveFromBookmark}
                         data-bookmark-id={val?.id}

@@ -6,6 +6,7 @@ import { CiPizza } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import LikesComponent from "../../components/Likes/LikesComponent";
 
 const BookMark = () => {
   const {
@@ -74,23 +75,7 @@ const BookMark = () => {
                       </Link>
                       <div className="flex justify-between items-center py-3">
                         <div className="flex flex-row">
-                          <button
-                            onClick={addOrRemoveFromFavs}
-                            data-dish-id={val?.id}
-                            className="flex seft-start item-center gap-x-2 pl-2"
-                          >
-                            {val.favorites ? (
-                              <CiPizza
-                                className="cursor-pointer fill-red-700 text-red-700"
-                                size={20}
-                              />
-                            ) : (
-                              <GiFullPizza
-                                className="cursor-pointer"
-                                size={20}
-                              />
-                            )}
-                          </button>
+                          <LikesComponent recipeId={val.id}/>
                           <button
                             onClick={addOrRemoveFromBookmark}
                             data-bookmark-id={val?.id}

@@ -43,7 +43,6 @@ const Comments = ({ dishID }) => {
   };
 
   useEffect(() => {
-    console.log("perro")
     fetchComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -61,7 +60,6 @@ const Comments = ({ dishID }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("perro 2")
     e.preventDefault();
     try {
       const response = await appApi.post(`/reviews?recipeId=${dishID}`, {
