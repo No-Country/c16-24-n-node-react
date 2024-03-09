@@ -8,9 +8,11 @@ Una red social para compartir, guardar y publicar recetas. Donde podras seguir a
 Asi todos acordamos:
 Nombre del Grupo: "MANYA MANYA" (No Country: c16-24-n-node-react)
 Nombre del Proyecto: "CHETIFABENE" - Una comunidad para compartir recetas de cocina.
+
 ---
 ### DESCRIPCIÓN DEL PROYECTO:
 CHETIFABENE es una aplicación web que permite a los usuarios compartir sus recetas de cocina favoritas con otros usuarios. La aplicación cuenta con una interfaz intuitiva y fácil de usar, lo que la convierte en una herramienta ideal para cocineros de todos los niveles.
+
 ---
 ### TEAM: "Manya Manya"
 - Project Management: Eduardo Abba (2do Rol: Analisis y diseño operacional) - https://www.linkedin.com/in/eduardo-abba-cibertech/
@@ -22,6 +24,7 @@ CHETIFABENE es una aplicación web que permite a los usuarios compartir sus rece
   Jorge Trujillo (2do Rol: Fullstack) - https://www.linkedin.com/in/jorge-trujillo-91a00a163/
   Anibal Elbaum - https://www.linkedin.com/in/inganibalelbaum
 - Team Leader: Matias Carballo - https://www.linkedin.com/in/matias-es-carballo
+
 ---
 ### STACKS \(Tecnologías/herramientas utilizadas):\
 - Project Management: Notepad, Excel, Slack, Discord, Whatsapp, Drive, Trello, Miro, Draw.io, Paint
@@ -30,6 +33,7 @@ CHETIFABENE es una aplicación web que permite a los usuarios compartir sus rece
 - Backend: Node.Js, Express, PostgreSQL, Cloudinary, Nodemailer, Postman
 - Data Base: PostgreSQL
 - Deployment: Vercel
+
 ---
 ### DOCUMENTACION DEL PROYECTO:
 - Project Management:
