@@ -83,7 +83,11 @@ Con esta idea en mente, nace CHETIFABENE; una aplicación web que permite a los 
 
 # 📷 Capturas de pantalla
 
+<img src="https://github.com/No-Country/c16-24-n-node-react/blob/dev/front/src/assets/home_screenshot.png">
 
+<img src="https://github.com/No-Country/c16-24-n-node-react/blob/dev/front/src/assets/post_screenshot.png">
+
+<img src="https://github.com/No-Country/c16-24-n-node-react/blob/dev/front/src/assets/profile_screenshot.png">
 
 ---
 
