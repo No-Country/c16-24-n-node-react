@@ -205,40 +205,67 @@ const getUserLikes = async (userId, page = 1, perPage = 10) => {
   const _perPage = perPage > 10 ? 10 : perPage;
 
   try {
-    const user = User.findOne({
-      where:{
-        id:userId,
-        deleted:false,
-      }
-    });
-    if(!user){
-      throw {status:404, msg:responseMessages.userNotRegistered}
-    }
-    const data = Like.findAll({
-      where:{
-        userId,
-        isDeleted:false,
+    const user = await User.findOne({
+      where: {
+        id: userId,
+        deleted: false,
       },
-      attributes:[],
+    });
+    if (!user) {
+      throw { status: 404, msg: responseMessages.userNotRegistered };
+    }
+
+    const recipesLikes = await Recipe.findAll({
+      attributes: ["id", "primaryimage", "name", "description", "createdAt"],
+      where: {
+        hidden: false,
+      },
       include: [
         {
-          model:Recipe,
-          where:{
-            hidden: false,
+          model: User,
+          where: { id: userId, deleted: false },
+          as: "UsersLiked",
+          attributes: [],
+          through: {
+            where: { isDeleted: false },
+            attributes: [],
           },
-          attributes:["id", "primaryimage", "name", "description", "createdAt"],
         },
-        {
-          model:User,
-          attributes:["id","user_name"]
-        }
       ],
       offset: (_page - 1) * _perPage,
       limit: _perPage,
       order: [["createdAt", "DESC"]],
     });
-    return data;
 
+    const recipesWithUser = recipesLikes.map((recipe) => {
+      return {
+        ...recipe.toJSON(),
+        User: { id: user.id, user_name: user.user_name },
+      };
+    });
+    //   where:{
+    //     userId,
+    //     isDeleted:false,
+    //   },
+    //   attributes:[],
+    //   include: [
+    //     {
+    //       model:Recipe,
+    //       where:{
+    //         hidden: false,
+    //       },
+    //       attributes:["id", "primaryimage", "name", "description", "createdAt"],
+    //     },
+    //     {
+    //       model:User,
+    //       attributes:["id","user_name"]
+    //     }
+    //   ],
+    //   offset: (_page - 1) * _perPage,
+    //   limit: _perPage,
+    //   order: [["createdAt", "DESC"]],
+    // });
+    return recipesWithUser;
   } catch (error) {
     throw error;
   }
