@@ -9,12 +9,11 @@ import LoadingSpinner from "../Spinner";
 const buildLikesUri = (isLogIn, recipeId) => {
   if (isLogIn) {
     return `/recipe/${recipeId}/likes_pr`;
-  } else {
-    return `/recipe/${recipeId}/likes`;
   }
+  return `/recipe/${recipeId}/likes`;
 };
 
-const LikesComponent = ({ recipeId }) => {
+const LikesComponent = ({ recipeId, callbackToLikesComp }) => {
   const { logIn } = useAuthContext();
   const [likes, setLikes] = useState({});
   const [loading, setLoading] = useState(true);
@@ -40,13 +39,21 @@ const LikesComponent = ({ recipeId }) => {
         setLikes={setLikes}
         loading={loading}
         setLoading={setLoading}
+        afterCallback={callbackToLikesComp}
       />
       <LikesCountComponent likesCount={likes.likes} />
     </>
   );
 };
 
-const LikeButton = ({ recipeId, isLiked, setLikes, loading, setLoading }) => {
+const LikeButton = ({
+  recipeId,
+  isLiked,
+  setLikes,
+  loading,
+  setLoading,
+  afterCallback,
+}) => {
   const { logIn } = useAuthContext();
   const navigate = useNavigate();
 
@@ -62,6 +69,9 @@ const LikeButton = ({ recipeId, isLiked, setLikes, loading, setLoading }) => {
       if (logIn) {
         const res = await appApi.post(`/recipe/${recipeId}/like`);
         setLikes((prev) => newLikesVal(res.data.created, prev.likes));
+        if (afterCallback) {
+          afterCallback(recipeId);
+        }
         setLoading(false);
       }
     } catch (error) {
@@ -79,7 +89,7 @@ const LikeButton = ({ recipeId, isLiked, setLikes, loading, setLoading }) => {
   return (
     <>
       {loading ? (
-        <LoadingSpinner className="w-[20px] h-[20px]"/>
+        <LoadingSpinner className="w-[20px] h-[20px]" />
       ) : (
         <button disabled={loading} onClick={handleClick}>
           {!!isLiked && logIn ? (

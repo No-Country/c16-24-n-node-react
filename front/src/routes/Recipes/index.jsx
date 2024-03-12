@@ -1,16 +1,15 @@
 import { FaRegUserCircle } from "react-icons/fa";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { HiOutlineBookmark } from "react-icons/hi2";
-import { GiFullPizza } from "react-icons/gi";
-import { CiPizza } from "react-icons/ci";
 import { useAuthContext } from "../../context/AuthProvider";
 import { Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import appApi from "../../api/appApi";
 import { BiSolidLike } from "react-icons/bi";
+import LikesComponent from "../../components/Likes/LikesComponent";
 
 const Recipes = () => {
-  const { addOrRemoveFromBookmark, logIn } = useAuthContext();
+  const { logIn } = useAuthContext();
   const [dishList, setDishList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,6 +27,11 @@ const Recipes = () => {
     fetchRecipe();
   }, []);
 
+  const removeFromLikesList = (recipeId) => {
+    const updatedPostList = dishList.filter((recipe) => recipe.id !== recipeId);
+    setDishList(updatedPostList);
+  };
+
   return (
     <>
       {!logIn && <Navigate to="/login" />}
@@ -41,8 +45,9 @@ const Recipes = () => {
                 <div className="flex flex-wrap md:gap-4 md:gap-y-24 justify-center items-center pb-20">
                   {dishList.map((val) => (
                     <RecipeDetailsComponent
-                      key={val.Recipe.id}
-                      likeInfo={val}
+                      key={val.id}
+                      recipeInfo={val}
+                      callbackToLikesComp={removeFromLikesList}
                     />
                   ))}
                 </div>
@@ -62,13 +67,13 @@ const Recipes = () => {
   );
 };
 
-const RecipeDetailsComponent = ({ likeInfo }) => {
+const RecipeDetailsComponent = ({ recipeInfo, callbackToLikesComp }) => {
   const { bookMark, addOrRemoveFromBookmark } = useAuthContext();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const books = bookMark?.map((bookMark) => bookMark.id);
   useEffect(() => {
     const fetchRecipe = () => {
-      if (books.includes(likeInfo.Recipe.id)) {
+      if (books.includes(recipeInfo.id)) {
         setIsBookmarked(true);
       } else {
         setIsBookmarked(false);
@@ -84,45 +89,32 @@ const RecipeDetailsComponent = ({ likeInfo }) => {
         <h3 className="flex justify-between items-center pl-2 pb-1">
           <span className="flex justify-between items-center gap-2 text-l">
             <FaRegUserCircle size={20} />
-            <Link to={`/${likeInfo.User.id}`}>
+            <Link to={`/${recipeInfo.User.id}`}>
               <p className="text-sm font-semibold" id="userPost">
-                @{likeInfo.User.user_name}
+                @{recipeInfo.User.user_name}
               </p>
             </Link>
           </span>
           <p id="date" className="text-sm md:pr-5 sm:p-0">
-            {new Date(likeInfo.Recipe.createdAt).toLocaleDateString("es-AR")}
+            {new Date(recipeInfo.createdAt).toLocaleDateString("es-AR")}
           </p>
         </h3>
-        <Link to={`/detail?dishID=${likeInfo.Recipe.id}`}>
+        <Link to={`/detail?dishID=${recipeInfo.id}`}>
           <img
             className="pt-2 w-[500px] max-h-[230px] object-cover rounded-xl"
-            src={likeInfo.Recipe.primaryimage}
+            src={recipeInfo.primaryimage}
             alt=""
           />
         </Link>
         <div className="flex justify-between items-center py-3">
           <div className="flex flex-row">
-            {/* <button
-            onClick={addOrRemoveFromFavs}
-            data-dish-id={val.id}
-            className="flex seft-start item-center gap-x-2 pl-2"
-          >
-            {!val.fav ? (
-              <CiPizza
-                className="cursor-pointer fill-red-700 text-red-700"
-                size={20}
-              />
-            ) : (
-              <GiFullPizza
-                className="cursor-pointer"
-                size={20}
-              />
-            )}
-          </button> */}
+            <LikesComponent
+              recipeId={recipeInfo.id}
+              callbackToLikesComp={callbackToLikesComp}
+            />
             <button
               onClick={addOrRemoveFromBookmark}
-              data-bookmark-id={likeInfo.Recipe?.id}
+              data-bookmark-id={recipeInfo?.id}
               className="flex seft-start item-center gap-x-2 pl-2"
             >
               {isBookmarked ? (
@@ -142,13 +134,13 @@ const RecipeDetailsComponent = ({ likeInfo }) => {
           </div>
         </div>
         <h3 id="name" className="pb-2">
-          {likeInfo.Recipe.name}
+          {recipeInfo.name}
         </h3>
         <p
           id="comentary"
           className="border text-justify border-solid rounded-xl p-2 md:h-20 sm:h-full"
         >
-          {likeInfo.Recipe.description?.substring(0, 120)}...
+          {recipeInfo.description?.substring(0, 120)}...
         </p>
       </div>
     </div>
