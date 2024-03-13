@@ -40,7 +40,7 @@ const Home = () => {
   }, [page, hasMore]);
 
   return (
-    <main className="flex justify-center px-4 mt-5">
+    <main className="flex justify-center px-4">
       <section className="max-w-[1200px] md:w-full">
         <div className="my-[5%] mx-0">
           <div className="flex flex-col lg:gap-x-4  md:gap-x-0 lg:gap-y-1 md:gap-y-1 sm:mb-5 justify-center items-center">

@@ -24,7 +24,7 @@ const RecipeCardComponent = ({ recipeInfo, callbackToLikesComp }) => {
   }, [bookMark]);
 
   return (
-    <div className="md:max-w-[550px] w-full sm:h-full">
+    <div className="md:max-w-[900px] w-full sm:h-full">
       <div className="flex flex-col w-full bg-white border border-solid rounded-xl mb-5 p-5">
         <h3 className="flex justify-between items-center pl-2 pb-1">
           <span className="flex justify-between items-center gap-2 text-l">
@@ -41,7 +41,7 @@ const RecipeCardComponent = ({ recipeInfo, callbackToLikesComp }) => {
         </h3>
         <Link to={`/detail?dishID=${recipeInfo.id}`}>
           <img
-            className="pt-2 w-full max-h-[230px] object-cover rounded-xl"
+            className="pt-2 w-full max-h-[230px] md:max-h-[350px] object-cover rounded-xl"
             src={recipeInfo.primaryimage}
             alt=""
           />
@@ -73,7 +73,7 @@ const RecipeCardComponent = ({ recipeInfo, callbackToLikesComp }) => {
             </button>
           </div>
         </div>
-        <h3 id="name" className="pb-2">
+        <h3 id="name" className="pb-2 text-lg font-bold">
           {recipeInfo.name}
         </h3>
         <p
